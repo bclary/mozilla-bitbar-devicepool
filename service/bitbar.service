@@ -1,0 +1,14 @@
+[Unit]
+Description=Bitbar Testrun manager service
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /home/bitbar/bin/start_android_hardware_testing.sh
+ExecStop=/bin/bash /home/bitbar/bin/stop_android_hardware_testing.sh
+Restart=on-failure
+WorkingDirectory=/home/bitbar
+User=bitbar
+
+[Install]
+WantedBy=multi-user.target
+
