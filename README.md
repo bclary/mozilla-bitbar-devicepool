@@ -34,8 +34,8 @@ variables and a yaml configuration file for Bibtar.
 
 ``` bash
 export TESTDROID_URL=https://mozilla.testdroid.com
-export TESTDROID_APIKEY=&lt;testdroid apikey&gt;
-export &lt;taskcluster worker type&gt;=&lt;taskcluster access token for worker type&gt;
+export TESTDROID_APIKEY=<testdroid apikey>
+export <taskcluster worker type>=<taskcluster access token for worker type>
 ...
 ```
 
@@ -49,7 +49,7 @@ workerType by replacing any dashes `-` with underscores `_` and whose
 value is set to the Taskcluster access token for the corresponding
 Taskcluster client.
 
-The (Service Installation)[#Service Installation) assumes these
+The [Service Installation](#Service Installation) assumes these
 environment variables are stored in `/etc/bitbar/bitbar.env`.
 
 ### Bitbar Configuration
@@ -58,9 +58,9 @@ The Bitbar configuration is specified as a YAML file with the
 following layout:
 
 <pre>
-\# The projects section contains definitions for each of the projects
-\# defined for mozilla-bitbar-devicepool. Each subsection of projects
-\# consists of a project name followed by the project properties.
+# The projects section contains definitions for each of the projects
+# defined for mozilla-bitbar-devicepool. Each subsection of projects
+# consists of a project name followed by the project properties.
 projects:
   # defaults is a special project name which is used to define
   # properties which will be set on the other projects. This
@@ -98,9 +98,9 @@ projects:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-unit-p2
       TC_WORKER_TYPE: gecko-t-ap-unit-p2
   #...
-\# The device-groups section contains definitions for each of the
-\# device groups. Each subsection of device_groups contains sections
-\# which list the names of the devices assigned to the device group.
+# The device-groups section contains definitions for each of the
+# device groups. Each subsection of device_groups contains sections
+# which list the names of the devices assigned to the device group.
 device_groups:
   motog4-docker-builder:
     Docker Builder:
@@ -257,7 +257,7 @@ optional arguments:
 These instructions assume that you will be setting up the
 mozilla-bitbar-devicepool to run as a systemd service.
 
-Customize [bitbar.service](services/bitbar.service) to fit the
+Customize [bitbar.service](service/bitbar.service) to fit the
 location where you will install mozilla-bitbar-devicepool. By default,
 it assumes it will be installed into the `/home/bitbar` directory.
 
