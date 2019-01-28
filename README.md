@@ -10,7 +10,7 @@ Bitbar Frameworks must be managed via the Testdroid user interface.
 
 ## Installation
 
-``` bash
+```
 # Clone the repository
 git clone https://github.com/bclary/mozilla-bitbar-devicepool.git
 cd mozilla-bitbar-devicepool
@@ -32,7 +32,7 @@ variables and a yaml configuration file for Bibtar.
 
 ### Environment Variables
 
-``` bash
+```
 export TESTDROID_URL=https://mozilla.testdroid.com
 export TESTDROID_APIKEY=<testdroid apikey>
 export <taskcluster worker type>=<taskcluster access token for worker type>
@@ -119,7 +119,7 @@ The `main.py` script is used to perform tasks related to running
 the Mozilla Android Hardware tests. It is implemented using `sub-command`
 arguments.
 
-``` bash
+```
 $ python main.py --help
 usage: main.py [-h] [--files FILES]
                [--log-level {CRITICAL,ERROR,WARNING,INFO,DEBUG}]
@@ -183,7 +183,7 @@ sub-command downloads the Testdroid.apk sample application and saves it
 to the `files/` directory. You can specify a unique name to prevent name
 collisions with files from other users.
 
-``` bash
+```
 $ python main.py download-testdroid-apk --help
 usage: main.py download-testdroid-apk [-h] [--filename FILENAME] [--force]
 
@@ -203,7 +203,7 @@ project which currently uses a non-empty test zip file is the
 create an empty zip file in the `files/` directory. You can specify a
 unique name to prevent name collisions with files from other users.
 
-``` bash
+```
 $ python main.py empty-test-zip --help
 usage: main.py empty-test-zip [-h] [--filename FILENAME]
 
@@ -220,7 +220,7 @@ which polls the Taskcluster queues for the worker types specified in
 the configuration for pending tasks and starts a corresponding Bitbat
 test run to service the task.
 
-``` bash
+```
 $ python main.py start-test-run-manager --help
 usage: main.py start-test-run-manager [-h] [--bitbar-config BITBAR_CONFIG]
                                       [--wait WAIT] [--delete-bitbar-tests]
@@ -242,7 +242,7 @@ for a project. The primary use for this command apart from one-off
 test runs, is to execute test runs for the `mozilla-docker-build`
 project which creates a new Docker image for use in further testing.
 
-``` bash
+```
 $ python main.py run-test --help
 usage: main.py run-test [-h] --project_name PROJECT_NAME
 
@@ -265,7 +265,7 @@ It uses the `start_android_hardware_testing.sh` and
 `stop_android_hardware_testing.sh` scripts in the `bin` directory to
 start and stop the test run manager.
 
-``` bash
+```
 sudo cp service/bitbar.service /etc/systemd/system/
 sudo chmod 664 /etc/systemd/system/bitbar.service
 sudo systemctl daemon-reload
@@ -273,13 +273,13 @@ sudo systemctl daemon-reload
 
 Start the bitbar.service
 
-``` bash
+```
 systemctl start bitbar.service
 ```
 
 Enable the bitbar.service to start on boot.
 
-``` bash
+```
 systemctl enable bitbar.service
 ```
 
@@ -287,6 +287,6 @@ systemctl enable bitbar.service
 
 To follow the log output of the bitbar service
 
-``` bash
+```
 sudo journalctl _SYSTEMD_UNIT=bitbar.service --follow
 ```
