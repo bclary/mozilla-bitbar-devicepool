@@ -28,7 +28,7 @@ pip install -r requirements.txt
 ## Configuration
 
 Configuring mozilla-bitbar-devicepool requires creating environment
-variables and a yaml configuration file for Bibtar.
+variables and a yaml configuration file for Bitbar.
 
 ### Environment Variables
 
