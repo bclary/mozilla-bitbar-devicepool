@@ -24,7 +24,6 @@ def run_test_with_configuration(test_configuration):
         payload=json.dumps(test_configuration),
         headers={'Content-type': 'application/json', 'Accept': 'application/json'})
     return response
-    #return TESTDROID.start_test_run_using_config(test_run_config=json.dumps(test_configuration))
 
 
 def run_test_for_project(project_name):

@@ -55,9 +55,6 @@ def test_run_manager(args):
 
     configuration.configure(bitbar_configpath, filespath=args.files)
 
-    #from mozilla_bitbar_devicepool.runs import run_test_for_project
-    #run_test_for_project('bclary-dummy-project')
-
     manager = TestRunManager(wait=args.wait,
                              delete_bitbar_tests=args.delete_bitbar_tests)
     manager.run()
