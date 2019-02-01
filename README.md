@@ -28,7 +28,7 @@ pip install -r requirements.txt
 ## Configuration
 
 Configuring mozilla-bitbar-devicepool requires creating environment
-variables and a yaml configuration file for Bibtar.
+variables and a yaml configuration file for Bitbar.
 
 ### Environment Variables
 
@@ -217,7 +217,7 @@ optional arguments:
 
 The sub-command `start-test-run-manager` starts a long running process
 which polls the Taskcluster queues for the worker types specified in
-the configuration for pending tasks and starts a corresponding Bitbat
+the configuration for pending tasks and starts a corresponding Bitbar
 test run to service the task.
 
 ```
