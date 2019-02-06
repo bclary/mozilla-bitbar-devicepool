@@ -67,9 +67,9 @@ projects:
     framework_name: Docker image build
     description: Mozilla Docker image build
     additional_parameters:
-      test_file: mozilla-docker-20190109T064727.zip
+      test_file: mozilla-docker-20190206T082739.zip
       application_file: bclary-Testdroid.apk
-      DOCKER_IMAGE_VERSION: 20190109T064727
+      DOCKER_IMAGE_VERSION: 20190206T082739
 device_groups:
   motog4-docker-builder:
     Docker Builder:
