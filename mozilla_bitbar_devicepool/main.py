@@ -61,6 +61,17 @@ def test_run_manager(args):
 
 
 def run_test(args):
+    if not TESTDROID:
+        logger.error("The environment variabels TESTDROID_URL, TESTDROID_APIKEY both need to be set.")
+        sys.exit(1)
+
+    if args.bitbar_config is None:
+        bitbar_configpath = os.path.join(modulepath, 'config', 'config.yml')
+    else:
+        bitbar_configpath = args.bitbar_config
+
+    configuration.configure(bitbar_configpath, filespath=args.files)
+
     run_test_for_project(args.project_name)
 
 def main():
@@ -142,7 +153,9 @@ Terminate Now
     ### run-test ###
     subparser = subparsers.add_parser("run-test",
                                       help="Run test for a project then exit.")
-    subparser.add_argument("--project_name",
+    subparser.add_argument("--bitbar-config",
+                           help="Path to Bitbar yaml configuration file.")
+    subparser.add_argument("--project-name",
                            required=True,
                            help="Specify a project name for which to start a test.")
     subparser.set_defaults(func=run_test)
