@@ -66,9 +66,9 @@ projects:
     device_model: motog4
     framework_name: Docker image build
     description: Mozilla Docker image build
+    test_file: mozilla-docker-20190206T082739.zip
+    application_file: bclary-Testdroid.apk
     additional_parameters:
-      test_file: mozilla-docker-20190206T082739.zip
-      application_file: bclary-Testdroid.apk
       DOCKER_IMAGE_VERSION: 20190206T082739
 device_groups:
   motog4-docker-builder:
