@@ -181,13 +181,13 @@ class TestRunManager(object):
                         stats['RUNNING'],
                         stats['WAITING']))
 
-                # If the test_group has available devices and does not
-                # have any waiting containers, then query taskcluster
-                # to see if any tasks are pending.
+                # If the test_group has available devices, then query
+                # taskcluster to see if any tasks are pending and
+                # queue up tests for the available devices.
                 bitbar_device_group = CACHE['device_groups'][device_group_name]
                 bitbar_device_group_count = bitbar_device_group['deviceCount']
                 available_devices = bitbar_device_group_count - stats['RUNNING']
-                if available_devices > 0 and stats['WAITING'] == 0:
+                if available_devices > 0:
                     pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
                     if pending_tasks > available_devices:
                         pending_tasks = available_devices
