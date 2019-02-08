@@ -66,10 +66,10 @@ projects:
     device_model: motog4
     framework_name: Docker image build
     description: Mozilla Docker image build
-    test_file: mozilla-docker-20190206T094537.zip
+    test_file: mozilla-docker-20190208T112604.zip
     application_file: aerickson-Testdroid.apk
     additional_parameters:
-      DOCKER_IMAGE_VERSION: 20190206T094537
+      DOCKER_IMAGE_VERSION: 20190208T112604
 device_groups:
   motog4-docker-builder:
     Docker Builder:
