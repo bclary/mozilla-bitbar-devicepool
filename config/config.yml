@@ -2,8 +2,8 @@ projects:
   defaults:
     os_type: ANDROID
     project_type: APPIUM_ANDROID_SERVER_SIDE
-    application_file: bclary-Testdroid.apk
-    test_file: bclary-empty-test.zip
+    application_file: aerickson-Testdroid.apk
+    test_file: aerickson-empty-test.zip
     timeout: 0
     scheduler: SINGLE
     archivingStrategy: DAYS
@@ -11,7 +11,7 @@ projects:
     taskcluster_provisioner_id: proj-autophone
     additional_parameters:
       bitbar_cloud_url: https://mozilla.testdroid.com
-      DOCKER_IMAGE_VERSION: 20190206T094537
+      DOCKER_IMAGE_VERSION: 20190208T112604
       TC_WORKER_CONF: gecko-t-ap
   mozilla-unittest-p2:
     device_group_name: pixel2-unit
@@ -66,10 +66,10 @@ projects:
     device_model: motog4
     framework_name: Docker image build
     description: Mozilla Docker image build
-    test_file: mozilla-docker-20190206T094537.zip
-    application_file: bclary-Testdroid.apk
+    test_file: mozilla-docker-20190208T112604.zip
+    application_file: aerickson-Testdroid.apk
     additional_parameters:
-      DOCKER_IMAGE_VERSION: 20190206T094537
+      DOCKER_IMAGE_VERSION: 20190208T112604
 device_groups:
   motog4-docker-builder:
     Docker Builder:
