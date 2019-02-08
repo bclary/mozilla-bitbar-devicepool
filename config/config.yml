@@ -2,8 +2,8 @@ projects:
   defaults:
     os_type: ANDROID
     project_type: APPIUM_ANDROID_SERVER_SIDE
-    application_file: bclary-Testdroid.apk
-    test_file: bclary-empty-test.zip
+    application_file: aerickson-Testdroid.apk
+    test_file: aerickson-empty-test.zip
     timeout: 0
     scheduler: SINGLE
     archivingStrategy: DAYS
@@ -67,7 +67,7 @@ projects:
     framework_name: Docker image build
     description: Mozilla Docker image build
     test_file: mozilla-docker-20190206T094537.zip
-    application_file: bclary-Testdroid.apk
+    application_file: aerickson-Testdroid.apk
     additional_parameters:
       DOCKER_IMAGE_VERSION: 20190206T094537
 device_groups:
