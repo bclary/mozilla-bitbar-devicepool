@@ -71,13 +71,13 @@ projects:
     additional_parameters:
       DOCKER_IMAGE_VERSION: 20190208T112604
   mozilla-docker-image-test:
-    device_group_name: NEW_GROUP_TO_BE_CREATED
+    device_group_name: motog5-test
     device_model: motog5
     framework_name: mozilla-usb
     description: Mozilla Docker image test
     additional_parameters:
-      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-image-test
-      TC_WORKER_TYPE: gecko-t-ap-perf-g5
+      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-g5
+      TC_WORKER_TYPE: gecko-t-ap-test-g5
       DOCKER_IMAGE_VERSION: 20190208T112604
 device_groups:
   motog4-docker-builder:
