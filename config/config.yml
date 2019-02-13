@@ -70,6 +70,7 @@ projects:
     application_file: aerickson-Testdroid.apk
     additional_parameters:
       DOCKER_IMAGE_VERSION: 20190208T112604
+  # used for testing changes to the docker container
   mozilla-docker-image-test:
     device_group_name: motog5-test
     device_model: motog5
@@ -78,6 +79,7 @@ projects:
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-g5
       TC_WORKER_TYPE: gecko-t-ap-test-g5
+      # replace with version to test
       DOCKER_IMAGE_VERSION: 20190208T112604
 device_groups:
   motog4-docker-builder:
