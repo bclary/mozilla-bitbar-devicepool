@@ -19,7 +19,6 @@ from mozilla_bitbar_devicepool.runs import (
     get_test_runs,
     run_test_for_project,
 )
-from testdroid import RequestResponseError
 
 CACHE = None
 CONFIG = None
@@ -59,7 +58,7 @@ class TestRunManager(object):
                     # ConnectionErrors.
                     time.sleep(5)
                     break
-                except (requests.exceptions.ConnectionError, RequestResponseError) as e:
+                except Exception as e:
                     logger.error('Failed to get tests for project %s (%s: %s).' % (project_name, e.__class__, e.message),
                                  exc_info=True)
                     time.sleep(self.wait)
@@ -159,8 +158,8 @@ class TestRunManager(object):
 
                 try:
                     stats = self.get_bitbar_test_stats(project_name, project_config)
-                except requests.exceptions.ConnectionError:
-                    logger.error('Failed to get stats for project %s' % project_name,
+                except Exception as e:
+                    logger.error('Failed to get stats for project %s (%s: %s).' % (project_name, e.__class__, e.message),
                                  exc_info=True)
                     continue
 
@@ -201,8 +200,8 @@ class TestRunManager(object):
                             logger.info('{:10s} test run {} started'.format(
                                 device_group_name,
                                 test_run['id']))
-                        except requests.exceptions.ConnectionError:
-                            logger.error('Failed to create test run for group %s' % device_group_name,
+                        except Exception as e:
+                            logger.error('Failed to create test run for group %s (%s: %s).' % (device_group_name, e.__class__, e.message),
                                          exc_info=True)
 
             time.sleep(self.wait)
