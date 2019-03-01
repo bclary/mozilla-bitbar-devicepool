@@ -19,6 +19,7 @@ from mozilla_bitbar_devicepool.runs import (
     get_test_runs,
     run_test_for_project,
 )
+from testdroid import RequestResponseError
 
 CACHE = None
 CONFIG = None
@@ -58,7 +59,7 @@ class TestRunManager(object):
                     # ConnectionErrors.
                     time.sleep(5)
                     break
-                except requests.exceptions.ConnectionError:
+                except (requests.exceptions.ConnectionError, RequestResponseError):
                     logger.error('Failed to get tests for project %s' % project_name,
                                  exc_info=True)
                     time.sleep(self.wait)
