@@ -59,8 +59,8 @@ class TestRunManager(object):
                     # ConnectionErrors.
                     time.sleep(5)
                     break
-                except (requests.exceptions.ConnectionError, RequestResponseError):
-                    logger.error('Failed to get tests for project %s' % project_name,
+                except (requests.exceptions.ConnectionError, RequestResponseError) as e:
+                    logger.error('Failed to get tests for project %s (%s).' % (project_name, e.__class__),
                                  exc_info=True)
                     time.sleep(self.wait)
 
