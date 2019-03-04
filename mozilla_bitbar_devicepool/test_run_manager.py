@@ -58,9 +58,12 @@ class TestRunManager(object):
                     # ConnectionErrors.
                     time.sleep(5)
                     break
-                except requests.exceptions.ConnectionError:
-                    logger.error('Failed to tests for project %s' % project_name,
-                                 exc_info=True)
+                except Exception as e:
+                    logger.error(
+                        'Failed to get tests for project %s (%s: %s).'
+                        % (project_name, e.__class__.__name__, e.message),
+                        exc_info=True,
+                    )
                     time.sleep(self.wait)
 
     def handle_signal(self, signalnum, frame):
@@ -158,9 +161,12 @@ class TestRunManager(object):
 
                 try:
                     stats = self.get_bitbar_test_stats(project_name, project_config)
-                except requests.exceptions.ConnectionError:
-                    logger.error('Failed to get stats for project %s' % project_name,
-                                 exc_info=True)
+                except Exception as e:
+                    logger.error(
+                        'Failed to get stats for project %s (%s: %s).'
+                        % (project_name, e.__class__.__name__, e.message),
+                        exc_info=True,
+                    )
                     continue
 
                 if stats['OFFLINE'] or stats['DISABLED']:
@@ -171,15 +177,16 @@ class TestRunManager(object):
                         ', '.join(stats['OFFLINE_DEVICES'])))
 
                 if stats['FINISHED'] or stats['RUNNING'] or stats['WAITING']:
-                    logger.info('{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} FINISHED {} RUNNING {} WAITING {}'.format(
-                        device_group_name,
-                        stats['COUNT'],
-                        stats['IDLE'],
-                        stats['OFFLINE'],
-                        stats['DISABLED'],
-                        stats['FINISHED'],
-                        stats['RUNNING'],
-                        stats['WAITING']))
+                    logger.info(
+                        '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} FINISHED {} RUNNING {} WAITING {}'.format(
+                            device_group_name,
+                            stats['COUNT'],
+                            stats['IDLE'],
+                            stats['OFFLINE'],
+                            stats['DISABLED'],
+                            stats['FINISHED'],
+                            stats['RUNNING'],
+                            stats['WAITING']))
 
                 # If the test_group has available devices, then query
                 # taskcluster to see if any tasks are pending and
@@ -188,7 +195,9 @@ class TestRunManager(object):
                 bitbar_device_group_count = bitbar_device_group['deviceCount']
                 available_devices = bitbar_device_group_count - stats['RUNNING'] - stats['WAITING']
                 if available_devices > 0:
-                    pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
+                    pending_tasks = get_taskcluster_pending_tasks(
+                        taskcluster_provisioner_id, worker_type
+                    )
                     if pending_tasks > available_devices:
                         pending_tasks = available_devices
 
@@ -200,9 +209,12 @@ class TestRunManager(object):
                             logger.info('{:10s} test run {} started'.format(
                                 device_group_name,
                                 test_run['id']))
-                        except requests.exceptions.ConnectionError:
-                            logger.error('Failed to create test run for group %s' % device_group_name,
-                                         exc_info=True)
+                        except Exception as e:
+                            logger.error(
+                                'Failed to create test run for group %s (%s: %s).'
+                                % (device_group_name, e.__class__.__name__, e.message),
+                                exc_info=True,
+                            )
 
             time.sleep(self.wait)
 
