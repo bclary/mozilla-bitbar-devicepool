@@ -171,15 +171,16 @@ class TestRunManager(object):
                         ', '.join(stats['OFFLINE_DEVICES'])))
 
                 if stats['FINISHED'] or stats['RUNNING'] or stats['WAITING']:
-                    logger.info('{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} FINISHED {} RUNNING {} WAITING {}'.format(
-                        device_group_name,
-                        stats['COUNT'],
-                        stats['IDLE'],
-                        stats['OFFLINE'],
-                        stats['DISABLED'],
-                        stats['FINISHED'],
-                        stats['RUNNING'],
-                        stats['WAITING']))
+                    logger.info(
+                        '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} FINISHED {} RUNNING {} WAITING {}'.format(
+                            device_group_name,
+                            stats['COUNT'],
+                            stats['IDLE'],
+                            stats['OFFLINE'],
+                            stats['DISABLED'],
+                            stats['FINISHED'],
+                            stats['RUNNING'],
+                            stats['WAITING']))
 
                 # If the test_group has available devices, then query
                 # taskcluster to see if any tasks are pending and
@@ -188,7 +189,9 @@ class TestRunManager(object):
                 bitbar_device_group_count = bitbar_device_group['deviceCount']
                 available_devices = bitbar_device_group_count - stats['RUNNING'] - stats['WAITING']
                 if available_devices > 0:
-                    pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
+                    pending_tasks = get_taskcluster_pending_tasks(
+                        taskcluster_provisioner_id, worker_type
+                    )
                     if pending_tasks > available_devices:
                         pending_tasks = available_devices
 
