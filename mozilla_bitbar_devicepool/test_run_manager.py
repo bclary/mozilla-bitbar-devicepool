@@ -59,7 +59,7 @@ class TestRunManager(object):
                     time.sleep(5)
                     break
                 except Exception as e:
-                    logger.error('Failed to get tests for project %s (%s: %s).' % (project_name, e.__class__, e.message),
+                    logger.error('Failed to get tests for project %s (%s: %s).' % (project_name, e.__class__.__name__, e.message),
                                  exc_info=True)
                     time.sleep(self.wait)
 
@@ -159,7 +159,7 @@ class TestRunManager(object):
                 try:
                     stats = self.get_bitbar_test_stats(project_name, project_config)
                 except Exception as e:
-                    logger.error('Failed to get stats for project %s (%s: %s).' % (project_name, e.__class__, e.message),
+                    logger.error('Failed to get stats for project %s (%s: %s).' % (project_name, e.__class__.__name__, e.message),
                                  exc_info=True)
                     continue
 
@@ -201,7 +201,7 @@ class TestRunManager(object):
                                 device_group_name,
                                 test_run['id']))
                         except Exception as e:
-                            logger.error('Failed to create test run for group %s (%s: %s).' % (device_group_name, e.__class__, e.message),
+                            logger.error('Failed to create test run for group %s (%s: %s).' % (device_group_name, e.__class__.__name__, e.message),
                                          exc_info=True)
 
             time.sleep(self.wait)
