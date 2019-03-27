@@ -61,6 +61,62 @@ projects:
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-unit-g5
       TC_WORKER_TYPE: gecko-t-ap-unit-g5
+  # generic-worker
+  mozilla-gw-unittest-p2:
+    device_group_name: pixel2-unit-2
+    device_model: pixel2
+    framework_name: mozilla-usb
+    description: Mozilla Unit tests for Pixel2 (using generic-worker)
+    additional_parameters:
+      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-unit-p2
+      TC_WORKER_TYPE: gecko-t-ap-unit-p2
+      DOCKER_IMAGE_VERSION: 20190325T160701
+  mozilla-gw-perftest-p2:
+    device_group_name: pixel2-perf-2
+    device_model: pixel2
+    framework_name: mozilla-usb
+    description: Mozilla Performance tests for Pixel2 (using generic-worker)
+    additional_parameters:
+      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-perf-p2
+      TC_WORKER_TYPE: gecko-t-ap-perf-p2
+      DOCKER_IMAGE_VERSION: 20190325T160701
+  mozilla-gw-perftest-g5:
+    device_group_name: motog5-perf-2
+    device_model: motog5
+    framework_name: mozilla-usb
+    description: Mozilla Performance tests for MotoG5 (using generic-worker)
+    additional_parameters:
+      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-perf-g5
+      TC_WORKER_TYPE: gecko-t-ap-perf-g5
+      DOCKER_IMAGE_VERSION: 20190325T160701
+  mozilla-gw-batttest-p2:
+    device_group_name: pixel2-batt-2
+    device_model: pixel2
+    framework_name: mozilla-tcp
+    description: Mozilla Battery tests for Pixel2 (using generic-worker)
+    additional_parameters:
+      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-batt-p2
+      TC_WORKER_TYPE: gecko-t-ap-batt-p2
+      DOCKER_IMAGE_VERSION: 20190325T160701
+  mozilla-gw-batttest-g5:
+    device_group_name: motog5-batt-2
+    device_model: motog5
+    framework_name: mozilla-tcp
+    description: Mozilla Battery tests for MotoG5 (using generic-worker)
+    additional_parameters:
+      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-batt-g5
+      TC_WORKER_TYPE: gecko-t-ap-batt-g5
+      DOCKER_IMAGE_VERSION: 20190325T160701
+  mozilla-gw-unittest-g5:
+    device_group_name: motog5-unit-2
+    device_model: motog5
+    framework_name: mozilla-usb
+    description: Mozilla Unit tests for MotoG5 (using generic-worker)
+    additional_parameters:
+      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-unit-g5
+      TC_WORKER_TYPE: gecko-t-ap-unit-g5
+      DOCKER_IMAGE_VERSION: 20190325T160701
+  # used for building new docker images
   mozilla-docker-build:
     device_group_name: motog4-docker-builder
     device_model: motog4
@@ -70,7 +126,7 @@ projects:
     application_file: aerickson-Testdroid.apk
     additional_parameters:
       DOCKER_IMAGE_VERSION: 20190208T112604
-  # used for testing changes to the docker container
+  # used for testing new docker images
   mozilla-docker-image-test:
     device_group_name: motog5-test
     device_model: motog5
@@ -85,7 +141,6 @@ device_groups:
   motog4-docker-builder:
     Docker Builder:
   motog5-batt:
-    motog5-08:
     motog5-15:
   motog5-perf:
     motog5-01:
@@ -99,17 +154,14 @@ device_groups:
     motog5-10:
     motog5-11:
     motog5-12:
-    motog5-13:
   motog5-unit:
   motog5-test:
     motog5-14:
   pixel2-batt:
-    pixel2-34:
     pixel2-35:
   pixel2-perf:
-    pixel2-19:                    
-    pixel2-20:          
-    pixel2-21:                 
+    pixel2-20:
+    pixel2-21:
     pixel2-22:                                   
     pixel2-23:    
     pixel2-26:
@@ -140,4 +192,15 @@ device_groups:
     pixel2-15:
     pixel2-16:
     pixel2-17:
+  # second set of device workers
+  motog5-batt-2:
+    motog5-08:
+  motog5-perf-2:
+    motog5-13:
+  motog5-unit-2:
+  pixel2-batt-2:
+    pixel2-34:
+  pixel2-perf-2:
+    pixel2-19:
+  pixel2-unit-2:
     pixel2-18:
