@@ -69,7 +69,7 @@ projects:
     description: Mozilla Unit tests for Pixel2 (using generic-worker)
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-unit-p2
-      TC_WORKER_TYPE: gecko-t-bitbar-unit-p2
+      TC_WORKER_TYPE: gecko-t-bitbar-gw-unit-p2
       DOCKER_IMAGE_VERSION: 20190325T160701
   mozilla-gw-perftest-p2:
     device_group_name: pixel2-perf-2
@@ -78,7 +78,7 @@ projects:
     description: Mozilla Performance tests for Pixel2 (using generic-worker)
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-perf-p2
-      TC_WORKER_TYPE: gecko-t-bitbar-perf-p2
+      TC_WORKER_TYPE: gecko-t-bitbar-gw-perf-p2
       DOCKER_IMAGE_VERSION: 20190325T160701
   mozilla-gw-perftest-g5:
     device_group_name: motog5-perf-2
@@ -87,7 +87,7 @@ projects:
     description: Mozilla Performance tests for MotoG5 (using generic-worker)
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-perf-g5
-      TC_WORKER_TYPE: gecko-t-bitbar-perf-g5
+      TC_WORKER_TYPE: gecko-t-bitbar-gw-perf-g5
       DOCKER_IMAGE_VERSION: 20190325T160701
   mozilla-gw-batttest-p2:
     device_group_name: pixel2-batt-2
@@ -96,7 +96,7 @@ projects:
     description: Mozilla Battery tests for Pixel2 (using generic-worker)
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-batt-p2
-      TC_WORKER_TYPE: gecko-t-bitbar-batt-p2
+      TC_WORKER_TYPE: gecko-t-bitbar-gw-batt-p2
       DOCKER_IMAGE_VERSION: 20190325T160701
   mozilla-gw-batttest-g5:
     device_group_name: motog5-batt-2
@@ -105,7 +105,7 @@ projects:
     description: Mozilla Battery tests for MotoG5 (using generic-worker)
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-batt-g5
-      TC_WORKER_TYPE: gecko-t-bitbar-batt-g5
+      TC_WORKER_TYPE: gecko-t-bitbar-gw-batt-g5
       DOCKER_IMAGE_VERSION: 20190325T160701
   mozilla-gw-unittest-g5:
     device_group_name: motog5-unit-2
@@ -114,7 +114,7 @@ projects:
     description: Mozilla Unit tests for MotoG5 (using generic-worker)
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-unit-g5
-      TC_WORKER_TYPE: gecko-t-bitbar-unit-g5
+      TC_WORKER_TYPE: gecko-t-bitbar-gw-unit-g5
       DOCKER_IMAGE_VERSION: 20190325T160701
   # used for building new docker images
   mozilla-docker-build:
