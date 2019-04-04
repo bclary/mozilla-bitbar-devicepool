@@ -140,8 +140,6 @@ projects:
 device_groups:
   motog4-docker-builder:
     Docker Builder:
-  motog5-batt:
-    motog5-15:
   motog5-perf:
     motog5-01:
     motog5-02:
@@ -154,26 +152,16 @@ device_groups:
     motog5-10:
     motog5-11:
     motog5-12:
+  motog5-perf-2:
+    motog5-13:
   motog5-unit:
   motog5-test:
     motog5-14:
-  pixel2-batt:
-    pixel2-35:
-  pixel2-perf:
-    pixel2-20:
-    pixel2-21:
-    pixel2-22:                                   
-    pixel2-23:    
-    pixel2-26:
-    pixel2-27:
-    pixel2-28:
-    pixel2-29:
-    pixel2-30:
-    pixel2-24:
-    pixel2-25:
-    pixel2-31:
-    pixel2-32:
-    pixel2-33:
+  motog5-batt:
+    motog5-15:
+  motog5-batt-2:
+    motog5-08:
+  motog5-unit-2:
   pixel2-unit:
     pixel2-01:
     pixel2-02:
@@ -192,15 +180,26 @@ device_groups:
     pixel2-15:
     pixel2-16:
     pixel2-17:
-  # second set of device workers
-  motog5-batt-2:
-    motog5-08:
-  motog5-perf-2:
-    motog5-13:
-  motog5-unit-2:
-  pixel2-batt-2:
-    pixel2-34:
-  pixel2-perf-2:
-    pixel2-19:
   pixel2-unit-2:
     pixel2-18:
+  pixel2-perf-2:
+    pixel2-19:
+  pixel2-perf:
+    pixel2-20:
+    pixel2-21:
+    pixel2-22:
+    pixel2-23:
+    pixel2-24:
+    pixel2-25:
+    pixel2-26:
+    pixel2-27:
+    pixel2-28:
+    pixel2-29:
+    pixel2-30:
+    pixel2-31:
+    pixel2-32:
+    pixel2-33:
+  pixel2-batt-2:
+    pixel2-34:
+  pixel2-batt:
+    pixel2-35:
