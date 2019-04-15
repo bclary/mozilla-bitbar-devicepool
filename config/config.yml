@@ -70,7 +70,7 @@ projects:
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-unit-p2
       TC_WORKER_TYPE: gecko-t-bitbar-gw-unit-p2
-      DOCKER_IMAGE_VERSION: 20190325T160701
+      DOCKER_IMAGE_VERSION: 20190408T165211
   mozilla-gw-perftest-p2:
     device_group_name: pixel2-perf-2
     device_model: pixel2
@@ -79,7 +79,7 @@ projects:
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-perf-p2
       TC_WORKER_TYPE: gecko-t-bitbar-gw-perf-p2
-      DOCKER_IMAGE_VERSION: 20190325T160701
+      DOCKER_IMAGE_VERSION: 20190408T165211
   mozilla-gw-perftest-g5:
     device_group_name: motog5-perf-2
     device_model: motog5
@@ -88,7 +88,7 @@ projects:
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-perf-g5
       TC_WORKER_TYPE: gecko-t-bitbar-gw-perf-g5
-      DOCKER_IMAGE_VERSION: 20190325T160701
+      DOCKER_IMAGE_VERSION: 20190408T165211
   mozilla-gw-batttest-p2:
     device_group_name: pixel2-batt-2
     device_model: pixel2
@@ -97,7 +97,7 @@ projects:
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-batt-p2
       TC_WORKER_TYPE: gecko-t-bitbar-gw-batt-p2
-      DOCKER_IMAGE_VERSION: 20190325T160701
+      DOCKER_IMAGE_VERSION: 20190408T165211
   mozilla-gw-batttest-g5:
     device_group_name: motog5-batt-2
     device_model: motog5
@@ -106,7 +106,7 @@ projects:
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-batt-g5
       TC_WORKER_TYPE: gecko-t-bitbar-gw-batt-g5
-      DOCKER_IMAGE_VERSION: 20190325T160701
+      DOCKER_IMAGE_VERSION: 20190408T165211
   mozilla-gw-unittest-g5:
     device_group_name: motog5-unit-2
     device_model: motog5
@@ -115,7 +115,7 @@ projects:
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-unit-g5
       TC_WORKER_TYPE: gecko-t-bitbar-gw-unit-g5
-      DOCKER_IMAGE_VERSION: 20190325T160701
+      DOCKER_IMAGE_VERSION: 20190408T165211
   # used for building new docker images
   mozilla-docker-build:
     device_group_name: motog4-docker-builder
@@ -147,21 +147,21 @@ device_groups:
     motog5-04:
     motog5-05:
     motog5-06:
+  motog5-perf-2:
     motog5-07:
     motog5-09:
     motog5-10:
     motog5-11:
     motog5-12:
-  motog5-perf-2:
     motog5-13:
   motog5-unit:
+  motog5-unit-2:
   motog5-test:
     motog5-14:
   motog5-batt:
     motog5-15:
   motog5-batt-2:
     motog5-08:
-  motog5-unit-2:
   pixel2-unit:
     pixel2-01:
     pixel2-02:
@@ -172,6 +172,7 @@ device_groups:
     pixel2-07:
     pixel2-08:
     pixel2-09:
+  pixel2-unit-2:
     pixel2-10:
     pixel2-11:
     pixel2-12:
@@ -180,17 +181,16 @@ device_groups:
     pixel2-15:
     pixel2-16:
     pixel2-17:
-  pixel2-unit-2:
     pixel2-18:
-  pixel2-perf-2:
-    pixel2-19:
   pixel2-perf:
+    pixel2-19:
     pixel2-20:
     pixel2-21:
     pixel2-22:
     pixel2-23:
     pixel2-24:
     pixel2-25:
+  pixel2-perf-2:
     pixel2-26:
     pixel2-27:
     pixel2-28:
@@ -199,7 +199,7 @@ device_groups:
     pixel2-31:
     pixel2-32:
     pixel2-33:
-  pixel2-batt-2:
-    pixel2-34:
   pixel2-batt:
+    pixel2-34:
+  pixel2-batt-2:
     pixel2-35:
