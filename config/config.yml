@@ -122,21 +122,21 @@ projects:
     device_model: motog4
     framework_name: Docker image build
     description: Mozilla Docker image build
-    test_file: mozilla-docker-20190208T112604.zip
+    test_file: mozilla-docker-20190423T121205.zip
     application_file: aerickson-Testdroid.apk
     additional_parameters:
-      DOCKER_IMAGE_VERSION: 20190208T112604
+      DOCKER_IMAGE_VERSION: 20190423T121205
   # used for testing new docker images
-  mozilla-docker-image-test:
-    device_group_name: motog5-test
-    device_model: motog5
-    framework_name: mozilla-usb
-    description: Mozilla Docker image test
-    additional_parameters:
-      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-g5
-      TC_WORKER_TYPE: gecko-t-ap-test-g5
-      # replace with version to test
-      DOCKER_IMAGE_VERSION: 20190213T123836
+  #mozilla-docker-image-test:
+  #  device_group_name: motog5-test
+  #  device_model: motog5
+  #  framework_name: mozilla-usb
+  #  description: Mozilla Docker image test
+  #  additional_parameters:
+  #    TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-test-g5
+  #    TC_WORKER_TYPE: gecko-t-bitbar-gw-test-g5
+  #    # replace with version to test
+  #    DOCKER_IMAGE_VERSION: 20190423T121205
 device_groups:
   motog4-docker-builder:
     Docker Builder:
