@@ -143,11 +143,11 @@ device_groups:
   motog5-perf:
     motog5-01:
     motog5-02:
-  motog5-perf-2:
     motog5-03:
     motog5-04:
     motog5-05:
     motog5-06:
+  motog5-perf-2:
     motog5-07:
     motog5-09:
     motog5-10:
@@ -185,7 +185,6 @@ device_groups:
   pixel2-perf:
     pixel2-19:
     pixel2-20:
-  pixel2-perf-2:
     pixel2-21:
     pixel2-22:
     pixel2-23:
@@ -193,6 +192,7 @@ device_groups:
     pixel2-25:
     pixel2-26:
     pixel2-27:
+  pixel2-perf-2:
     pixel2-28:
     pixel2-29:
     pixel2-30:
