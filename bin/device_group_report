@@ -14,10 +14,9 @@ def get_group_size(group):
 
 pathname = os.path.dirname(sys.argv[0])
 root_dir = os.path.abspath(os.path.join(pathname, ".."))
+bitbar_config_path = os.path.join(root_dir, "config", "config.yml")
 
-bitbar_configpath = os.path.join(root_dir, "config", "config.yml")
-
-with open(bitbar_configpath, "r") as stream:
+with open(bitbar_config_path, "r") as stream:
     try:
         conf_yaml = yaml.safe_load(stream)
     except yaml.YAMLError as exc:
