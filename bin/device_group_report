@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+
+import yaml
+import os
+import sys
+
+
+
+def get_group_size(group):
+    if group:
+        return len(group)
+    else:
+        return 0
+
+
+pathname = os.path.dirname(sys.argv[0])
+root_dir = os.path.abspath(os.path.join(pathname, ".."))
+print(root_dir)
+
+bitbar_configpath = os.path.join(root_dir, 'config', 'config.yml')
+
+with open(bitbar_configpath, 'r') as stream:
+    try:
+        conf_yaml = yaml.safe_load(stream)
+    except yaml.YAMLError as exc:
+        print(exc)
+
+tcw_result_dict = {}
+gw_result_dict = {}
+for group in conf_yaml['device_groups']:
+    the_item = conf_yaml['device_groups'][group]
+    # filter out the test queue and the builder job
+    if '-test' not in group and '-builder' not in group:
+        if group.endswith('-2'):
+            gw_result_dict[group] = get_group_size(the_item)
+        else:
+            tcw_result_dict[group] = get_group_size(the_item)
+
+for a_dict in [tcw_result_dict, gw_result_dict]:
+    for item in sorted(a_dict):
+        print("%s: %s" % (item, a_dict[item]))
