@@ -14,7 +14,6 @@ def get_group_size(group):
 
 pathname = os.path.dirname(sys.argv[0])
 root_dir = os.path.abspath(os.path.join(pathname, ".."))
-print(root_dir)
 
 bitbar_configpath = os.path.join(root_dir, "config", "config.yml")
 
