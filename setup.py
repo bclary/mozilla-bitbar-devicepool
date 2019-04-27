@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="mozilla-bitbar-devicepool",
+    name="mozilla_bitbar_devicepool",
     version="0.0.0",
     author="Bob Clary",
     author_email="bclary@mozilla.com",
@@ -18,4 +18,8 @@ setuptools.setup(
         "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
         "Operating System :: OS Independent",
     ],
+    scripts=['bin/device_group_report'],
+    # entry_points = {
+    #     'console_scripts': ['device_group_report=mozilla_bitbar_devicepool.device_group_report:main'],
+    # }
 )
