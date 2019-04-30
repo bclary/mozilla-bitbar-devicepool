@@ -13,10 +13,19 @@ def get_len(an_object):
 
 
 class DeviceGroupReport:
-    def main(self):
-        pathname = os.path.dirname(sys.argv[0])
-        root_dir = os.path.abspath(os.path.join(pathname, ".."))
-        bitbar_config_path = os.path.join(root_dir, "config", "config.yml")
+    def __init__(self):
+        self.gw_result_dict = {}
+        self.tcw_result_dict = {}
+
+    def get_report_dict(self, bitbar_config_path=None):
+        if not bitbar_config_path:
+            pathname = os.path.dirname(sys.argv[0])
+            root_dir = os.path.abspath(os.path.join(pathname, ".."))
+            bitbar_config_path = os.path.join(root_dir, "config", "config.yml")
+
+        # pathname = os.path.dirname(sys.argv[0])
+        # root_dir = os.path.abspath(os.path.join(pathname, ".."))
+        # bitbar_config_path = os.path.join(root_dir, "config", "config.yml")
 
         with open(bitbar_config_path, "r") as stream:
             try:
@@ -24,17 +33,19 @@ class DeviceGroupReport:
             except yaml.YAMLError as exc:
                 print(exc)
 
-        tcw_result_dict = {}
-        gw_result_dict = {}
         for group in conf_yaml["device_groups"]:
             the_item = conf_yaml["device_groups"][group]
             # filter out the test queue and the builder job
             if "-test" not in group and "-builder" not in group:
                 if group.endswith("-2"):
-                    gw_result_dict[group] = get_len(the_item)
+                    self.gw_result_dict[group] = get_len(the_item)
                 else:
-                    tcw_result_dict[group] = get_len(the_item)
+                    self.tcw_result_dict[group] = get_len(the_item)
 
-        for a_dict in [tcw_result_dict, gw_result_dict]:
+    def main(self):
+        # TODO: use argparse and take config file as param
+        self.get_report_dict()
+
+        for a_dict in [self.tcw_result_dict, self.gw_result_dict]:
             for item in sorted(a_dict):
                 print("%s: %s" % (item, a_dict[item]))
