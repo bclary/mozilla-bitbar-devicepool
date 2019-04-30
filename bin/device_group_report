@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 
-from mozilla_bitbar_devicepool.device_group_report import DeviceGroupReport
+import sys
+try:
+  from mozilla_bitbar_devicepool.device_group_report import DeviceGroupReport
+except ImportError:
+  print("ERROR: Please install dependencies (`pip install -r requirements.txt`)!")
+  sys.exit(1)
 
 dgr = DeviceGroupReport()
 dgr.main()
