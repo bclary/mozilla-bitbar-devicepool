@@ -23,10 +23,6 @@ class DeviceGroupReport:
             root_dir = os.path.abspath(os.path.join(pathname, ".."))
             bitbar_config_path = os.path.join(root_dir, "config", "config.yml")
 
-        # pathname = os.path.dirname(sys.argv[0])
-        # root_dir = os.path.abspath(os.path.join(pathname, ".."))
-        # bitbar_config_path = os.path.join(root_dir, "config", "config.yml")
-
         with open(bitbar_config_path, "r") as stream:
             try:
                 conf_yaml = yaml.safe_load(stream)
