@@ -19,7 +19,4 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     scripts=['bin/device_group_report'],
-    # entry_points = {
-    #     'console_scripts': ['device_group_report=mozilla_bitbar_devicepool.device_group_report:main'],
-    # }
 )
