@@ -20,6 +20,7 @@ class DeviceGroupReport:
             pathname = os.path.dirname(sys.argv[0])
             root_dir = os.path.abspath(os.path.join(pathname, ".."))
             self.config_path = os.path.join(root_dir, "config", "config.yml")
+            print("Using config file at '%s'." % self.config_path)
         else:
             self.config_path = config_path
 
