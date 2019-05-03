@@ -13,17 +13,19 @@ def get_len(an_object):
 
 
 class DeviceGroupReport:
-    def __init__(self):
+    def __init__(self, config_path=None):
         self.gw_result_dict = {}
         self.tcw_result_dict = {}
-
-    def get_report_dict(self, bitbar_config_path=None):
-        if not bitbar_config_path:
+        if not config_path:
             pathname = os.path.dirname(sys.argv[0])
             root_dir = os.path.abspath(os.path.join(pathname, ".."))
-            bitbar_config_path = os.path.join(root_dir, "config", "config.yml")
+            self.config_path = os.path.join(root_dir, "config", "config.yml")
+            print("Using config file at '%s'." % self.config_path)
+        else:
+            self.config_path = config_path
 
-        with open(bitbar_config_path, "r") as stream:
+    def get_report_dict(self):
+        with open(self.config_path, "r") as stream:
             try:
                 conf_yaml = yaml.safe_load(stream)
             except yaml.YAMLError as exc:
@@ -39,7 +41,6 @@ class DeviceGroupReport:
                     self.tcw_result_dict[group] = get_len(the_item)
 
     def main(self):
-        # TODO: use argparse and take config file as param
         self.get_report_dict()
 
         for a_dict in [self.tcw_result_dict, self.gw_result_dict]:
