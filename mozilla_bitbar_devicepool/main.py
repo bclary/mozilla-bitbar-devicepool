@@ -53,7 +53,12 @@ def test_run_manager(args):
     else:
         bitbar_configpath = args.bitbar_config
 
-    configuration.configure(bitbar_configpath, filespath=args.files)
+    if args.secret_config is None:
+        secret_configpath = os.path.join(modulepath, 'config', 'secret.yml')
+    else:
+        secret_configpath = args.secret_config
+
+    configuration.configure(bitbar_configpath, secret_configpath=secret_configpath, filespath=args.files)
 
     manager = TestRunManager(wait=args.wait,
                              delete_bitbar_tests=args.delete_bitbar_tests)
@@ -70,7 +75,12 @@ def run_test(args):
     else:
         bitbar_configpath = args.bitbar_config
 
-    configuration.configure(bitbar_configpath, filespath=args.files)
+    if args.secret_config is None:
+        secret_configpath = os.path.join(modulepath, 'config', 'secret.yml')
+    else:
+        secret_configpath = args.secret_config
+
+    configuration.configure(bitbar_configpath, secret_configpath=secret_configpath, filespath=args.files)
 
     run_test_for_project(args.project_name)
 
@@ -155,6 +165,8 @@ Terminate Now
                                       help="Run test for a project then exit.")
     subparser.add_argument("--bitbar-config",
                            help="Path to Bitbar yaml configuration file.")
+    subparser.add_argument("--secret-config",
+                           help="Path to Bitbar secret yaml configuration file.")
     subparser.add_argument("--project-name",
                            required=True,
                            help="Specify a project name for which to start a test.")

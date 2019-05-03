@@ -50,13 +50,16 @@ def get_filespath():
     return FILESPATH
 
 
-def configure(bitbar_configpath, filespath=None):
+def configure(bitbar_configpath, secret_configpath, filespath=None):
     """Parse and load the configuration yaml file
     defining the Mozilla Bitbar test setup.
 
     :param bitbar_configpath: string path to the config.yml
                               containing the Mozilla Bitbar
                               configuration.
+    :param secret_configpath: string path to the secret.yml
+                              containing the Mozilla Bitbar
+                              secret configuration.
     :param filespath: string path to the files directory where
                       application and test files are kept.
     """
@@ -66,6 +69,12 @@ def configure(bitbar_configpath, filespath=None):
 
     with open(bitbar_configpath) as bitbar_configfile:
         CONFIG = yaml.load(bitbar_configfile.read())
+
+    if os.path.exists(secret_configpath):
+        with open(secret_configpath) as secret_configfile:
+            secret_yml = yaml.load(secret_configfile.read())
+        # merge with CONFIG
+        CONFIG = apply_dict_defaults(secret_yml, CONFIG)
 
     configure_device_groups()
     configure_projects()
