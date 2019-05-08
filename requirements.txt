@@ -1,3 +1,6 @@
+# install this module with `python setup.py develop`
+-e .
+
 PyYAML
 requests
 testdroid
