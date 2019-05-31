@@ -65,7 +65,7 @@ def configure(bitbar_configpath, filespath=None):
     FILESPATH=filespath
 
     with open(bitbar_configpath) as bitbar_configfile:
-        CONFIG = yaml.load(bitbar_configfile.read())
+        CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
 
     configure_device_groups()
     configure_projects()
