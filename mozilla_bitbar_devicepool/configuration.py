@@ -66,8 +66,8 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
     with open(bitbar_configpath) as bitbar_configfile:
         CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
 
-    configure_device_groups(update_bitbar)
-    configure_projects(update_bitbar)
+    configure_device_groups(update_bitbar=update_bitbar)
+    configure_projects(update_bitbar=update_bitbar)
 
 
 def configure_device_groups(update_bitbar=False):
