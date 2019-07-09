@@ -152,13 +152,13 @@ def configure_projects(update_bitbar=False):
     on the other projects if they are not already explicitly set.
 
     """
-    logger.info('configure_projects: entry')
     projects_config = CONFIG['projects']
     project_defaults = projects_config['defaults']
 
     project_total = len(projects_config)
     counter = 0
     for project_name in projects_config:
+        logger.info('configure_projects: configuring project {}'.format(project_name))
         counter += 1
         if project_name == 'defaults':
             continue
