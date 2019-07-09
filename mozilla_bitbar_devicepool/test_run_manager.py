@@ -5,6 +5,7 @@
 import logging
 import signal
 import time
+import threading
 
 import requests
 
@@ -140,8 +141,74 @@ class TestRunManager(object):
                         delete_test_run(project_id, test_run_id)
             bitbar_test_runs[project_name] = []
 
-    def run(self):
+    # TODO: add taskcluster_provisioner_id to self so we don't have to pass
+    def handle_queue(self, project_name, projects_config, taskcluster_provisioner_id):
+        project_config = projects_config[project_name]
+        device_group_name = project_config['device_group_name']
+        additional_parameters = project_config['additional_parameters']
+        worker_type = additional_parameters.get('TC_WORKER_TYPE')
 
+        try:
+            stats = self.get_bitbar_test_stats(project_name, project_config)
+        except Exception as e:
+            logger.error(
+                'Failed to get stats for project %s (%s: %s).'
+                % (project_name, e.__class__.__name__, e.message),
+                exc_info=True,
+            )
+            # continue
+            # hmm, just pass and keep going
+
+        if stats['OFFLINE'] or stats['DISABLED']:
+            logger.warning('{:10s} DISABLED {} OFFLINE {} {}'.format(
+                device_group_name,
+                stats['DISABLED'],
+                stats['OFFLINE'],
+                ', '.join(stats['OFFLINE_DEVICES'])))
+
+        if stats['FINISHED'] or stats['RUNNING'] or stats['WAITING']:
+            logger.info(
+                '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} FINISHED {} RUNNING {} WAITING {}'.format(
+                    device_group_name,
+                    stats['COUNT'],
+                    stats['IDLE'],
+                    stats['OFFLINE'],
+                    stats['DISABLED'],
+                    stats['FINISHED'],
+                    stats['RUNNING'],
+                    stats['WAITING']))
+
+        # If the test_group has available devices, then query
+        # taskcluster to see if any tasks are pending and
+        # queue up tests for the available devices.
+        bitbar_device_group = CACHE['device_groups'][device_group_name]
+        bitbar_device_group_count = bitbar_device_group['deviceCount']
+        available_devices = bitbar_device_group_count - stats['RUNNING'] - stats['WAITING']
+        if available_devices > 0:
+            pending_tasks = get_taskcluster_pending_tasks(
+                taskcluster_provisioner_id, worker_type
+            )
+            if pending_tasks > available_devices:
+                pending_tasks = available_devices
+
+            for task in range(pending_tasks):
+                try:
+                    test_run = run_test_for_project(project_name)
+                    bitbar_test_runs[project_name].append(test_run)
+
+                    logger.info('{:10s} test run {} started'.format(
+                        device_group_name,
+                        test_run['id']))
+                except Exception as e:
+                    logger.error(
+                        'Failed to create test run for group %s (%s: %s).'
+                        % (device_group_name, e.__class__.__name__, e.message),
+                        exc_info=True,
+                    )
+
+        time.sleep(self.wait)
+
+    def run(self):
         projects_config = CONFIG['projects']
         bitbar_test_runs = CACHE['test_runs']
         taskcluster_provisioner_id = projects_config['defaults']['taskcluster_provisioner_id']
@@ -152,71 +219,83 @@ class TestRunManager(object):
                     continue
 
                 project_config = projects_config[project_name]
-                device_group_name = project_config['device_group_name']
+                # device_group_name = project_config['device_group_name']
                 additional_parameters = project_config['additional_parameters']
                 worker_type = additional_parameters.get('TC_WORKER_TYPE')
                 if not worker_type:
                     # Only manage projects initiated via Taskcluster.
                     continue
 
-                try:
-                    stats = self.get_bitbar_test_stats(project_name, project_config)
-                except Exception as e:
-                    logger.error(
-                        'Failed to get stats for project %s (%s: %s).'
-                        % (project_name, e.__class__.__name__, e.message),
-                        exc_info=True,
-                    )
-                    continue
+                # TESTIZNG
+                t1 = threading.Thread(target=thread_test, args=(project_name))
+                t1.start()
 
-                if stats['OFFLINE'] or stats['DISABLED']:
-                    logger.warning('{:10s} DISABLED {} OFFLINE {} {}'.format(
-                        device_group_name,
-                        stats['DISABLED'],
-                        stats['OFFLINE'],
-                        ', '.join(stats['OFFLINE_DEVICES'])))
+                # TODO: multithread handle_queue
 
-                if stats['FINISHED'] or stats['RUNNING'] or stats['WAITING']:
-                    logger.info(
-                        '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} FINISHED {} RUNNING {} WAITING {}'.format(
-                            device_group_name,
-                            stats['COUNT'],
-                            stats['IDLE'],
-                            stats['OFFLINE'],
-                            stats['DISABLED'],
-                            stats['FINISHED'],
-                            stats['RUNNING'],
-                            stats['WAITING']))
+            # this has all been copied to handle_queue
+            #
+            #     try:
+            #         stats = self.get_bitbar_test_stats(project_name, project_config)
+            #     except Exception as e:
+            #         logger.error(
+            #             'Failed to get stats for project %s (%s: %s).'
+            #             % (project_name, e.__class__.__name__, e.message),
+            #             exc_info=True,
+            #         )
+            #         continue
 
-                # If the test_group has available devices, then query
-                # taskcluster to see if any tasks are pending and
-                # queue up tests for the available devices.
-                bitbar_device_group = CACHE['device_groups'][device_group_name]
-                bitbar_device_group_count = bitbar_device_group['deviceCount']
-                available_devices = bitbar_device_group_count - stats['RUNNING'] - stats['WAITING']
-                if available_devices > 0:
-                    pending_tasks = get_taskcluster_pending_tasks(
-                        taskcluster_provisioner_id, worker_type
-                    )
-                    if pending_tasks > available_devices:
-                        pending_tasks = available_devices
+            #     if stats['OFFLINE'] or stats['DISABLED']:
+            #         logger.warning('{:10s} DISABLED {} OFFLINE {} {}'.format(
+            #             device_group_name,
+            #             stats['DISABLED'],
+            #             stats['OFFLINE'],
+            #             ', '.join(stats['OFFLINE_DEVICES'])))
 
-                    for task in range(pending_tasks):
-                        try:
-                            test_run = run_test_for_project(project_name)
-                            bitbar_test_runs[project_name].append(test_run)
+            #     if stats['FINISHED'] or stats['RUNNING'] or stats['WAITING']:
+            #         logger.info(
+            #             '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} FINISHED {} RUNNING {} WAITING {}'.format(
+            #                 device_group_name,
+            #                 stats['COUNT'],
+            #                 stats['IDLE'],
+            #                 stats['OFFLINE'],
+            #                 stats['DISABLED'],
+            #                 stats['FINISHED'],
+            #                 stats['RUNNING'],
+            #                 stats['WAITING']))
 
-                            logger.info('{:10s} test run {} started'.format(
-                                device_group_name,
-                                test_run['id']))
-                        except Exception as e:
-                            logger.error(
-                                'Failed to create test run for group %s (%s: %s).'
-                                % (device_group_name, e.__class__.__name__, e.message),
-                                exc_info=True,
-                            )
+            #     # If the test_group has available devices, then query
+            #     # taskcluster to see if any tasks are pending and
+            #     # queue up tests for the available devices.
+            #     bitbar_device_group = CACHE['device_groups'][device_group_name]
+            #     bitbar_device_group_count = bitbar_device_group['deviceCount']
+            #     available_devices = bitbar_device_group_count - stats['RUNNING'] - stats['WAITING']
+            #     if available_devices > 0:
+            #         pending_tasks = get_taskcluster_pending_tasks(
+            #             taskcluster_provisioner_id, worker_type
+            #         )
+            #         if pending_tasks > available_devices:
+            #             pending_tasks = available_devices
 
-            time.sleep(self.wait)
+            #         for task in range(pending_tasks):
+            #             try:
+            #                 test_run = run_test_for_project(project_name)
+            #                 bitbar_test_runs[project_name].append(test_run)
+
+            #                 logger.info('{:10s} test run {} started'.format(
+            #                     device_group_name,
+            #                     test_run['id']))
+            #             except Exception as e:
+            #                 logger.error(
+            #                     'Failed to create test run for group %s (%s: %s).'
+            #                     % (device_group_name, e.__class__.__name__, e.message),
+            #                     exc_info=True,
+            #                 )
+
+            # time.sleep(self.wait)
 
         if self.state == 'TERM':
             self.abort_tests()
+
+def thread_test(project_name):
+    print("working on queue: %s" % project_name)
+    time.sleep(5)
