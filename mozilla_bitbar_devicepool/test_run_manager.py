@@ -154,8 +154,7 @@ class TestRunManager(object):
                             delete_test_run(project_id, test_run_id)
             bitbar_test_runs[project_name] = []
 
-    # TODO: add taskcluster_provisioner_id to self so we don't have to pass
-    def handle_queue(self, project_name, projects_config, taskcluster_provisioner_id):
+    def handle_queue(self, project_name, projects_config):
         while self.state == 'RUNNING':
             project_config = projects_config[project_name]
             device_group_name = project_config['device_group_name']
@@ -199,6 +198,7 @@ class TestRunManager(object):
             bitbar_device_group_count = bitbar_device_group['deviceCount']
             available_devices = bitbar_device_group_count - stats['RUNNING'] - stats['WAITING']
             bitbar_test_runs = CACHE['test_runs']
+            taskcluster_provisioner_id = projects_config['defaults']['taskcluster_provisioner_id']
             if available_devices > 0:
                 pending_tasks = get_taskcluster_pending_tasks(
                     taskcluster_provisioner_id, worker_type
@@ -242,11 +242,14 @@ class TestRunManager(object):
                 # Only manage projects initiated via Taskcluster.
                 continue
 
-            # TESTIZNG
-            t1 = threading.Thread(target=self.thread_test, args=(project_name,))
-            t1.start()
+            # TESTING
+            # t1 = threading.Thread(target=self.thread_test, args=(project_name,))
 
             # TODO: multithread handle_queue
+            t1 = threading.Thread(target=self.handle_queue, args=(project_name, projects_config,))
+
+            t1.start()
+
 
         # we need the main thread to keep running so it can handle signals
         # - https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
