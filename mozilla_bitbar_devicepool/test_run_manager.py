@@ -6,6 +6,7 @@ import logging
 import signal
 import time
 import threading
+import sys
 
 import requests
 
@@ -227,7 +228,7 @@ class TestRunManager(object):
                 continue
 
             # TESTIZNG
-            t1 = threading.Thread(target=thread_test, args=(project_name,))
+            t1 = threading.Thread(target=self.thread_test, args=(project_name,))
             t1.start()
 
             # TODO: multithread handle_queue
@@ -293,10 +294,24 @@ class TestRunManager(object):
 
             # time.sleep(self.wait)
 
+        # https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
+        while True:
+            # don't ignore signals
+            try:
+                time.sleep(0.5)
+            except KeyboardInterrupt:
+                self.state = 'STOP'
+                # allow threads see state change
+                time.sleep(5)
+                # TODO: should really join so they exit cleanly?
+                # exit
+                sys.exit(0)
+
         if self.state == 'TERM':
             self.abort_tests()
 
-def thread_test(project_name):
-    while True:
-        print("working on queue: %s" % project_name)
-        time.sleep(5)
+    def thread_test(self, project_name):
+        while self.state == 'RUNNING':
+        # while True:
+            print("working on queue: %s" % project_name)
+            time.sleep(5)
