@@ -5,6 +5,7 @@
 from __future__ import absolute_import
 
 import os
+import logging
 
 import yaml
 
@@ -43,6 +44,7 @@ BITBAR_CACHE = {
 FILESPATH = None
 CONFIG = None
 
+logger = logging.getLogger()
 
 def get_filespath():
     """Return files path where application and test files are kept.
@@ -78,6 +80,7 @@ def configure_device_groups(update_bitbar=False):
                    and object for each device group which contains
                    objects for each contained device.
     """
+    logger.info('configure_device_groups: entry')
     # Cache the bitbar device data in the configuration.
     devices_cache = BITBAR_CACHE['devices'] = {}
     for device in get_devices():
@@ -143,10 +146,14 @@ def configure_projects(update_bitbar=False):
     on the other projects if they are not already explicitly set.
 
     """
+    logger.info('configure_projects: entry')
     projects_config = CONFIG['projects']
     project_defaults = projects_config['defaults']
 
+    project_total = len(projects_config)
+    counter = 0
     for project_name in projects_config:
+        counter += 1
         if project_name == 'defaults':
             continue
 
@@ -168,6 +175,7 @@ def configure_projects(update_bitbar=False):
         framework_name = project_config['framework_name']
         BITBAR_CACHE['frameworks'][framework_name] = get_frameworks(name=framework_name)[0]
 
+        logger.info('configure_projects: {}/{} {}: configuring test file'.format(counter, project_total, project_name))
         file_name =  project_config.get('test_file')
         if file_name:
             bitbar_files = get_files(name=file_name, inputtype='test')
@@ -182,6 +190,7 @@ def configure_projects(update_bitbar=False):
                     raise Exception('Test file {} not found and not configured to update bitbar configuration!'.format(file_name))
             BITBAR_CACHE['files'][file_name] = bitbar_file
 
+        logger.info('configure_projects: {}/{} {}: configuring application file'.format(counter, project_total, project_name))
         file_name = project_config.get('application_file')
         if file_name:
             bitbar_files = get_files(name=file_name, inputtype='application')
