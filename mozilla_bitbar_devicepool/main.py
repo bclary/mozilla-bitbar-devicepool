@@ -53,6 +53,7 @@ def test_run_manager(args):
     else:
         bitbar_configpath = args.bitbar_config
 
+    configuration.load_configuration(bitbar_configpath, filespath=args.files)
     if args.do_configuration:
         configuration.configure(bitbar_configpath, filespath=args.files)
 
@@ -71,6 +72,7 @@ def run_test(args):
     else:
         bitbar_configpath = args.bitbar_config
 
+    configuration.load_configuration(bitbar_configpath, filespath=args.files)
     if args.do_configuration:
         configuration.configure(bitbar_configpath, filespath=args.files)
 

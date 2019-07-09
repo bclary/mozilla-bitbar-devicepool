@@ -49,7 +49,16 @@ def get_filespath():
     """
     return FILESPATH
 
+# TODO: add doc string
+def load_configuration(bitbar_configpath, filespath=None):
+    global CONFIG, FILESPATH
 
+    FILESPATH=filespath
+
+    with open(bitbar_configpath) as bitbar_configfile:
+        CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
+
+# TODO: remove unneeded args
 def configure(bitbar_configpath, filespath=None):
     """Parse and load the configuration yaml file
     defining the Mozilla Bitbar test setup.
@@ -60,12 +69,12 @@ def configure(bitbar_configpath, filespath=None):
     :param filespath: string path to the files directory where
                       application and test files are kept.
     """
-    global CONFIG, FILESPATH
+    # global CONFIG, FILESPATH
 
-    FILESPATH=filespath
+    # FILESPATH=filespath
 
-    with open(bitbar_configpath) as bitbar_configfile:
-        CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
+    # with open(bitbar_configpath) as bitbar_configfile:
+    #     CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
 
     configure_device_groups()
     configure_projects()
