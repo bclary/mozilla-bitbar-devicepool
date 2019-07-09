@@ -8,8 +8,6 @@ import time
 import threading
 import sys
 
-import requests
-
 from mozilla_bitbar_devicepool import configuration
 from mozilla_bitbar_devicepool.taskcluster import get_taskcluster_pending_tasks
 from mozilla_bitbar_devicepool.devices import get_offline_devices
@@ -218,8 +216,6 @@ class TestRunManager(object):
 
     def run(self):
         projects_config = CONFIG['projects']
-        bitbar_test_runs = CACHE['test_runs']
-        taskcluster_provisioner_id = projects_config['defaults']['taskcluster_provisioner_id']
 
         # while self.state == 'RUNNING':
         for project_name in projects_config:
