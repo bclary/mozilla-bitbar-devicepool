@@ -227,7 +227,7 @@ class TestRunManager(object):
                     continue
 
                 # TESTIZNG
-                t1 = threading.Thread(target=thread_test, args=(project_name))
+                t1 = threading.Thread(target=thread_test, args=(project_name,))
                 t1.start()
 
                 # TODO: multithread handle_queue
