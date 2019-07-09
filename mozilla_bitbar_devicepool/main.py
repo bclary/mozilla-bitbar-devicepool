@@ -142,8 +142,8 @@ Terminate Now
                            help="Path to Bitbar yaml configuration file.")
     subparser.add_argument('--wait', dest='wait',
                            type=int,
-                           default=60,
-                           help='Seconds to wait between checks. Defaults to 60.')
+                           default=20,
+                           help='Seconds to wait between checks. Defaults to 20.')
     subparser.add_argument('--delete-bitbar-tests', dest='delete_bitbar_tests',
                            action='store_true',
                            default=False,
