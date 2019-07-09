@@ -49,17 +49,7 @@ def get_filespath():
     """
     return FILESPATH
 
-# TODO: add doc string
-def load_configuration(bitbar_configpath, filespath=None):
-    global CONFIG, FILESPATH
-
-    FILESPATH=filespath
-
-    with open(bitbar_configpath) as bitbar_configfile:
-        CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
-
-# TODO: remove unneeded args
-def configure(bitbar_configpath, filespath=None):
+def configure(bitbar_configpath, filespath=None, do_updates=False):
     """Parse and load the configuration yaml file
     defining the Mozilla Bitbar test setup.
 
@@ -69,18 +59,18 @@ def configure(bitbar_configpath, filespath=None):
     :param filespath: string path to the files directory where
                       application and test files are kept.
     """
-    # global CONFIG, FILESPATH
+    global CONFIG, FILESPATH
 
-    # FILESPATH=filespath
+    FILESPATH=filespath
 
-    # with open(bitbar_configpath) as bitbar_configfile:
-    #     CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
+    with open(bitbar_configpath) as bitbar_configfile:
+        CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
 
-    configure_device_groups()
-    configure_projects()
+    configure_device_groups(do_updates)
+    configure_projects(do_updates)
 
 
-def configure_device_groups():
+def configure_device_groups(do_updates=False):
     """Configure device groups from configuration.
 
     :param config: parsed yaml configuration containing
@@ -133,7 +123,7 @@ def configure_device_groups():
 
         BITBAR_CACHE['device_groups'][device_group_name] = bitbar_device_group
 
-def configure_projects():
+def configure_projects(do_updates=False):
     """Configure projects from configuration.
 
     :param config: parsed yaml configuration containing
