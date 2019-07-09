@@ -86,7 +86,6 @@ def configure_device_groups(update_bitbar=False):
                    and object for each device group which contains
                    objects for each contained device.
     """
-    logger.info('configure_device_groups: entry')
     # Cache the bitbar device data in the configuration.
     devices_cache = BITBAR_CACHE['devices'] = {}
     for device in get_devices():
@@ -94,6 +93,7 @@ def configure_device_groups(update_bitbar=False):
 
     device_groups_config = CONFIG['device_groups']
     for device_group_name in device_groups_config:
+        logger.info('configuring device group {}'.format(device_group_name))
         device_group_config = device_groups_config[device_group_name]
         if device_group_config is None:
             # Handle the case where the configured device group is empty.
