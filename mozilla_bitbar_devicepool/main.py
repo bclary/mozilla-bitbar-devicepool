@@ -53,7 +53,8 @@ def test_run_manager(args):
     else:
         bitbar_configpath = args.bitbar_config
 
-    configuration.configure(bitbar_configpath, filespath=args.files)
+    if args.do_configuration:
+        configuration.configure(bitbar_configpath, filespath=args.files)
 
     manager = TestRunManager(wait=args.wait,
                              delete_bitbar_tests=args.delete_bitbar_tests)
@@ -70,7 +71,8 @@ def run_test(args):
     else:
         bitbar_configpath = args.bitbar_config
 
-    configuration.configure(bitbar_configpath, filespath=args.files)
+    if args.do_configuration:
+        configuration.configure(bitbar_configpath, filespath=args.files)
 
     run_test_for_project(args.project_name)
 
@@ -144,6 +146,9 @@ Terminate Now
                            type=int,
                            default=20,
                            help='Seconds to wait between checks. Defaults to 20.')
+    subparser.add_argument("--do-configuration",
+                           action="store_true", default=False,
+                           help="Change bitbar configuration.")
     subparser.add_argument('--delete-bitbar-tests', dest='delete_bitbar_tests',
                            action='store_true',
                            default=False,
@@ -155,6 +160,9 @@ Terminate Now
                                       help="Run test for a project then exit.")
     subparser.add_argument("--bitbar-config",
                            help="Path to Bitbar yaml configuration file.")
+    subparser.add_argument("--do-configuration",
+                           action="store_true", default=False,
+                           help="Change bitbar configuration.")
     subparser.add_argument("--project-name",
                            required=True,
                            help="Specify a project name for which to start a test.")
