@@ -50,6 +50,7 @@ class TestRunManager(object):
 
         signal.signal(signal.SIGUSR2, self.handle_signal)
         signal.signal(signal.SIGTERM, self.handle_signal)
+        signal.signal(signal.SIGINT, self.handle_signal)
 
         bitbar_projects = CACHE['projects']
         bitbar_test_runs = CACHE['test_runs']
@@ -75,7 +76,8 @@ class TestRunManager(object):
     def handle_signal(self, signalnum, frame):
         if self.state != 'RUNNING':
             return
-        if signalnum == signal.SIGUSR2:
+
+        if signalnum == signal.SIGINT or signalnum == signal.SIGUSR2:
             self.state = 'STOP'
         elif signalnum == signal.SIGTERM:
             self.state = 'TERM'
@@ -248,16 +250,8 @@ class TestRunManager(object):
         # we need the main thread to keep running so it can handle signals
         # - https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
         while self.state == 'RUNNING':
-            try:
-                time.sleep(0.5)
-            except KeyboardInterrupt:
-                # TODO: use handle_signal vs just setting this
-                self.state = 'STOP'
-                # allow threads see state change
-                time.sleep(5)
-                # TODO: should really join so they exit cleanly?
-                # exit
-                sys.exit(0)
+            # SIGINT is handled above
+            time.sleep(0.5)
 
         # TODO: how to handle this?
         if self.state == 'TERM':
