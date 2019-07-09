@@ -49,7 +49,7 @@ def get_filespath():
     """
     return FILESPATH
 
-def configure(bitbar_configpath, filespath=None, do_updates=False):
+def configure(bitbar_configpath, filespath=None, update_bitbar=False):
     """Parse and load the configuration yaml file
     defining the Mozilla Bitbar test setup.
 
@@ -70,7 +70,7 @@ def configure(bitbar_configpath, filespath=None, do_updates=False):
     configure_projects(do_updates)
 
 
-def configure_device_groups(do_updates=False):
+def configure_device_groups(update_bitbar=False):
     """Configure device groups from configuration.
 
     :param config: parsed yaml configuration containing
@@ -123,7 +123,7 @@ def configure_device_groups(do_updates=False):
 
         BITBAR_CACHE['device_groups'][device_group_name] = bitbar_device_group
 
-def configure_projects(do_updates=False):
+def configure_projects(update_bitbar=False):
     """Configure projects from configuration.
 
     :param config: parsed yaml configuration containing
