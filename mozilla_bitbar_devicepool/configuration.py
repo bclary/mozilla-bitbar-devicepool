@@ -155,7 +155,7 @@ def configure_projects(update_bitbar=False):
         project_config = projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
 
         bitbar_projects = get_projects(name=project_name)
-        if len(bitbar_projects) > 1
+        if len(bitbar_projects) > 1:
             raise Exception('project {} has {} duplicates'.format(project_name, len(bitbar_projects) - 1))
         elif len(bitbar_projects) == 1:
             bitbar_project = bitbar_projects[0]
