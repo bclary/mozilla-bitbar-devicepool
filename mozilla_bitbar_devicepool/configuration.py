@@ -177,7 +177,7 @@ def configure_projects(update_bitbar=False):
                                                os.path.join(FILESPATH, file_name))
                     bitbar_file = get_files(name=file_name, inputtype='test')[-1]
                 else:
-                    raise Exception('Test file not found and not configured to update bitbar configuration!')
+                    raise Exception('Test file {} not found and not configured to update bitbar configuration!'.format(file_name))
             BITBAR_CACHE['files'][file_name] = bitbar_file
 
         file_name = project_config.get('application_file')
@@ -191,7 +191,7 @@ def configure_projects(update_bitbar=False):
                                                       os.path.join(FILESPATH, file_name))
                     bitbar_file = get_files(name=file_name, inputtype='application')[-1]
                 else:
-                    raise Exception('Application file not found and not configured to update bitbar configuration!')
+                    raise Exception('Application file {} not found and not configured to update bitbar configuration!'.format(file_name))
             BITBAR_CACHE['files'][file_name] = bitbar_file
 
         # Sync the base project properties if they have changed.
