@@ -228,6 +228,7 @@ class TestRunManager(object):
 
     def run(self):
         projects_config = CONFIG['projects']
+        CONFIG['threads'] = []
 
         # while self.state == 'RUNNING':
         for project_name in projects_config:
@@ -245,11 +246,11 @@ class TestRunManager(object):
             # TESTING
             # t1 = threading.Thread(target=self.thread_test, args=(project_name,))
 
-            # TODO: multithread handle_queue
+            # multithread handle_queue
             t1 = threading.Thread(target=self.handle_queue, args=(project_name, projects_config,))
 
             t1.start()
-
+            CONFIG['threads'].append(t1)
 
         # we need the main thread to keep running so it can handle signals
         # - https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
