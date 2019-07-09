@@ -53,7 +53,7 @@ def test_run_manager(args):
     else:
         bitbar_configpath = args.bitbar_config
 
-    configuration.configure(bitbar_configpath, filespath=args.files, update_bitbar=args.do_updates)
+    configuration.configure(bitbar_configpath, filespath=args.files, update_bitbar=args.update_bitbar)
 
     manager = TestRunManager(wait=args.wait,
                              delete_bitbar_tests=args.delete_bitbar_tests)
