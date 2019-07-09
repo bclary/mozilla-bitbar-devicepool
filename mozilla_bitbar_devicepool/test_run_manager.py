@@ -22,6 +22,12 @@ from mozilla_bitbar_devicepool.runs import (
     run_test_for_project,
 )
 
+#
+# WARNING: not used everywhere yet!!!
+#
+# don't fire calls at bitbar, just mention you would
+TESTING = False
+
 CACHE = None
 CONFIG = None
 
