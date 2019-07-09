@@ -93,13 +93,16 @@ def configure_device_groups(update_bitbar=False):
 
         # get the current definition of the device group at bitbar.
         bitbar_device_groups = get_device_groups(displayname=device_group_name)
-        if len(bitbar_device_groups) == 0:
-            # no such device group. create it.
-            bitbar_device_group = create_device_group(device_group_name)
+        if len(bitbar_device_groups) > 1:
+            raise Exception('device group {} has {} duplicates'.format(device_group_name, len(bitbar_device_groups) - 1))
         elif len(bitbar_device_groups) == 1:
             bitbar_device_group = bitbar_device_groups[0]
         else:
-            raise Exception('device group {} has {} duplicates'.format(device_group_name, len(bitbar_device_groups) - 1))
+            # no such device group. create it.
+            if update_bitbar:
+                bitbar_device_group = create_device_group(device_group_name)
+            else:
+                raise Exception('device group {} does not exist but can not create.'.format(device_group_name))
 
         bitbar_device_group_devices = get_device_group_devices(bitbar_device_group['id'])
         bitbar_device_group_names = set([device['displayName'] for device in bitbar_device_group_devices])
@@ -113,13 +116,19 @@ def configure_device_groups(update_bitbar=False):
         add_device_ids = [ devices_cache[name]['id'] for name in add_device_names ]
 
         for device_id in delete_device_ids:
-            delete_device_from_device_group(bitbar_device_group['id'], device_id)
+            if update_bitbar:
+                delete_device_from_device_group(bitbar_device_group['id'], device_id)
+            else:
+                raise Exception('Attempting to remove device {} from group {}, but not configured to update bitbar config.'.format(device_id, bitbar_device_group['id']))
             bitbar_device_group['deviceCount'] -= 1
             if bitbar_device_group['deviceCount'] < 0:
                 raise Exception('device group {} has negative deviceCount'.format(device_group_name))
 
         if add_device_ids:
-            bitbar_device_group = add_devices_to_device_group(bitbar_device_group['id'], add_device_ids)
+            if update_bitbar:
+                bitbar_device_group = add_devices_to_device_group(bitbar_device_group['id'], add_device_ids)
+            else:
+                raise Exception('Attempting to add device(s) {} to group {}, but not configured to update bitbar config.'.format(add_device_ids, bitbar_device_group['id']))
 
         BITBAR_CACHE['device_groups'][device_group_name] = bitbar_device_group
 
@@ -163,9 +172,12 @@ def configure_projects(update_bitbar=False):
             if len(bitbar_files) > 0:
                 bitbar_file = bitbar_files[-1]
             else:
-                TESTDROID.upload_test_file(bitbar_project['id'],
-                                           os.path.join(FILESPATH, file_name))
-                bitbar_file = get_files(name=file_name, inputtype='test')[-1]
+                if update_bitbar:
+                    TESTDROID.upload_test_file(bitbar_project['id'],
+                                               os.path.join(FILESPATH, file_name))
+                    bitbar_file = get_files(name=file_name, inputtype='test')[-1]
+                else:
+                    raise Exception('Test file not found and not configured to update bitbar configuration!')
             BITBAR_CACHE['files'][file_name] = bitbar_file
 
         file_name = project_config.get('application_file')
@@ -174,9 +186,12 @@ def configure_projects(update_bitbar=False):
             if len(bitbar_files) > 0:
                 bitbar_file = bitbar_files[-1]
             else:
-                TESTDROID.upload_application_file(bitbar_project['id'],
-                                                  os.path.join(FILESPATH, file_name))
-                bitbar_file = get_files(name=file_name, inputtype='application')[-1]
+                if update_bitbar:
+                    TESTDROID.upload_application_file(bitbar_project['id'],
+                                                      os.path.join(FILESPATH, file_name))
+                    bitbar_file = get_files(name=file_name, inputtype='application')[-1]
+                else:
+                    raise Exception('Application file not found and not configured to update bitbar configuration!')
             BITBAR_CACHE['files'][file_name] = bitbar_file
 
         # Sync the base project properties if they have changed.
@@ -184,12 +199,15 @@ def configure_projects(update_bitbar=False):
             project_config['archivingItemCount'] != bitbar_project['archivingItemCount'] or
             project_config['description'] != bitbar_project['description']):
             # project basic attributes changed in config, update bitbar version.
-            bitbar_project = update_project(
-                bitbar_project['id'],
-                project_name,
-                archiving_item_count=project_config['archivingItemCount'],
-                archiving_strategy=project_config['archivingStrategy'],
-                description=project_config['description'])
+            if update_bitbar:
+                bitbar_project = update_project(
+                    bitbar_project['id'],
+                    project_name,
+                    archiving_item_count=project_config['archivingItemCount'],
+                    archiving_strategy=project_config['archivingStrategy'],
+                    description=project_config['description'])
+            else:
+                raise Exception('The remote configuration for {} differs from the local configuration, but not configured to update bitbar!'.format(project_name))
 
         additional_parameters = project_config['additional_parameters']
         if 'TC_WORKER_TYPE' in additional_parameters:
