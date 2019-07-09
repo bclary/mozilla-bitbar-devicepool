@@ -236,9 +236,9 @@ class TestRunManager(object):
 
             # TODO: multithread handle_queue
 
-        # https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
-        while True:
-            # don't ignore signals
+        # we need the main thread to keep running so it can handle signals
+        # - https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
+        while self.state == 'RUNNING':
             try:
                 time.sleep(0.5)
             except KeyboardInterrupt:
