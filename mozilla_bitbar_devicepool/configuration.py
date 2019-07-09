@@ -155,13 +155,15 @@ def configure_projects(update_bitbar=False):
         project_config = projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
 
         bitbar_projects = get_projects(name=project_name)
-        if len(bitbar_projects) == 0:
-            # no such project. create it.
-            bitbar_project = create_project(project_name, project_type=project_config['project_type'])
+        if len(bitbar_projects) > 1
+            raise Exception('project {} has {} duplicates'.format(project_name, len(bitbar_projects) - 1))
         elif len(bitbar_projects) == 1:
             bitbar_project = bitbar_projects[0]
         else:
-            raise Exception('project {} has {} duplicates'.format(project_name, len(bitbar_projects) - 1))
+            if update_bitbar:
+                bitbar_project = create_project(project_name, project_type=project_config['project_type'])
+            else:
+                raise Exception('Project {} does not exist, but not creating as not configured to update bitbar!'.format(project_name))
 
         framework_name = project_config['framework_name']
         BITBAR_CACHE['frameworks'][framework_name] = get_frameworks(name=framework_name)[0]
