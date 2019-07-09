@@ -318,3 +318,4 @@ class TestRunManager(object):
             # https://stackoverflow.com/questions/26688424/python-threads-are-printing-at-the-same-time-messing-up-the-text-output
             print("working on queue: %s" % project_name)
             time.sleep(5)
+        print("exiting: %s" % project_name)
