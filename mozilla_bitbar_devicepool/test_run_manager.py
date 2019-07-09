@@ -300,6 +300,7 @@ class TestRunManager(object):
             try:
                 time.sleep(0.5)
             except KeyboardInterrupt:
+                # TODO: use handle_signal vs just setting this
                 self.state = 'STOP'
                 # allow threads see state change
                 time.sleep(5)
