@@ -185,7 +185,7 @@ class TestRunManager(object):
         bitbar_device_group = CACHE['device_groups'][device_group_name]
         bitbar_device_group_count = bitbar_device_group['deviceCount']
         available_devices = bitbar_device_group_count - stats['RUNNING'] - stats['WAITING']
-        bitbar_test_runs = CACHE['test_runs'
+        bitbar_test_runs = CACHE['test_runs']
         if available_devices > 0:
             pending_tasks = get_taskcluster_pending_tasks(
                 taskcluster_provisioner_id, worker_type
