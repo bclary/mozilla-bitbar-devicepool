@@ -115,7 +115,10 @@ class TestRunManager(object):
                 logger.info('{:10s} test run {} finished'.format(device_group_name, test_run['id']))
                 del bitbar_test_runs[project_name][i]
                 if self.delete_bitbar_tests:
-                    delete_test_run(project_id, test_run_id)
+                    if TESTING:
+                        print('TESTING MODE: {}: Would be deleting test run {}.'.format(project_name, test_run_id))
+                    else:
+                        delete_test_run(project_id, test_run_id)
 
         stats['IDLE'] = (stats['COUNT'] -
                          stats['DISABLED'] -
@@ -141,9 +144,12 @@ class TestRunManager(object):
                     continue
                 if state is None or test_run['state'] == state:
                     logger.info('aborting test run {} {}'.format(project_name, test_run_id))
-                    abort_test_run(project_id, test_run_id)
-                    if self.delete_bitbar_tests:
-                        delete_test_run(project_id, test_run_id)
+                    if TESTING:
+                        print('TESTING MODE: {}: Would be aborting and deleting test run {}.'.format(project_name, test_run_id))
+                    else:
+                        abort_test_run(project_id, test_run_id)
+                        if self.delete_bitbar_tests:
+                            delete_test_run(project_id, test_run_id)
             bitbar_test_runs[project_name] = []
 
     # TODO: add taskcluster_provisioner_id to self so we don't have to pass
@@ -199,12 +205,15 @@ class TestRunManager(object):
 
             for task in range(pending_tasks):
                 try:
-                    test_run = run_test_for_project(project_name)
-                    bitbar_test_runs[project_name].append(test_run)
+                    if TESTING:
+                        print('TESTING MODE: {}: Would be starting test run.'.format(project_name))
+                    else:
+                        test_run = run_test_for_project(project_name)
+                        bitbar_test_runs[project_name].append(test_run)
 
-                    logger.info('{:10s} test run {} started'.format(
-                        device_group_name,
-                        test_run['id']))
+                        logger.info('{:10s} test run {} started'.format(
+                            device_group_name,
+                            test_run['id']))
                 except Exception as e:
                     logger.error(
                         'Failed to create test run for group %s (%s: %s).'
