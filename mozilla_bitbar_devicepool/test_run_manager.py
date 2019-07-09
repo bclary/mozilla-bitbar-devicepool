@@ -213,24 +213,24 @@ class TestRunManager(object):
         bitbar_test_runs = CACHE['test_runs']
         taskcluster_provisioner_id = projects_config['defaults']['taskcluster_provisioner_id']
 
-        while self.state == 'RUNNING':
-            for project_name in projects_config:
-                if project_name == 'defaults':
-                    continue
+        # while self.state == 'RUNNING':
+        for project_name in projects_config:
+            if project_name == 'defaults':
+                continue
 
-                project_config = projects_config[project_name]
-                # device_group_name = project_config['device_group_name']
-                additional_parameters = project_config['additional_parameters']
-                worker_type = additional_parameters.get('TC_WORKER_TYPE')
-                if not worker_type:
-                    # Only manage projects initiated via Taskcluster.
-                    continue
+            project_config = projects_config[project_name]
+            # device_group_name = project_config['device_group_name']
+            additional_parameters = project_config['additional_parameters']
+            worker_type = additional_parameters.get('TC_WORKER_TYPE')
+            if not worker_type:
+                # Only manage projects initiated via Taskcluster.
+                continue
 
-                # TESTIZNG
-                t1 = threading.Thread(target=thread_test, args=(project_name,))
-                t1.start()
+            # TESTIZNG
+            t1 = threading.Thread(target=thread_test, args=(project_name,))
+            t1.start()
 
-                # TODO: multithread handle_queue
+            # TODO: multithread handle_queue
 
             # this has all been copied to handle_queue
             #
@@ -297,5 +297,6 @@ class TestRunManager(object):
             self.abort_tests()
 
 def thread_test(project_name):
-    print("working on queue: %s" % project_name)
-    time.sleep(5)
+    while True:
+        print("working on queue: %s" % project_name)
+        time.sleep(5)
