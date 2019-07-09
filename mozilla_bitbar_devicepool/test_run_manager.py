@@ -308,6 +308,7 @@ class TestRunManager(object):
                 # exit
                 sys.exit(0)
 
+        # TODO: how to handle this?
         if self.state == 'TERM':
             self.abort_tests()
 
