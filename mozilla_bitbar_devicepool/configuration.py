@@ -251,7 +251,6 @@ def configure_projects(update_bitbar=False):
             'OFFLINE_DEVICES': 0,
             'OFFLINE': 0,
             'DISABLED': 0,
-            'FINISHED': 0,
             'RUNNING': 0,
             'WAITING': 0,
 }

@@ -107,7 +107,7 @@ class TestRunManager(object):
                     stats['OFFLINE'],
                     ', '.join(stats['OFFLINE_DEVICES'])))
 
-            if stats['FINISHED'] or stats['RUNNING'] or stats['WAITING']:
+            if stats['RUNNING'] or stats['WAITING']:
                 logger.info(
                     '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {}'.format(
                         device_group_name,
