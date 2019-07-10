@@ -244,10 +244,10 @@ class TestRunManager(object):
                 continue
 
             # TESTING
-            t1 = threading.Thread(target=self.thread_test, args=(project_name,))
+            # t1 = threading.Thread(target=self.thread_test, args=(project_name,))
 
             # multithread handle_queue
-            # t1 = threading.Thread(target=self.handle_queue, args=(project_name, projects_config,))
+            t1 = threading.Thread(target=self.handle_queue, args=(project_name, projects_config,))
             CONFIG['threads'].append(t1)
             t1.start()
 
