@@ -130,6 +130,8 @@ class TestRunManager(object):
                         jobs_to_start))
 
             for _task in range(jobs_to_start):
+                if self.state != 'RUNNING':
+                    break
                 try:
                     if TESTING:
                         print('TESTING MODE: {}: Would be starting test run.'.format(project_name))
@@ -146,7 +148,8 @@ class TestRunManager(object):
                         exc_info=True,
                         )
 
-            time.sleep(self.wait)
+            if self.state == 'RUNNING':
+                time.sleep(self.wait)
         logger.info("thread exiting: %s" % project_name)
 
     def process_active_runs(self):
