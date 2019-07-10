@@ -58,7 +58,7 @@ class TestRunManager(object):
         for project_name in bitbar_projects:
             bitbar_project = bitbar_projects[project_name]
             project_id = bitbar_project['id']
-            while True:
+            while self.state == 'RUNNING':
                 try:
                     bitbar_test_runs[project_name] = get_test_runs(project_id, active=True)
                     # Insert a delay to give Bitbar a break and hopefully reduce
