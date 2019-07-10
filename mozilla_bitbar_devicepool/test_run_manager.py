@@ -264,9 +264,6 @@ class TestRunManager(object):
 
     def thread_test(self, project_name):
         while self.state == 'RUNNING':
-        # while True:
-            # TODO: use screen semaphore to avoid interleaved output
-            # https://stackoverflow.com/questions/26688424/python-threads-are-printing-at-the-same-time-messing-up-the-text-output
-            print("working on queue: %s" % project_name)
+            logger.info("THREAD_TEST: working on queue: %s" % project_name)
             time.sleep(5)
-        print("exiting: %s" % project_name)
+        logger.info("THREAD_TESTexiting: %s" % project_name)
