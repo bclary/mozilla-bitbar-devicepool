@@ -54,6 +54,7 @@ class TestRunManager(object):
         bitbar_projects = CACHE['projects']
         bitbar_test_runs = CACHE['test_runs']
 
+        logger.info('test-run-manager: loading existing runs')
         for project_name in bitbar_projects:
             bitbar_project = bitbar_projects[project_name]
             project_id = bitbar_project['id']
