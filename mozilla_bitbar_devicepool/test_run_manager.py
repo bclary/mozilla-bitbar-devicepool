@@ -56,7 +56,7 @@ class TestRunManager(object):
         # bitbar_test_runs = CACHE['test_runs']
 
         logger.info('test-run-manager: loading existing runs')
-        self.process_get_active_runs()
+        self.process_active_runs()
         # for project_name in bitbar_projects:
         #     bitbar_project = bitbar_projects[project_name]
         #     project_id = bitbar_project['id']
@@ -229,7 +229,7 @@ class TestRunManager(object):
             time.sleep(self.wait)
         logger.info("thread exiting: %s" % project_name)
 
-    def process_get_active_runs(self):
+    def process_active_runs(self):
         bitbar_projects = CACHE['projects']
         bitbar_test_runs = CACHE['test_runs']
 
@@ -281,7 +281,7 @@ class TestRunManager(object):
             # SIGINT is handled above
 
             # every minute, update running jobs
-            self.process_get_active_runs()
+            self.process_active_runs()
 
             time.sleep(60)
 
