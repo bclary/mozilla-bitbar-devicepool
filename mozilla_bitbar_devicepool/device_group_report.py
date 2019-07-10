@@ -34,7 +34,7 @@ class DeviceGroupReport:
         for group in conf_yaml["device_groups"]:
             the_item = conf_yaml["device_groups"][group]
             # filter out the test queue and the builder job
-            if "-test" not in group and "-builder" not in group:
+            if "-builder" not in group:
                 if group.endswith("-2"):
                     self.gw_result_dict[group] = get_len(the_item)
                 else:

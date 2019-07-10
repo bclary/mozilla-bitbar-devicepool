@@ -141,9 +141,9 @@ device_groups:
   motog4-docker-builder:
     Docker Builder:
   motog5-perf:
+  motog5-perf-2:
     motog5-01:
     motog5-02:
-  motog5-perf-2:
     motog5-03:
     motog5-04:
     motog5-05:
@@ -188,9 +188,9 @@ device_groups:
     motog5-08:
     motog5-15:
   pixel2-unit:
+  pixel2-unit-2:
     pixel2-01:
     pixel2-02:
-  pixel2-unit-2:
     pixel2-03:
     pixel2-04:
     pixel2-05:
@@ -208,9 +208,9 @@ device_groups:
     pixel2-17:
     pixel2-18:
   pixel2-perf:
+  pixel2-perf-2:
     pixel2-19:
     pixel2-20:
-  pixel2-perf-2:
     pixel2-21:
     pixel2-22:
     pixel2-23:
