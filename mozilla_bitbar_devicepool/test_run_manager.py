@@ -107,17 +107,6 @@ class TestRunManager(object):
                     stats['OFFLINE'],
                     ', '.join(stats['OFFLINE_DEVICES'])))
 
-            if stats['RUNNING'] or stats['WAITING']:
-                logger.info(
-                    '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {}'.format(
-                        device_group_name,
-                        stats['COUNT'],
-                        stats['IDLE'],
-                        stats['OFFLINE'],
-                        stats['DISABLED'],
-                        stats['RUNNING'],
-                        stats['WAITING']))
-
             bitbar_device_group = CACHE['device_groups'][device_group_name]
             bitbar_device_group_count = bitbar_device_group['deviceCount']
             taskcluster_provisioner_id = projects_config['defaults']['taskcluster_provisioner_id']
@@ -125,9 +114,21 @@ class TestRunManager(object):
             # create enough tests to service either the pending tasks or twice the number
             # of the devices in the group (whichever is smaller).
             pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
-            pending_tasks = min(pending_tasks, 2*bitbar_device_group_count) - stats['WAITING']
+            jobs_to_start = min(pending_tasks, 2*bitbar_device_group_count) - stats['WAITING']
 
-            for _task in range(pending_tasks):
+            if stats['RUNNING'] or stats['WAITING']:
+                logger.info(
+                    '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {} PENDING {}'.format(
+                        device_group_name,
+                        stats['COUNT'],
+                        stats['IDLE'],
+                        stats['OFFLINE'],
+                        stats['DISABLED'],
+                        stats['RUNNING'],
+                        stats['WAITING'],
+                        pending_tasks))
+
+            for _task in range(jobs_to_start):
                 try:
                     if TESTING:
                         print('TESTING MODE: {}: Would be starting test run.'.format(project_name))
