@@ -144,6 +144,8 @@ class TestRunManager(object):
 
     def handle_queue(self, project_name, projects_config):
         logger.info("thread starting: %s" % project_name)
+        stats = CACHE['projects'][project_name]['stats']
+
         while self.state == 'RUNNING':
             project_config = projects_config[project_name]
             device_group_name = project_config['device_group_name']
