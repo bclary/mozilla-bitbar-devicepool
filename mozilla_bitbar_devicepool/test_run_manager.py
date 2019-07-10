@@ -169,8 +169,8 @@ class TestRunManager(object):
                     % (project_name, e.__class__.__name__, e.message),
                     exc_info=True,
                 )
-                # continue
-                # hmm, just pass and keep going
+                time.sleep(self.wait)
+                continue
 
             if stats['OFFLINE'] or stats['DISABLED']:
                 logger.warning('{:10s} DISABLED {} OFFLINE {} {}'.format(
