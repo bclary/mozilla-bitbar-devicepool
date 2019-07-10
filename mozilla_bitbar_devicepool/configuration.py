@@ -93,7 +93,7 @@ def configure_device_groups(update_bitbar=False):
 
     device_groups_config = CONFIG['device_groups']
     for device_group_name in device_groups_config:
-        logger.info('configuring device group {}'.format(device_group_name))
+        logger.info('configure_device_groups: configuring group {}'.format(device_group_name))
         device_group_config = device_groups_config[device_group_name]
         if device_group_config is None:
             # Handle the case where the configured device group is empty.
@@ -158,10 +158,14 @@ def configure_projects(update_bitbar=False):
     project_total = len(projects_config)
     counter = 0
     for project_name in projects_config:
-        logger.info('configure_projects: configuring project {}'.format(project_name))
         counter += 1
+        log_header = "configure_projects: {} ({}/{})".format(project_name, counter, project_total)
+
         if project_name == 'defaults':
+            logger.info('{}: skipping'.format(log_header))
             continue
+        else:
+            logger.info('{}: configuring...'.format(log_header))
 
         project_config = projects_config[project_name]
         # Set the default project values.
@@ -181,7 +185,7 @@ def configure_projects(update_bitbar=False):
         framework_name = project_config['framework_name']
         BITBAR_CACHE['frameworks'][framework_name] = get_frameworks(name=framework_name)[0]
 
-        logger.info('configure_projects: {}/{} {}: configuring test file'.format(counter, project_total, project_name))
+        logger.info('{}: configuring test file'.format(log_header))
         file_name =  project_config.get('test_file')
         if file_name:
             bitbar_files = get_files(name=file_name, inputtype='test')
@@ -196,7 +200,7 @@ def configure_projects(update_bitbar=False):
                     raise Exception('Test file {} not found and not configured to update bitbar configuration!'.format(file_name))
             BITBAR_CACHE['files'][file_name] = bitbar_file
 
-        logger.info('configure_projects: {}/{} {}: configuring application file'.format(counter, project_total, project_name))
+        logger.info('{}: configuring application file'.format(log_header))
         file_name = project_config.get('application_file')
         if file_name:
             bitbar_files = get_files(name=file_name, inputtype='application')
