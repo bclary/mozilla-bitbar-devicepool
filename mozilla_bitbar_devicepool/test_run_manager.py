@@ -172,7 +172,6 @@ class TestRunManager(object):
         projects_config = CONFIG['projects']
         CONFIG['threads'] = []
 
-        # while self.state == 'RUNNING':
         for project_name in projects_config:
             if project_name == 'defaults':
                 continue
@@ -187,20 +186,13 @@ class TestRunManager(object):
 
             # multithread handle_queue
             t1 = threading.Thread(target=self.handle_queue, args=(project_name, projects_config,))
-            # TODO: on signal reception, join on these threads to wait for them to quit
             CONFIG['threads'].append(t1)
             t1.start()
 
         # we need the main thread to keep running so it can handle signals
         # - https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
         while self.state == 'RUNNING':
-            # SIGINT is handled above
-
             for project_name in projects_config:
                 self.get_bitbar_test_stats(project_name, projects_config)
-
-            # every minute, update running jobs
             self.process_active_runs()
-
             time.sleep(60)
-
