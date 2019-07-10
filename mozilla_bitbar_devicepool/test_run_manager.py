@@ -155,6 +155,7 @@ class TestRunManager(object):
             bitbar_test_runs[project_name] = []
 
     def handle_queue(self, project_name, projects_config):
+        logger.info("thread starting: %s" % project_name)
         while self.state == 'RUNNING':
             project_config = projects_config[project_name]
             device_group_name = project_config['device_group_name']
@@ -224,7 +225,7 @@ class TestRunManager(object):
                             exc_info=True,
                         )
             time.sleep(self.wait)
-        logger.info("exiting: %s" % project_name)
+        logger.info("thread exiting: %s" % project_name)
 
     def run(self):
         projects_config = CONFIG['projects']
