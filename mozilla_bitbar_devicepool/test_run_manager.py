@@ -15,7 +15,6 @@ from mozilla_bitbar_devicepool.runs import (
     abort_test_run,
     delete_test_run,
     get_test_run,
-    get_test_runs,
     run_test_for_project,
     get_active_test_runs,
 )
@@ -85,7 +84,6 @@ class TestRunManager(object):
             self.state = 'TERM'
 
     def get_bitbar_test_stats(self, project_name, project_config):
-        project_id = CACHE['projects'][project_name]['id']
         device_group_name = project_config['device_group_name']
         device_group = CONFIG['device_groups'][device_group_name]
         bitbar_device_group = CACHE['device_groups'][device_group_name]
@@ -107,8 +105,7 @@ class TestRunManager(object):
         stats['RUNNING'] = 0
         stats['WAITING'] = 0
 
-        for i, test_run in enumerate(bitbar_test_runs[project_name]):
-            test_run_id = test_run['id']
+        for test_run in bitbar_test_runs[project_name]:
             test_run_state = test_run['state']
             stats[test_run_state] += 1
 
