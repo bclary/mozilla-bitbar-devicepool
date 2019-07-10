@@ -6,7 +6,6 @@ import logging
 import signal
 import time
 import threading
-import sys
 
 from mozilla_bitbar_devicepool import configuration
 from mozilla_bitbar_devicepool.taskcluster import get_taskcluster_pending_tasks
@@ -24,7 +23,7 @@ from mozilla_bitbar_devicepool.runs import (
 # WARNING: not used everywhere yet!!!
 #
 # don't fire calls at bitbar, just mention you would
-TESTING = False
+TESTING = True
 
 CACHE = None
 CONFIG = None
@@ -245,13 +244,12 @@ class TestRunManager(object):
                 continue
 
             # TESTING
-            # t1 = threading.Thread(target=self.thread_test, args=(project_name,))
+            t1 = threading.Thread(target=self.thread_test, args=(project_name,))
 
             # multithread handle_queue
-            t1 = threading.Thread(target=self.handle_queue, args=(project_name, projects_config,))
-
-            t1.start()
+            # t1 = threading.Thread(target=self.handle_queue, args=(project_name, projects_config,))
             CONFIG['threads'].append(t1)
+            t1.start()
 
         # we need the main thread to keep running so it can handle signals
         # - https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
