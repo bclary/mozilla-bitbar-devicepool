@@ -242,7 +242,7 @@ def configure_projects(update_bitbar=False):
 
         BITBAR_CACHE['projects'][project_name] = bitbar_project
 
-        device_group_name = bitbar_project['device_group_name']
+        device_group_name = project_config['device_group_name']
         device_group = BITBAR_CACHE['device_groups'][device_group_name]
 
         BITBAR_CACHE['projects'][project_name]['stats'] = {
