@@ -17,6 +17,7 @@ from mozilla_bitbar_devicepool.runs import (
     get_test_run,
     get_test_runs,
     run_test_for_project,
+    get_active_test_runs,
 )
 
 #
@@ -51,27 +52,28 @@ class TestRunManager(object):
         signal.signal(signal.SIGTERM, self.handle_signal)
         signal.signal(signal.SIGINT, self.handle_signal)
 
-        bitbar_projects = CACHE['projects']
-        bitbar_test_runs = CACHE['test_runs']
+        # bitbar_projects = CACHE['projects']
+        # bitbar_test_runs = CACHE['test_runs']
 
         logger.info('test-run-manager: loading existing runs')
-        for project_name in bitbar_projects:
-            bitbar_project = bitbar_projects[project_name]
-            project_id = bitbar_project['id']
-            while self.state == 'RUNNING':
-                try:
-                    bitbar_test_runs[project_name] = get_test_runs(project_id, active=True)
-                    # Insert a delay to give Bitbar a break and hopefully reduce
-                    # ConnectionErrors.
-                    time.sleep(5)
-                    break
-                except Exception as e:
-                    logger.error(
-                        'Failed to get tests for project %s (%s: %s).'
-                        % (project_name, e.__class__.__name__, e.message),
-                        exc_info=True,
-                    )
-                    time.sleep(self.wait)
+        self.process_get_active_runs()
+        # for project_name in bitbar_projects:
+        #     bitbar_project = bitbar_projects[project_name]
+        #     project_id = bitbar_project['id']
+        #     while self.state == 'RUNNING':
+        #         try:
+        #             bitbar_test_runs[project_name] = get_test_runs(project_id, active=True)
+        #             # Insert a delay to give Bitbar a break and hopefully reduce
+        #             # ConnectionErrors.
+        #             time.sleep(5)
+        #             break
+        #         except Exception as e:
+        #             logger.error(
+        #                 'Failed to get tests for project %s (%s: %s).'
+        #                 % (project_name, e.__class__.__name__, e.message),
+        #                 exc_info=True,
+        #             )
+        #             time.sleep(self.wait)
 
     def handle_signal(self, signalnum, frame):
         if self.state != 'RUNNING':
@@ -227,6 +229,26 @@ class TestRunManager(object):
             time.sleep(self.wait)
         logger.info("thread exiting: %s" % project_name)
 
+    def process_get_active_runs(self):
+        bitbar_projects = CACHE['projects']
+        bitbar_test_runs = CACHE['test_runs']
+
+        # init the temporary dict
+        accumulation_dict = {}
+        for project_name in bitbar_projects:
+            accumulation_dict[project_name] = []
+
+        # gather all runs per project
+        result = get_active_test_runs()
+        for item in result:
+            project_name = item['projectName']
+            accumulation_dict[project_name].append(item)
+
+        # replace current values with what we got above
+        for project_name in bitbar_projects:
+            bitbar_test_runs[project_name] = accumulation_dict[project_name]
+
+
     def run(self):
         projects_config = CONFIG['projects']
         CONFIG['threads'] = []
@@ -257,7 +279,11 @@ class TestRunManager(object):
         # - https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
         while self.state == 'RUNNING':
             # SIGINT is handled above
-            time.sleep(0.5)
+
+            # every minute, update running jobs
+            self.process_get_active_runs()
+
+            time.sleep(60)
 
         # TODO: how to handle this?
         if self.state == 'TERM':
