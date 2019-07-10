@@ -47,28 +47,8 @@ class TestRunManager(object):
         signal.signal(signal.SIGTERM, self.handle_signal)
         signal.signal(signal.SIGINT, self.handle_signal)
 
-        # bitbar_projects = CACHE['projects']
-        # bitbar_test_runs = CACHE['test_runs']
-
         logger.info('test-run-manager: loading existing runs')
         self.process_active_runs()
-        # for project_name in bitbar_projects:
-        #     bitbar_project = bitbar_projects[project_name]
-        #     project_id = bitbar_project['id']
-        #     while self.state == 'RUNNING':
-        #         try:
-        #             bitbar_test_runs[project_name] = get_test_runs(project_id, active=True)
-        #             # Insert a delay to give Bitbar a break and hopefully reduce
-        #             # ConnectionErrors.
-        #             time.sleep(5)
-        #             break
-        #         except Exception as e:
-        #             logger.error(
-        #                 'Failed to get tests for project %s (%s: %s).'
-        #                 % (project_name, e.__class__.__name__, e.message),
-        #                 exc_info=True,
-        #             )
-        #             time.sleep(self.wait)
 
     def handle_signal(self, signalnum, frame):
         if self.state != 'RUNNING':
