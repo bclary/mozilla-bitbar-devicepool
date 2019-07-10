@@ -266,4 +266,4 @@ class TestRunManager(object):
         while self.state == 'RUNNING':
             logger.info("THREAD_TEST: working on queue: %s" % project_name)
             time.sleep(5)
-        logger.info("THREAD_TESTexiting: %s" % project_name)
+        logger.info("THREAD_TEST: exiting: %s" % project_name)
