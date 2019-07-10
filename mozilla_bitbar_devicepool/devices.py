@@ -62,6 +62,9 @@ def get_device_problems(device_model=None):
 
     :param device_model: string prefix of device names to match.
     """
+    # aje: noop this function as the API call causes issues
+    return []
+
     path = 'admin/device-problems'
     payload={'limit': 0}
     data = TESTDROID.get(path=path, payload=payload)['data']
