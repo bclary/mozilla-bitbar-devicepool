@@ -249,6 +249,7 @@ class TestRunManager(object):
 
             # multithread handle_queue
             t1 = threading.Thread(target=self.handle_queue, args=(project_name, projects_config,))
+            # TODO: on signal reception, join on these threads to wait for them to quit
             CONFIG['threads'].append(t1)
             t1.start()
 
