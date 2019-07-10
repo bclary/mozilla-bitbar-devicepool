@@ -118,38 +118,32 @@ class TestRunManager(object):
                         stats['RUNNING'],
                         stats['WAITING']))
 
-            # If the test_group has available devices, then query
-            # taskcluster to see if any tasks are pending and
-            # queue up tests for the available devices.
             bitbar_device_group = CACHE['device_groups'][device_group_name]
             bitbar_device_group_count = bitbar_device_group['deviceCount']
-            available_devices = bitbar_device_group_count - stats['RUNNING'] - stats['WAITING']
-            bitbar_test_runs = CACHE['test_runs']
             taskcluster_provisioner_id = projects_config['defaults']['taskcluster_provisioner_id']
-            if available_devices > 0:
-                pending_tasks = get_taskcluster_pending_tasks(
-                    taskcluster_provisioner_id, worker_type
-                )
-                if pending_tasks > available_devices:
-                    pending_tasks = available_devices
 
-                for task in range(pending_tasks):
-                    try:
-                        if TESTING:
-                            print('TESTING MODE: {}: Would be starting test run.'.format(project_name))
-                        else:
-                            test_run = run_test_for_project(project_name)
-                            bitbar_test_runs[project_name].append(test_run)
+            # create enough tests to service either the pending tasks or twice the number
+            # of the devices in the group (whichever is smaller).
+            pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
+            pending_tasks = min(pending_tasks, 2*bitbar_device_group_count) - stats['WAITING']
 
-                            logger.info('{:10s} test run {} started'.format(
-                                device_group_name,
-                                test_run['id']))
-                    except Exception as e:
-                        logger.error(
-                            'Failed to create test run for group %s (%s: %s).'
-                            % (device_group_name, e.__class__.__name__, e.message),
-                            exc_info=True,
+            for _task in range(pending_tasks):
+                try:
+                    if TESTING:
+                        print('TESTING MODE: {}: Would be starting test run.'.format(project_name))
+                    else:
+                        test_run = run_test_for_project(project_name)
+
+                        logger.info('{:10s} test run {} started'.format(
+                            device_group_name,
+                            test_run['id']))
+                except Exception as e:
+                    logger.error(
+                        'Failed to create test run for group %s (%s: %s).'
+                        % (device_group_name, e.__class__.__name__, e.message),
+                        exc_info=True,
                         )
+
             time.sleep(self.wait)
         logger.info("thread exiting: %s" % project_name)
 
