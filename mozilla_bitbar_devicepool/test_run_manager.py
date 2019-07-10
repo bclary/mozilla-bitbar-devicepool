@@ -37,14 +37,13 @@ class TestRunManager(object):
     DevicePoolTestRunManager starts Bitbar test runs to service the
     test jobs from Taskcluster.
     """
-    def __init__(self, wait=60, delete_bitbar_tests=False):
+    def __init__(self, wait=60):
         global CACHE, CONFIG
 
         CACHE = configuration.BITBAR_CACHE
         CONFIG = configuration.CONFIG
 
         self.wait = wait
-        self.delete_bitbar_tests = delete_bitbar_tests
         self.state = 'RUNNING'
 
         signal.signal(signal.SIGUSR2, self.handle_signal)
@@ -81,7 +80,7 @@ class TestRunManager(object):
         if signalnum == signal.SIGINT or signalnum == signal.SIGUSR2:
             self.state = 'STOP'
         elif signalnum == signal.SIGTERM:
-            self.state = 'TERM'
+            self.state = 'STOP'
 
     def get_bitbar_test_stats(self, project_name, project_config):
         device_group_name = project_config['device_group_name']
@@ -113,31 +112,6 @@ class TestRunManager(object):
                          stats['DISABLED'] -
                          stats['OFFLINE'] -
                          stats['RUNNING'])
-
-    def abort_tests(self, state=None):
-        bitbar_projects = CACHE['projects']
-
-        for project_name in bitbar_projects:
-            bitbar_project = bitbar_projects[project_name]
-            project_id = bitbar_project['id']
-            bitbar_test_runs = CACHE['test_runs']
-
-            for test_run in bitbar_test_runs[project_name]:
-                test_run_id = test_run['id']
-
-                # No need to cache the result since we are removing them all.
-                test_run = get_test_run(project_id, test_run_id)
-                if test_run['state'] == 'FINISHED':
-                    continue
-                if state is None or test_run['state'] == state:
-                    logger.info('aborting test run {} {}'.format(project_name, test_run_id))
-                    if TESTING:
-                        print('TESTING MODE: {}: Would be aborting and deleting test run {}.'.format(project_name, test_run_id))
-                    else:
-                        abort_test_run(project_id, test_run_id)
-                        if self.delete_bitbar_tests:
-                            delete_test_run(project_id, test_run_id)
-            bitbar_test_runs[project_name] = []
 
     def handle_queue(self, project_name, projects_config):
         logger.info("thread starting: %s" % project_name)
@@ -258,6 +232,3 @@ class TestRunManager(object):
 
             time.sleep(60)
 
-        # TODO: how to handle this?
-        if self.state == 'TERM':
-            self.abort_tests()

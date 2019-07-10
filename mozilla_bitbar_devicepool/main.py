@@ -55,8 +55,7 @@ def test_run_manager(args):
 
     configuration.configure(bitbar_configpath, filespath=args.files, update_bitbar=args.update_bitbar)
 
-    manager = TestRunManager(wait=args.wait,
-                             delete_bitbar_tests=args.delete_bitbar_tests)
+    manager = TestRunManager(wait=args.wait)
     manager.run()
 
 
@@ -147,10 +146,6 @@ Terminate Now
     subparser.add_argument("--update-bitbar",
                            action="store_true", default=False,
                            help="Update the remote bitbar configuration to reflect the config file.")
-    subparser.add_argument('--delete-bitbar-tests', dest='delete_bitbar_tests',
-                           action='store_true',
-                           default=False,
-                           help='Delete bitbar tests after finishing. Defaults to False.')
     subparser.set_defaults(func=test_run_manager)
 
     ### run-test ###
