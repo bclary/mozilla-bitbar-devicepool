@@ -12,9 +12,6 @@ from mozilla_bitbar_devicepool.taskcluster import get_taskcluster_pending_tasks
 from mozilla_bitbar_devicepool.devices import get_offline_devices
 from mozilla_bitbar_devicepool.device_groups import get_device_group_devices
 from mozilla_bitbar_devicepool.runs import (
-    abort_test_run,
-    delete_test_run,
-    get_test_run,
     run_test_for_project,
     get_active_test_runs,
 )
@@ -23,7 +20,7 @@ from mozilla_bitbar_devicepool.runs import (
 # WARNING: not used everywhere yet!!!
 #
 # don't fire calls at bitbar, just mention you would
-TESTING = False
+TESTING = True
 
 CACHE = None
 CONFIG = None
