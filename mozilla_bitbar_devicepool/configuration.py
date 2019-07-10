@@ -241,3 +241,17 @@ def configure_projects(update_bitbar=False):
             additional_parameters['TASKCLUSTER_ACCESS_TOKEN'] = os.environ[taskcluster_access_token_name]
 
         BITBAR_CACHE['projects'][project_name] = bitbar_project
+
+        device_group_name = bitbar_project['device_group_name']
+        device_group = BITBAR_CACHE['device_groups'][device_group_name]
+
+        BITBAR_CACHE['projects'][project_name]['stats'] = {
+            'COUNT': device_group['deviceCount'],
+            'IDLE': 0,
+            'OFFLINE_DEVICES': 0,
+            'OFFLINE': 0,
+            'DISABLED': 0,
+            'FINISHED': 0,
+            'RUNNING': 0,
+            'WAITING': 0,
+}
