@@ -197,3 +197,4 @@ class TestRunManager(object):
                 self.get_bitbar_test_stats(project_name, projects_config)
             self.process_active_runs()
             time.sleep(60)
+        logger.info('main thread exiting')
