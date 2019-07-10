@@ -23,7 +23,7 @@ from mozilla_bitbar_devicepool.runs import (
 # WARNING: not used everywhere yet!!!
 #
 # don't fire calls at bitbar, just mention you would
-TESTING = True
+TESTING = False
 
 CACHE = None
 CONFIG = None
