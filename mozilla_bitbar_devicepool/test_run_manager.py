@@ -118,7 +118,7 @@ class TestRunManager(object):
 
             if stats['RUNNING'] or stats['WAITING']:
                 logger.info(
-                    '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {} PENDING {}'.format(
+                    '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {} PENDING {} STARTING {}'.format(
                         device_group_name,
                         stats['COUNT'],
                         stats['IDLE'],
@@ -126,7 +126,8 @@ class TestRunManager(object):
                         stats['DISABLED'],
                         stats['RUNNING'],
                         stats['WAITING'],
-                        pending_tasks))
+                        pending_tasks,
+                        jobs_to_start))
 
             for _task in range(jobs_to_start):
                 try:
