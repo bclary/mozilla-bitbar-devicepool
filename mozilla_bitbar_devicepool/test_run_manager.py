@@ -195,7 +195,9 @@ class TestRunManager(object):
         # - https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
         while self.state == 'RUNNING':
             for project_name in projects_config:
-                self.get_bitbar_test_stats(project_name, projects_config)
+                if project_name == 'defaults':
+                    continue
+                self.get_bitbar_test_stats(project_name, projects_config[project_name])
             self.process_active_runs()
             time.sleep(60)
         logger.info('main thread exiting')
