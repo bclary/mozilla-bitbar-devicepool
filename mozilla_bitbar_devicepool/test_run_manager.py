@@ -44,7 +44,6 @@ class TestRunManager(object):
         self.state = 'RUNNING'
 
         signal.signal(signal.SIGUSR2, self.handle_signal)
-        signal.signal(signal.SIGTERM, self.handle_signal)
         signal.signal(signal.SIGINT, self.handle_signal)
 
         logger.info('test-run-manager: loading existing runs')
@@ -56,8 +55,7 @@ class TestRunManager(object):
 
         if signalnum == signal.SIGINT or signalnum == signal.SIGUSR2:
             self.state = 'STOP'
-        elif signalnum == signal.SIGTERM:
-            self.state = 'STOP'
+
 
     def get_bitbar_test_stats(self, project_name, project_config):
         device_group_name = project_config['device_group_name']
