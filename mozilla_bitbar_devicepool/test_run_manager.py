@@ -203,6 +203,7 @@ class TestRunManager(object):
                     continue
                 with lock:
                     self.get_bitbar_test_stats(project_name, projects_config[project_name])
+                time.sleep(1)
             self.process_active_runs()
             time.sleep(60)
         logger.info('main thread exiting')
