@@ -88,6 +88,7 @@ class TestRunManager(object):
     def handle_queue(self, project_name, projects_config):
         logger.info("thread starting")
         stats = CACHE['projects'][project_name]['stats']
+        lock = CACHE['projects'][project_name]['lock']
 
         while self.state == 'RUNNING':
             project_config = projects_config[project_name]
@@ -95,34 +96,35 @@ class TestRunManager(object):
             additional_parameters = project_config['additional_parameters']
             worker_type = additional_parameters.get('TC_WORKER_TYPE')
 
-            if stats['OFFLINE'] or stats['DISABLED']:
-                logger.warning('{:10s} DISABLED {} OFFLINE {} {}'.format(
-                    device_group_name,
-                    stats['DISABLED'],
-                    stats['OFFLINE'],
-                    ', '.join(stats['OFFLINE_DEVICES'])))
-
-            bitbar_device_group = CACHE['device_groups'][device_group_name]
-            bitbar_device_group_count = bitbar_device_group['deviceCount']
-            taskcluster_provisioner_id = projects_config['defaults']['taskcluster_provisioner_id']
-
-            # create enough tests to service either the pending tasks or twice the number
-            # of the devices in the group (whichever is smaller).
-            pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
-            jobs_to_start = min(pending_tasks, bitbar_device_group_count) - stats['WAITING']
-
-            if stats['RUNNING'] or stats['WAITING']:
-                logger.info(
-                    '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {} PENDING {} STARTING {}'.format(
+            with lock:
+                if stats['OFFLINE'] or stats['DISABLED']:
+                    logger.warning('{:10s} DISABLED {} OFFLINE {} {}'.format(
                         device_group_name,
-                        stats['COUNT'],
-                        stats['IDLE'],
-                        stats['OFFLINE'],
                         stats['DISABLED'],
-                        stats['RUNNING'],
-                        stats['WAITING'],
-                        pending_tasks,
-                        jobs_to_start))
+                        stats['OFFLINE'],
+                        ', '.join(stats['OFFLINE_DEVICES'])))
+
+                bitbar_device_group = CACHE['device_groups'][device_group_name]
+                bitbar_device_group_count = bitbar_device_group['deviceCount']
+                taskcluster_provisioner_id = projects_config['defaults']['taskcluster_provisioner_id']
+
+                # create enough tests to service either the pending tasks or twice the number
+                # of the devices in the group (whichever is smaller).
+                pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
+                jobs_to_start = min(pending_tasks, bitbar_device_group_count) - stats['WAITING']
+
+                if stats['RUNNING'] or stats['WAITING']:
+                    logger.info(
+                        '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {} PENDING {} STARTING {}'.format(
+                            device_group_name,
+                            stats['COUNT'],
+                            stats['IDLE'],
+                            stats['OFFLINE'],
+                            stats['DISABLED'],
+                            stats['RUNNING'],
+                            stats['WAITING'],
+                            pending_tasks,
+                            jobs_to_start))
 
             for _task in range(jobs_to_start):
                 if self.state != 'RUNNING':
@@ -194,11 +196,13 @@ class TestRunManager(object):
 
         # we need the main thread to keep running so it can handle signals
         # - https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
+        lock = CACHE['projects'][project_name]['lock']
         while self.state == 'RUNNING':
             for project_name in projects_config:
                 if project_name == 'defaults':
                     continue
-                self.get_bitbar_test_stats(project_name, projects_config[project_name])
+                with lock:
+                    self.get_bitbar_test_stats(project_name, projects_config[project_name])
             self.process_active_runs()
             time.sleep(60)
         logger.info('main thread exiting')

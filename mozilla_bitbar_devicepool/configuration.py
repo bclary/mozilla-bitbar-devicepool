@@ -5,6 +5,7 @@
 from __future__ import absolute_import
 
 import os
+import threading
 import time
 
 import yaml
@@ -241,6 +242,7 @@ def configure_projects(update_bitbar=False):
             additional_parameters['TASKCLUSTER_ACCESS_TOKEN'] = os.environ[taskcluster_access_token_name]
 
         BITBAR_CACHE['projects'][project_name] = bitbar_project
+        BITBAR_CACHE['projects'][project_name]['lock'] = threading.Lock()
 
         device_group_name = project_config['device_group_name']
         device_group = BITBAR_CACHE['device_groups'][device_group_name]
