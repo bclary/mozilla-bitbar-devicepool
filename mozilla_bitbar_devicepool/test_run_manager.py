@@ -112,6 +112,8 @@ class TestRunManager(object):
                 # of the devices in the group (whichever is smaller).
                 pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
                 jobs_to_start = min(pending_tasks, bitbar_device_group_count - stats['WAITING']) 
+                if jobs_to_start < 0:
+                    jobs_to_start = 0
 
                 if stats['RUNNING'] or stats['WAITING']:
                     logger.info(
