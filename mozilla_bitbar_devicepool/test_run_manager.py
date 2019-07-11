@@ -2,12 +2,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import logging
 import signal
 import time
 import threading
 
-from mozilla_bitbar_devicepool import configuration
+from mozilla_bitbar_devicepool import configuration, logger
 from mozilla_bitbar_devicepool.taskcluster import get_taskcluster_pending_tasks
 from mozilla_bitbar_devicepool.devices import get_offline_devices
 from mozilla_bitbar_devicepool.device_groups import get_device_group_devices
@@ -24,8 +23,6 @@ TESTING = False
 
 CACHE = None
 CONFIG = None
-
-logger = logging.getLogger()
 
 class TestRunManager(object):
     """Model state and control from Apache's example:
@@ -89,7 +86,7 @@ class TestRunManager(object):
                          stats['RUNNING'])
 
     def handle_queue(self, project_name, projects_config):
-        logger.info("thread starting: %s" % project_name)
+        logger.info("thread starting")
         stats = CACHE['projects'][project_name]['stats']
 
         while self.state == 'RUNNING':
@@ -132,7 +129,7 @@ class TestRunManager(object):
                     break
                 try:
                     if TESTING:
-                        print('TESTING MODE: {}: Would be starting test run.'.format(project_name))
+                        logger.info('TESTING MODE: Would be starting test run.')
                     else:
                         test_run = run_test_for_project(project_name)
 
@@ -148,7 +145,7 @@ class TestRunManager(object):
 
             if self.state == 'RUNNING':
                 time.sleep(self.wait)
-        logger.info("thread exiting: %s" % project_name)
+        logger.info("thread exiting")
 
     def process_active_runs(self):
         bitbar_projects = CACHE['projects']
@@ -182,12 +179,14 @@ class TestRunManager(object):
             # device_group_name = project_config['device_group_name']
             additional_parameters = project_config['additional_parameters']
             worker_type = additional_parameters.get('TC_WORKER_TYPE')
+
             if not worker_type:
                 # Only manage projects initiated via Taskcluster.
                 continue
 
             # multithread handle_queue
-            t1 = threading.Thread(target=self.handle_queue, args=(project_name, projects_config,))
+            # TODO: should name be project_name or device group name?
+            t1 = threading.Thread(target=self.handle_queue, name=project_name, args=(project_name, projects_config,))
             CONFIG['threads'].append(t1)
             t1.start()
 

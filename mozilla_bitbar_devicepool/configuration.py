@@ -5,7 +5,6 @@
 from __future__ import absolute_import
 
 import os
-import logging
 import time
 
 import yaml
@@ -13,6 +12,7 @@ import yaml
 from mozilla_bitbar_devicepool import (
     TESTDROID,
     apply_dict_defaults,
+    logger
 )
 
 from mozilla_bitbar_devicepool.devices import get_devices
@@ -44,8 +44,6 @@ BITBAR_CACHE = {
 
 FILESPATH = None
 CONFIG = None
-
-logger = logging.getLogger()
 
 def get_filespath():
     """Return files path where application and test files are kept.

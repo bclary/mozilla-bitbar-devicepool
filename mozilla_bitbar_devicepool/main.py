@@ -5,7 +5,6 @@
 from __future__ import absolute_import
 
 import argparse
-import logging
 import os
 import sys
 import zipfile
@@ -163,7 +162,7 @@ Terminate Now
 
     args = parser.parse_args()
 
-    logger.setLevel(getattr(logging, args.log_level))
+    logger.setLevel(level=args.log_level)
 
     args.func(args)
 

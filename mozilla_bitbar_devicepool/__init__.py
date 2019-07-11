@@ -7,20 +7,18 @@
 
 from __future__ import absolute_import
 
+# we need to run basicConfig before any other module does
+import logging
+# TODO: put %(asctime)s back in?
+logging.basicConfig(format='%(threadName)s/%(levelname)s: %(message)s')
+
 import copy
 import os
-import logging
 import urlparse
-
 import requests
-
 from testdroid import Testdroid
 
-
 modulepath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
-
 logger = logging.getLogger()
 
 TESTDROID_URL=os.environ.get('TESTDROID_URL')
