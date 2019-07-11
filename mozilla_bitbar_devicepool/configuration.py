@@ -226,6 +226,9 @@ def configure_projects(update_bitbar=False):
                     archiving_strategy=project_config['archivingStrategy'],
                     description=project_config['description'])
             else:
+                logger.error('archivingStrategy: pc: "{}" bb: "{}"'.format(project_config['archivingStrategy'], bitbar_project['archivingStrategy']))
+                logger.error('archivingItemCount: pc: "{}" bb: "{}"'.format(project_config['archivingItemCount'], bitbar_project['archivingItemCount']))
+                logger.error('description: pc: "{}" bb: "{}"'.format(project_config['description'], bitbar_project['description']))
                 raise Exception('The remote configuration for {} differs from the local configuration, but not configured to update bitbar!'.format(project_name))
 
         additional_parameters = project_config['additional_parameters']
