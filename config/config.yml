@@ -7,7 +7,7 @@ projects:
     timeout: 0
     scheduler: SINGLE
     archivingStrategy: DAYS
-    archivingItemCount: 365
+    archivingItemCount: 7
     taskcluster_provisioner_id: proj-autophone
     additional_parameters:
       bitbar_cloud_url: https://mozilla.testdroid.com
