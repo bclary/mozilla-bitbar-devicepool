@@ -188,6 +188,10 @@ class TestRunManager(object):
                 # Only manage projects initiated via Taskcluster.
                 continue
 
+            # prepopulate stats
+            self.get_bitbar_test_stats(project_name, projects_config[project_name])
+            time.sleep(1)
+
             # multithread handle_queue
             # TODO: should name be project_name or device group name?
             t1 = threading.Thread(target=self.handle_queue, name=project_name, args=(project_name, projects_config,))
@@ -198,6 +202,7 @@ class TestRunManager(object):
         # - https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
         lock = CACHE['projects'][project_name]['lock']
         while self.state == 'RUNNING':
+            time.sleep(60)
             for project_name in projects_config:
                 if project_name == 'defaults':
                     continue
@@ -205,5 +210,4 @@ class TestRunManager(object):
                     self.get_bitbar_test_stats(project_name, projects_config[project_name])
                 time.sleep(1)
             self.process_active_runs()
-            time.sleep(60)
         logger.info('main thread exiting')
