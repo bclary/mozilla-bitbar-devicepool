@@ -160,7 +160,9 @@ class TestRunManager(object):
         result = get_active_test_runs()
         for item in result:
             project_name = item['projectName']
-            accumulation_dict[project_name].append(item)
+            # only accumulate for projects in our config
+            if project_name in bitbar_projects:
+                accumulation_dict[project_name].append(item)
 
         # replace current values with what we got above
         for project_name in bitbar_projects:
