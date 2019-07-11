@@ -162,8 +162,7 @@ def configure_projects(update_bitbar=False):
         if project_name == 'defaults':
             logger.info('{}: skipping'.format(log_header))
             continue
-        else:
-            logger.info('{}: configuring...'.format(log_header))
+        logger.info('{}: configuring...'.format(log_header))
 
         project_config = projects_config[project_name]
         # Set the default project values.
