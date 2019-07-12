@@ -13,54 +13,54 @@ projects:
       bitbar_cloud_url: https://mozilla.testdroid.com
       DOCKER_IMAGE_VERSION: 20190213T123836
       TC_WORKER_CONF: gecko-t-ap
-  mozilla-unittest-p2:
-    device_group_name: pixel2-unit
-    device_model: pixel2
-    framework_name: mozilla-usb
-    description: Mozilla Unit tests for Pixel2
-    additional_parameters:
-      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-unit-p2
-      TC_WORKER_TYPE: gecko-t-ap-unit-p2
-  mozilla-perftest-p2:
-    device_group_name: pixel2-perf
-    device_model: pixel2
-    framework_name: mozilla-usb
-    description: Mozilla Performance tests for Pixel2
-    additional_parameters:
-      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-perf-p2
-      TC_WORKER_TYPE: gecko-t-ap-perf-p2
-  mozilla-perftest-g5:
-    device_group_name: motog5-perf
-    device_model: motog5
-    framework_name: mozilla-usb
-    description: Mozilla Performance tests for MotoG5
-    additional_parameters:
-      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-perf-g5
-      TC_WORKER_TYPE: gecko-t-ap-perf-g5
-  mozilla-batttest-p2:
-    device_group_name: pixel2-batt
-    device_model: pixel2
-    framework_name: mozilla-tcp
-    description: Mozilla Battery tests for Pixel2
-    additional_parameters:
-      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-batt-p2
-      TC_WORKER_TYPE: gecko-t-ap-batt-p2
-  mozilla-batttest-g5:
-    device_group_name: motog5-batt
-    device_model: motog5
-    framework_name: mozilla-tcp
-    description: Mozilla Battery tests for MotoG5
-    additional_parameters:
-      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-batt-g5
-      TC_WORKER_TYPE: gecko-t-ap-batt-g5
-  mozilla-unittest-g5:
-    device_group_name: motog5-unit
-    device_model: motog5
-    framework_name: mozilla-usb
-    description: Mozilla Unit tests for MotoG5
-    additional_parameters:
-      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-unit-g5
-      TC_WORKER_TYPE: gecko-t-ap-unit-g5
+  # mozilla-unittest-p2:
+  #   device_group_name: pixel2-unit
+  #   device_model: pixel2
+  #   framework_name: mozilla-usb
+  #   description: Mozilla Unit tests for Pixel2
+  #   additional_parameters:
+  #     TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-unit-p2
+  #     TC_WORKER_TYPE: gecko-t-ap-unit-p2
+  # mozilla-perftest-p2:
+  #   device_group_name: pixel2-perf
+  #   device_model: pixel2
+  #   framework_name: mozilla-usb
+  #   description: Mozilla Performance tests for Pixel2
+  #   additional_parameters:
+  #     TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-perf-p2
+  #     TC_WORKER_TYPE: gecko-t-ap-perf-p2
+  # mozilla-perftest-g5:
+  #   device_group_name: motog5-perf
+  #   device_model: motog5
+  #   framework_name: mozilla-usb
+  #   description: Mozilla Performance tests for MotoG5
+  #   additional_parameters:
+  #     TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-perf-g5
+  #     TC_WORKER_TYPE: gecko-t-ap-perf-g5
+  # mozilla-batttest-p2:
+  #   device_group_name: pixel2-batt
+  #   device_model: pixel2
+  #   framework_name: mozilla-tcp
+  #   description: Mozilla Battery tests for Pixel2
+  #   additional_parameters:
+  #     TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-batt-p2
+  #     TC_WORKER_TYPE: gecko-t-ap-batt-p2
+  # mozilla-batttest-g5:
+  #   device_group_name: motog5-batt
+  #   device_model: motog5
+  #   framework_name: mozilla-tcp
+  #   description: Mozilla Battery tests for MotoG5
+  #   additional_parameters:
+  #     TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-batt-g5
+  #     TC_WORKER_TYPE: gecko-t-ap-batt-g5
+  # mozilla-unittest-g5:
+  #   device_group_name: motog5-unit
+  #   device_model: motog5
+  #   framework_name: mozilla-usb
+  #   description: Mozilla Unit tests for MotoG5
+  #   additional_parameters:
+  #     TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-unit-g5
+  #     TC_WORKER_TYPE: gecko-t-ap-unit-g5
   # generic-worker
   mozilla-gw-unittest-p2:
     device_group_name: pixel2-unit-2
