@@ -117,15 +117,15 @@ projects:
       TC_WORKER_TYPE: gecko-t-bitbar-gw-unit-g5
       DOCKER_IMAGE_VERSION: 20190711T162430
   # used for building new docker images
-  mozilla-docker-build:
-    device_group_name: motog4-docker-builder
-    device_model: motog4
-    framework_name: Docker image build
-    description: Mozilla Docker image build
-    test_file: mozilla-docker-20190528T112747.zip
-    application_file: aerickson-Testdroid.apk
-    additional_parameters:
-      DOCKER_IMAGE_VERSION: 20190528T112747
+  # mozilla-docker-build:
+  #   device_group_name: motog4-docker-builder
+  #   device_model: motog4
+  #   framework_name: Docker image build
+  #   description: Mozilla Docker image build
+  #   test_file: mozilla-docker-20190528T112747.zip
+  #   application_file: aerickson-Testdroid.apk
+  #   additional_parameters:
+  #     DOCKER_IMAGE_VERSION: 20190528T112747
   # used for testing new docker images
   #mozilla-docker-image-test:
   #  device_group_name: motog5-test
