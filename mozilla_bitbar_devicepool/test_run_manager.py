@@ -70,17 +70,6 @@ class TestRunManager(object):
         stats['OFFLINE_DEVICES'] = offline_devices
         stats['OFFLINE'] = len(offline_devices)
         stats['DISABLED'] = device_group_count - len(enabled_devices)
-        stats['RUNNING'] = 0
-        stats['WAITING'] = 0
-
-        for test_run in bitbar_test_runs[project_name]:
-            test_run_state = test_run['state']
-            stats[test_run_state] += 1
-
-        stats['IDLE'] = (stats['COUNT'] -
-                         stats['DISABLED'] -
-                         stats['OFFLINE'] -
-                         stats['RUNNING'])
 
     def handle_queue(self, project_name, projects_config):
         logger.info("thread starting")
@@ -108,7 +97,7 @@ class TestRunManager(object):
                 # create enough tests to service either the pending tasks or twice the number
                 # of the devices in the group (whichever is smaller).
                 pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
-                jobs_to_start = min(pending_tasks, bitbar_device_group_count/2 - stats['WAITING']) 
+                jobs_to_start = min(pending_tasks, stats['IDLE'] - stats['WAITING']) 
                 if jobs_to_start < 0:
                     jobs_to_start = 0
 
@@ -176,9 +165,23 @@ class TestRunManager(object):
 
         # replace current values with what we got above
         for project_name in bitbar_projects:
+            stats = CACHE['projects'][project_name]['stats']
             lock = CACHE['projects'][project_name]['lock']
             with lock:
                 bitbar_test_runs[project_name] = accumulation_dict[project_name]
+
+                stats['RUNNING'] = 0
+                stats['WAITING'] = 0
+                for test_run in bitbar_test_runs[project_name]:
+                    test_run_state = test_run['state']
+                    stats[test_run_state] += 1
+
+                stats['IDLE'] = (stats['COUNT'] -
+                                stats['DISABLED'] -
+                                stats['OFFLINE'] -
+                                stats['RUNNING'])
+                if stats['IDLE'] < 0:
+                    stats['IDLE'] = 0
 
     def run(self):
         projects_config = CONFIG['projects']
