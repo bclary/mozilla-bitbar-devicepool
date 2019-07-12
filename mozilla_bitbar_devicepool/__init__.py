@@ -9,8 +9,9 @@ from __future__ import absolute_import
 
 # we need to run basicConfig before any other module does
 import logging
+
 # TODO: put %(asctime)s back in?
-logging.basicConfig(format='%(threadName)s/%(levelname)s: %(message)s')
+logging.basicConfig(format='%(threadName)22s %(levelname)-8s %(message)s')
 
 import copy
 import os
