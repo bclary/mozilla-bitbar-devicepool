@@ -255,6 +255,4 @@ def configure_projects(update_bitbar=False):
             'DISABLED': 0,
             'RUNNING': 0,
             'WAITING': 0,
-            'PENDING': 0,
-            'JOBS_TO_START': 0,
 }
