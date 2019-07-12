@@ -97,7 +97,7 @@ class TestRunManager(object):
                 # create enough tests to service either the pending tasks or twice the number
                 # of the devices in the group (whichever is smaller).
                 pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
-                jobs_to_start = min(pending_tasks, stats['IDLE'] - stats['WAITING']) 
+                jobs_to_start = min(pending_tasks, stats['IDLE'] - stats['WAITING'] + 2)
                 if jobs_to_start < 0:
                     jobs_to_start = 0
 
