@@ -218,14 +218,20 @@ class TestRunManager(object):
 
         # we need the main thread to keep running so it can handle signals
         # - https://www.g-loaded.eu/2016/11/24/how-to-terminate-running-python-threads-using-signals/
-        lock = CACHE['projects'][project_name]['lock']
         while self.state == 'RUNNING':
+            waiting_total = 0
+            running_total = 0
             time.sleep(60)
             logger.info('getting stats for all projects')
             for project_name in projects_config:
                 if project_name == 'defaults':
                     continue
+                lock = CACHE['projects'][project_name]['lock']
+                stats = CACHE['projects'][project_name]['stats']
+                waiting_total += stats['WAITING']
+                running_total += stats['RUNNING']
                 with lock:
                     self.get_bitbar_test_stats(project_name, projects_config[project_name])
                 time.sleep(1)
+            logger.info('WAITING_TOTAL {} RUNNING_TOTAL {}'.format(waiting_total, running_total))
         logger.info('main thread exiting')
