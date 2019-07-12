@@ -144,7 +144,7 @@ class TestRunManager(object):
         while self.state == 'RUNNING':
             logger.info('getting active runs')
             self.process_active_runs()
-            time.sleep(20)
+            time.sleep(10)
 
     def process_active_runs(self):
         bitbar_projects = CACHE['projects']
