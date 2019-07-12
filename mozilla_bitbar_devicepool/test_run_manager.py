@@ -136,6 +136,9 @@ class TestRunManager(object):
                         logger.info('TESTING MODE: Would be starting test run.')
                     else:
                         test_run = run_test_for_project(project_name)
+                        # increment so we don't start too many jobs before main thread updates stats
+                        with lock:
+                            stats['WAITING'] += 1
 
                         logger.info('{:10s} test run {} started'.format(
                             device_group_name,
