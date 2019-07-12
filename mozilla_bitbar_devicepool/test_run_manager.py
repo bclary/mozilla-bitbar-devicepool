@@ -208,6 +208,7 @@ class TestRunManager(object):
         lock = CACHE['projects'][project_name]['lock']
         while self.state == 'RUNNING':
             time.sleep(60)
+            logger.info('getting stats for all projects')
             for project_name in projects_config:
                 if project_name == 'defaults':
                     continue
