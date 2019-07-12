@@ -71,6 +71,19 @@ class TestRunManager(object):
         stats['OFFLINE'] = len(offline_devices)
         stats['DISABLED'] = device_group_count - len(enabled_devices)
 
+        if stats['RUNNING'] + stats['WAITING'] + stats['PENDING'] + stats['JOBS_TO_START'] > 0:
+            logger.info(
+                '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {} PENDING {} STARTING {}'.format(
+                    device_group_name,
+                    stats['COUNT'],
+                    stats['IDLE'],
+                    stats['OFFLINE'],
+                    stats['DISABLED'],
+                    stats['RUNNING'],
+                    stats['WAITING'],
+                    stats['PENDING'],
+                    stats['JOBS_TO_START']))
+
     def handle_queue(self, project_name, projects_config):
         logger.info("thread starting")
         stats = CACHE['projects'][project_name]['stats']
@@ -100,31 +113,20 @@ class TestRunManager(object):
                 jobs_to_start = min(pending_tasks, stats['IDLE'] - stats['WAITING']) 
                 if jobs_to_start < 0:
                     jobs_to_start = 0
-
-                if stats['RUNNING'] or stats['WAITING']:
-                    logger.info(
-                        '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {} PENDING {} STARTING {}'.format(
-                            device_group_name,
-                            stats['COUNT'],
-                            stats['IDLE'],
-                            stats['OFFLINE'],
-                            stats['DISABLED'],
-                            stats['RUNNING'],
-                            stats['WAITING'],
-                            pending_tasks,
-                            jobs_to_start))
+                stats['PENDING'] = pending_tasks
+                stats['JOBS_TO_START'] = jobs_to_start
 
             for _task in range(jobs_to_start):
                 if self.state != 'RUNNING':
                     break
                 try:
+                    # increment so we don't start too many jobs before main thread updates stats
+                    with lock:
+                        stats['WAITING'] += 1
                     if TESTING:
                         logger.info('TESTING MODE: Would be starting test run.')
                     else:
                         test_run = run_test_for_project(project_name)
-                        # increment so we don't start too many jobs before main thread updates stats
-                        with lock:
-                            stats['WAITING'] += 1
 
                         logger.info('{:10s} test run {} started'.format(
                             device_group_name,
