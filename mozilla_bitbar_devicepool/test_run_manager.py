@@ -43,9 +43,6 @@ class TestRunManager(object):
         signal.signal(signal.SIGUSR2, self.handle_signal)
         signal.signal(signal.SIGINT, self.handle_signal)
 
-        logger.info('test-run-manager: loading existing runs')
-        self.process_active_runs()
-
     def handle_signal(self, signalnum, frame):
         if self.state != 'RUNNING':
             return
@@ -154,6 +151,12 @@ class TestRunManager(object):
                 time.sleep(self.wait)
         logger.info("thread exiting")
 
+    def thread_active_jobs(self):
+        while self.state == 'RUNNING':
+            logger.info('getting active runs')
+            self.process_active_runs()
+            time.sleep(20)
+
     def process_active_runs(self):
         bitbar_projects = CACHE['projects']
         bitbar_test_runs = CACHE['test_runs']
@@ -173,12 +176,19 @@ class TestRunManager(object):
 
         # replace current values with what we got above
         for project_name in bitbar_projects:
-            bitbar_test_runs[project_name] = accumulation_dict[project_name]
-
+            lock = CACHE['projects'][project_name]['lock']
+            with lock:
+                bitbar_test_runs[project_name] = accumulation_dict[project_name]
 
     def run(self):
         projects_config = CONFIG['projects']
         CONFIG['threads'] = []
+
+        active_job_thread = threading.Thread(target=self.thread_active_jobs, name='active_jobs', args=())
+        logger.info('test-run-manager: loading existing runs')
+        active_job_thread.start()
+        CONFIG['threads'].append(active_job_thread)
+        time.sleep(2)
 
         for project_name in projects_config:
             if project_name == 'defaults':
@@ -215,5 +225,4 @@ class TestRunManager(object):
                 with lock:
                     self.get_bitbar_test_stats(project_name, projects_config[project_name])
                 time.sleep(1)
-            self.process_active_runs()
         logger.info('main thread exiting')
