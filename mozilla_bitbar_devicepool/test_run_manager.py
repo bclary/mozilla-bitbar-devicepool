@@ -92,7 +92,7 @@ class TestRunManager(object):
 
                 taskcluster_provisioner_id = projects_config['defaults']['taskcluster_provisioner_id']
 
-                # create enough tests to service either the pending tasks or the number idle
+                # create enough tests to service either the pending tasks or the number of idle
                 # devices which do not already have a waiting test + a small logarithmic fudge
                 # term based on the number of pending tasks (whichever is smaller).
                 pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
