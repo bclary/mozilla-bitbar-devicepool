@@ -62,6 +62,7 @@ def get_device_problems(device_model=None):
 
     :param device_model: string prefix of device names to match.
     """
+
     path = 'admin/device-problems'
     payload={'limit': 0}
     data = TESTDROID.get(path=path, payload=payload)['data']

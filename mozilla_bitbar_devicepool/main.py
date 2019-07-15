@@ -5,7 +5,6 @@
 from __future__ import absolute_import
 
 import argparse
-import logging
 import os
 import sys
 import zipfile
@@ -53,10 +52,9 @@ def test_run_manager(args):
     else:
         bitbar_configpath = args.bitbar_config
 
-    configuration.configure(bitbar_configpath, filespath=args.files)
+    configuration.configure(bitbar_configpath, filespath=args.files, update_bitbar=args.update_bitbar)
 
-    manager = TestRunManager(wait=args.wait,
-                             delete_bitbar_tests=args.delete_bitbar_tests)
+    manager = TestRunManager(wait=args.wait)
     manager.run()
 
 
@@ -70,7 +68,7 @@ def run_test(args):
     else:
         bitbar_configpath = args.bitbar_config
 
-    configuration.configure(bitbar_configpath, filespath=args.files)
+    configuration.configure(bitbar_configpath, filespath=args.files, update_bitbar=args.update_bitbar)
 
     run_test_for_project(args.project_name)
 
@@ -144,10 +142,9 @@ Terminate Now
                            type=int,
                            default=20,
                            help='Seconds to wait between checks. Defaults to 20.')
-    subparser.add_argument('--delete-bitbar-tests', dest='delete_bitbar_tests',
-                           action='store_true',
-                           default=False,
-                           help='Delete bitbar tests after finishing. Defaults to False.')
+    subparser.add_argument("--update-bitbar",
+                           action="store_true", default=False,
+                           help="Update the remote bitbar configuration to reflect the config file.")
     subparser.set_defaults(func=test_run_manager)
 
     ### run-test ###
@@ -155,6 +152,9 @@ Terminate Now
                                       help="Run test for a project then exit.")
     subparser.add_argument("--bitbar-config",
                            help="Path to Bitbar yaml configuration file.")
+    subparser.add_argument("--update-bitbar",
+                           action="store_true", default=False,
+                           help="Update the remote bitbar configuration to reflect the config file.")
     subparser.add_argument("--project-name",
                            required=True,
                            help="Specify a project name for which to start a test.")
@@ -162,7 +162,7 @@ Terminate Now
 
     args = parser.parse_args()
 
-    logger.setLevel(getattr(logging, args.log_level))
+    logger.setLevel(level=args.log_level)
 
     args.func(args)
 
