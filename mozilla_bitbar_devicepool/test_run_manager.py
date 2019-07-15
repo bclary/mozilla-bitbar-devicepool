@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import math
 import signal
 import time
 import threading
@@ -55,7 +56,6 @@ class TestRunManager(object):
         device_group_name = project_config['device_group_name']
         device_group = CONFIG['device_groups'][device_group_name]
         bitbar_device_group = CACHE['device_groups'][device_group_name]
-        bitbar_test_runs = CACHE['test_runs']
         stats = CACHE['projects'][project_name]['stats']
         device_group_count = bitbar_device_group['deviceCount']
 
@@ -90,14 +90,14 @@ class TestRunManager(object):
                         stats['OFFLINE'],
                         ', '.join(stats['OFFLINE_DEVICES'])))
 
-                bitbar_device_group = CACHE['device_groups'][device_group_name]
-                bitbar_device_group_count = bitbar_device_group['deviceCount']
                 taskcluster_provisioner_id = projects_config['defaults']['taskcluster_provisioner_id']
 
-                # create enough tests to service either the pending tasks or twice the number
-                # of the devices in the group (whichever is smaller).
+                # create enough tests to service either the pending tasks or the number idle
+                # devices which do not already have a waiting test + a small logarithmic fudge
+                # term based on the number of pending tasks (whichever is smaller).
                 pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
-                jobs_to_start = min(pending_tasks, stats['IDLE'] - stats['WAITING'] + 2)
+                jobs_to_start = min(pending_tasks,
+                                    stats['IDLE'] - stats['WAITING'] + 1 + int(math.log10(1 + pending_tasks)))
                 if jobs_to_start < 0:
                     jobs_to_start = 0
 
