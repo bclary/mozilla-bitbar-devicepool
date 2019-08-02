@@ -73,16 +73,16 @@ projects:
   #   additional_parameters:
   #     DOCKER_IMAGE_VERSION: 20190528T112747
   # used for testing new docker images
-  #mozilla-docker-image-test:
-  #  device_group_name: motog5-test
-  #  device_model: motog5
-  #  framework_name: mozilla-usb
-  #  description: Mozilla Docker image test
-  #  additional_parameters:
-  #    TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-test-g5
-  #    TC_WORKER_TYPE: gecko-t-bitbar-gw-test-g5
-  #    # replace with version to test
-  #    DOCKER_IMAGE_VERSION: 20190711T162430
+  mozilla-docker-image-test:
+   device_group_name: motog5-test
+   device_model: motog5
+   framework_name: mozilla-usb
+   description: Mozilla Docker image test
+   additional_parameters:
+     TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-test-g5
+     TC_WORKER_TYPE: gecko-t-bitbar-gw-test-g5
+     # replace with version to test
+     DOCKER_IMAGE_VERSION: 20190731T113428
 device_groups:
   motog4-docker-builder:
     Docker Builder:
