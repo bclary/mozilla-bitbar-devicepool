@@ -152,13 +152,14 @@ device_groups:
     motog5-37:
     motog5-38:
     motog5-39:
-    motog5-40:
   motog5-unit:
   motog5-unit-2:
   motog5-test:
     pixel2-60:
   test-1:
+    motog5-40:
   test-2:
+    pixel2-59:
   test-3:
   motog5-batt:
   motog5-batt-2:
@@ -224,7 +225,6 @@ device_groups:
     pixel2-56:
     pixel2-57:
     pixel2-58:
-    pixel2-59:
   pixel2-batt:
   pixel2-batt-2:
     pixel2-34:
