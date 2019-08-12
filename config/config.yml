@@ -73,16 +73,43 @@ projects:
   #   additional_parameters:
   #     DOCKER_IMAGE_VERSION: 20190528T112747
   # used for testing new docker images
+  mozilla-gw-test-1:
+    device_group_name: test-1
+    framework_name: mozilla-usb
+    description: used for testing new images
+    additional_parameters:
+      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-1
+      TC_WORKER_TYPE: gecko-t-bitbar-gw-test-1
+      # replace with version to test
+      DOCKER_IMAGE_VERSION: 20190809T110552
+  mozilla-gw-test-2:
+    device_group_name: test-2
+    framework_name: mozilla-usb
+    description: used for testing new images
+    additional_parameters:
+      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-2
+      TC_WORKER_TYPE: gecko-t-bitbar-gw-test-2
+      # replace with version to test
+      DOCKER_IMAGE_VERSION: 20190809T110552
+  # mozilla-gw-test-3:
+  #   device_group_name: test-3
+  #   framework_name: mozilla-usb
+  #   description: used for testing new images
+  #   additional_parameters:
+  #     TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-3
+  #     TC_WORKER_TYPE: gecko-t-bitbar-gw-test-3
+  #     # replace with version to test
+  #     # DOCKER_IMAGE_VERSION: 20190809T110552
   mozilla-docker-image-test:
-   device_group_name: motog5-test
-   device_model: motog5
-   framework_name: mozilla-usb
-   description: Mozilla Docker image test
-   additional_parameters:
-     TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-test-g5
-     TC_WORKER_TYPE: gecko-t-bitbar-gw-test-g5
-     # replace with version to test
-     DOCKER_IMAGE_VERSION: 20190731T113428
+    device_group_name: motog5-test
+    device_model: motog5
+    framework_name: mozilla-usb
+    description: Mozilla Docker image test
+    additional_parameters:
+      TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-test-g5
+      TC_WORKER_TYPE: gecko-t-bitbar-gw-test-g5
+      # replace with version to test
+      DOCKER_IMAGE_VERSION: 20190731T113428
 device_groups:
   motog4-docker-builder:
     Docker Builder:
@@ -125,11 +152,15 @@ device_groups:
     motog5-37:
     motog5-38:
     motog5-39:
-    motog5-40:
   motog5-unit:
   motog5-unit-2:
   motog5-test:
     pixel2-60:
+  test-1:
+    motog5-40:
+  test-2:
+    pixel2-59:
+  test-3:
   motog5-batt:
   motog5-batt-2:
     motog5-08:
@@ -194,7 +225,6 @@ device_groups:
     pixel2-56:
     pixel2-57:
     pixel2-58:
-    pixel2-59:
   pixel2-batt:
   pixel2-batt-2:
     pixel2-34:
