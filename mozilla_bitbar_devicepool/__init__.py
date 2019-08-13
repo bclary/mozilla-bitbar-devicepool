@@ -11,7 +11,7 @@ from __future__ import absolute_import
 import logging
 
 # TODO: put %(asctime)s back in?
-logging.basicConfig(format='%(threadName)24s %(levelname)-8s %(message)s')
+logging.basicConfig(format='%(threadName)26s %(levelname)-8s %(message)s')
 
 import copy
 import os
