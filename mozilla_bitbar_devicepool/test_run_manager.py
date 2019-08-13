@@ -60,7 +60,10 @@ class TestRunManager(object):
         device_group_count = bitbar_device_group['deviceCount']
 
         offline_devices = []
-        temp_offline_devices = get_offline_devices(device_model=project_config['device_model'])
+        if 'device_model' in project_config:
+            temp_offline_devices = get_offline_devices(device_model=project_config['device_model'])
+        else:
+            temp_offline_devices = get_offline_devices()
         for device_name in temp_offline_devices:
             if device_name in device_group:
                 offline_devices.append(device_name)
