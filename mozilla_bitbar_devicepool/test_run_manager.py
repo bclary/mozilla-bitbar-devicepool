@@ -106,7 +106,7 @@ class TestRunManager(object):
 
                 if stats['RUNNING'] or stats['WAITING']:
                     logger.info(
-                        '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {} PENDING {} STARTING {}'.format(
+                        '{:13s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {} PENDING {} STARTING {}'.format(
                             device_group_name,
                             stats['COUNT'],
                             stats['IDLE'],
