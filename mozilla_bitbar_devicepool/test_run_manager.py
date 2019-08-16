@@ -7,7 +7,7 @@ import signal
 import threading
 import time
 
-from requests import ConnectionError
+import requests
 
 from mozilla_bitbar_devicepool import configuration, logger
 from mozilla_bitbar_devicepool.device_groups import get_device_group_devices
@@ -97,7 +97,7 @@ class TestRunManager(object):
                 # term based on the number of pending tasks (whichever is smaller).
                 try:
                     pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
-                except ConnectionError as e:
+                except requests.ConnectionError as e:
                     logger.warning("exception raised when calling get_taskcluster_pending_tasks.")
                     logger.warning(e)
                     # ensure jobs_to_start is set to 0 below
