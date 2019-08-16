@@ -95,7 +95,13 @@ class TestRunManager(object):
                 # create enough tests to service either the pending tasks or the number of idle
                 # devices which do not already have a waiting test + a small logarithmic fudge
                 # term based on the number of pending tasks (whichever is smaller).
-                pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
+                try:
+                    pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
+                except ConnectionError as e:
+                    logger.warning("exception raised when calling get_taskcluster_pending_tasks.")
+                    logger.warning(e)
+                    # ensure jobs_to_start is set to 0 below
+                    pending_tasks = -1
                 jobs_to_start = min(pending_tasks,
                                     stats['IDLE'] - stats['WAITING'] + 1 + int(math.log10(1 + pending_tasks)))
                 if jobs_to_start < 0:
