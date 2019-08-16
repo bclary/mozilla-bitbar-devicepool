@@ -60,7 +60,7 @@ class TestRunManager(object):
         device_group_count = bitbar_device_group['deviceCount']
 
         offline_devices = []
-        temp_offline_devices = get_offline_devices(device_model=project_config['device_model'])
+        temp_offline_devices = get_offline_devices(device_model=project_config.get('device_model', None))
         for device_name in temp_offline_devices:
             if device_name in device_group:
                 offline_devices.append(device_name)
@@ -103,7 +103,7 @@ class TestRunManager(object):
 
                 if stats['RUNNING'] or stats['WAITING']:
                     logger.info(
-                        '{:10s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {} PENDING {} STARTING {}'.format(
+                        '{:13s} COUNT {} IDLE {} OFFLINE {} DISABLED {} RUNNING {} WAITING {} PENDING {} STARTING {}'.format(
                             device_group_name,
                             stats['COUNT'],
                             stats['IDLE'],
