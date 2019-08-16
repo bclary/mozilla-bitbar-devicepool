@@ -4,17 +4,17 @@
 
 import math
 import signal
-import time
 import threading
+import time
+
+import requests
 
 from mozilla_bitbar_devicepool import configuration, logger
-from mozilla_bitbar_devicepool.taskcluster import get_taskcluster_pending_tasks
-from mozilla_bitbar_devicepool.devices import get_offline_devices
 from mozilla_bitbar_devicepool.device_groups import get_device_group_devices
-from mozilla_bitbar_devicepool.runs import (
-    run_test_for_project,
-    get_active_test_runs,
-)
+from mozilla_bitbar_devicepool.devices import get_offline_devices
+from mozilla_bitbar_devicepool.runs import (get_active_test_runs,
+                                            run_test_for_project)
+from mozilla_bitbar_devicepool.taskcluster import get_taskcluster_pending_tasks
 
 #
 # WARNING: not used everywhere yet!!!
@@ -97,7 +97,7 @@ class TestRunManager(object):
                 # term based on the number of pending tasks (whichever is smaller).
                 try:
                     pending_tasks = get_taskcluster_pending_tasks(taskcluster_provisioner_id, worker_type)
-                except ConnectionError as e:
+                except requests.ConnectionError as e:
                     logger.warning("exception raised when calling get_taskcluster_pending_tasks.")
                     logger.warning(e)
                     # ensure jobs_to_start is set to 0 below
