@@ -4,19 +4,17 @@
 
 import math
 import signal
-import time
 import threading
-
-from mozilla_bitbar_devicepool import configuration, logger
-from mozilla_bitbar_devicepool.taskcluster import get_taskcluster_pending_tasks
-from mozilla_bitbar_devicepool.devices import get_offline_devices
-from mozilla_bitbar_devicepool.device_groups import get_device_group_devices
-from mozilla_bitbar_devicepool.runs import (
-    run_test_for_project,
-    get_active_test_runs,
-)
+import time
 
 from requests import ConnectionError
+
+from mozilla_bitbar_devicepool import configuration, logger
+from mozilla_bitbar_devicepool.device_groups import get_device_group_devices
+from mozilla_bitbar_devicepool.devices import get_offline_devices
+from mozilla_bitbar_devicepool.runs import (get_active_test_runs,
+                                            run_test_for_project)
+from mozilla_bitbar_devicepool.taskcluster import get_taskcluster_pending_tasks
 
 #
 # WARNING: not used everywhere yet!!!
