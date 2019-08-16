@@ -16,6 +16,8 @@ from mozilla_bitbar_devicepool.runs import (
     get_active_test_runs,
 )
 
+from requests import ConnectionError
+
 #
 # WARNING: not used everywhere yet!!!
 #
