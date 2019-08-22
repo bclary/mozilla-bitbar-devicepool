@@ -16,6 +16,7 @@ class DeviceGroupReport:
     def __init__(self, config_path=None):
         self.gw_result_dict = {}
         self.tcw_result_dict = {}
+        self.test_result_dict = {}
         if not config_path:
             pathname = os.path.dirname(sys.argv[0])
             root_dir = os.path.abspath(os.path.join(pathname, ".."))
@@ -35,7 +36,9 @@ class DeviceGroupReport:
             the_item = conf_yaml["device_groups"][group]
             # filter out the test queue and the builder job
             if "-builder" not in group:
-                if group.endswith("-2"):
+                if "test" in group:
+                    self.test_result_dict[group] = get_len(the_item)
+                elif group.endswith("2"):
                     self.gw_result_dict[group] = get_len(the_item)
                 else:
                     self.tcw_result_dict[group] = get_len(the_item)
@@ -43,6 +46,12 @@ class DeviceGroupReport:
     def main(self):
         self.get_report_dict()
 
-        for a_dict in [self.tcw_result_dict, self.gw_result_dict]:
-            for item in sorted(a_dict):
-                print("%s: %s" % (item, a_dict[item]))
+        print("/// tc-w ///")
+        for key in sorted(self.tcw_result_dict.keys()):
+            print("%s: %s" % (key, self.tcw_result_dict[key]))
+        print("/// g-w ///")
+        for key in sorted(self.gw_result_dict.keys()):
+            print("%s: %s" % (key, self.gw_result_dict[key]))
+        print("/// test ///")
+        for key in sorted(self.test_result_dict.keys()):
+            print("%s: %s" % (key, self.test_result_dict[key]))
