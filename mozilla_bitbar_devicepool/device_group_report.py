@@ -47,12 +47,12 @@ class DeviceGroupReport:
     def main(self):
         self.get_report_dict()
 
-        print("/// t-c \\\\\\")
+        print("/// tc-w ///")
         for key in sorted(self.tcw_result_dict.keys()):
             print("%s: %s" % (key, self.tcw_result_dict[key]))
-        print("/// g-w \\\\\\")
+        print("/// g-w ///")
         for key in sorted(self.gw_result_dict.keys()):
             print("%s: %s" % (key, self.gw_result_dict[key]))
-        print("/// test \\\\\\")
+        print("/// test ///")
         for key in sorted(self.test_result_dict.keys()):
             print("%s: %s" % (key, self.test_result_dict[key]))
