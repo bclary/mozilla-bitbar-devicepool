@@ -99,7 +99,7 @@ projects:
   #     TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-3
   #     TC_WORKER_TYPE: gecko-t-bitbar-gw-test-3
   #     # replace with version to test
-  #     # DOCKER_IMAGE_VERSION: 20190809T110552
+  #     # DOCKER_IMAGE_VERSION: 20190813T144959
   mozilla-docker-image-test:
     device_group_name: motog5-test
     device_model: motog5
