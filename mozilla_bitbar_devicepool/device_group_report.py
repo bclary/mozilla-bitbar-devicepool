@@ -33,7 +33,6 @@ class DeviceGroupReport:
                 print(exc)
 
         for group in conf_yaml["device_groups"]:
-            print("*** %s" % group)
             the_item = conf_yaml["device_groups"][group]
             # filter out the test queue and the builder job
             if "-builder" not in group:
@@ -48,9 +47,12 @@ class DeviceGroupReport:
     def main(self):
         self.get_report_dict()
 
+        print("/// t-c \\\\\\")
         for key in sorted(self.tcw_result_dict.keys()):
             print("%s: %s" % (key, self.tcw_result_dict[key]))
+        print("/// g-w \\\\\\")
         for key in sorted(self.gw_result_dict.keys()):
             print("%s: %s" % (key, self.gw_result_dict[key]))
+        print("/// test \\\\\\")
         for key in sorted(self.test_result_dict.keys()):
             print("%s: %s" % (key, self.test_result_dict[key]))
