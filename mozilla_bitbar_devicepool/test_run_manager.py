@@ -131,8 +131,7 @@ class TestRunManager(object):
                         with lock:
                             stats['WAITING'] += 1
 
-                        logger.info('{:10s} test run {} started'.format(
-                            device_group_name,
+                        logger.info('test run {} started'.format(
                             test_run['id']))
                 except Exception as e:
                     logger.error(
