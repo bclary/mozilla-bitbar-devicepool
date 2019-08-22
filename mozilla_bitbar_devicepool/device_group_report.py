@@ -36,13 +36,12 @@ class DeviceGroupReport:
             the_item = conf_yaml["device_groups"][group]
             # filter out the test queue and the builder job
             if "-builder" not in group:
-                if 'test' in group:
+                if "test" in group:
                     self.test_result_dict[group] = get_len(the_item)
-                elif group.endswith('2'):
+                elif group.endswith("2"):
                     self.gw_result_dict[group] = get_len(the_item)
                 else:
                     self.tcw_result_dict[group] = get_len(the_item)
-
 
     def main(self):
         self.get_report_dict()
