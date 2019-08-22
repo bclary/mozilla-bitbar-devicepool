@@ -38,10 +38,10 @@ class DeviceGroupReport:
             if "-builder" not in group:
                 if 'test' in group:
                     self.test_result_dict[group] = get_len(the_item)
-                elif group.endswith('unit') or group.endswith('perf') or group.endswith('batt'):
-                    self.tcw_result_dict[group] = get_len(the_item)
-                else:
+                elif group.endswith('2'):
                     self.gw_result_dict[group] = get_len(the_item)
+                else:
+                    self.tcw_result_dict[group] = get_len(the_item)
 
 
     def main(self):
