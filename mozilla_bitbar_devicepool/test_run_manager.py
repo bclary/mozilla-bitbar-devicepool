@@ -126,6 +126,7 @@ class TestRunManager(object):
                     if TESTING:
                         logger.info('TESTING MODE: Would be starting test run.')
                     else:
+                        # TODO: check that there are devices assigned to project first
                         test_run = run_test_for_project(project_name)
                         # increment so we don't start too many jobs before main thread updates stats
                         with lock:
