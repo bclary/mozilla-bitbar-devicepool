@@ -126,14 +126,18 @@ class TestRunManager(object):
                     if TESTING:
                         logger.info('TESTING MODE: Would be starting test run.')
                     else:
-                        # TODO: check that there are devices assigned to project first
-                        test_run = run_test_for_project(project_name)
-                        # increment so we don't start too many jobs before main thread updates stats
-                        with lock:
-                            stats['WAITING'] += 1
+                        # if there are no devices assigned, the API will throw an exception
+                        # when we try to start, so detect and warn here.
+                        if stats['COUNT'] == 0:
+                            logger.warning("Didn't try to start a job because there are no devices assigned.")
+                        else:
+                            test_run = run_test_for_project(project_name)
+                            # increment so we don't start too many jobs before main thread updates stats
+                            with lock:
+                                stats['WAITING'] += 1
 
-                        logger.info('test run {} started'.format(
-                            test_run['id']))
+                            logger.info('test run {} started'.format(
+                                test_run['id']))
                 except Exception as e:
                     logger.error(
                         'Failed to create test run for group %s (%s: %s).'
