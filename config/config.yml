@@ -102,7 +102,6 @@ projects:
       DOCKER_IMAGE_VERSION: 20190830T150902
   mozilla-docker-image-test:
     device_group_name: motog5-test
-    device_model: motog5
     framework_name: mozilla-usb
     description: Mozilla Docker image test
     additional_parameters:
