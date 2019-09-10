@@ -114,8 +114,6 @@ device_groups:
     Docker Builder:
   motog5-perf:
   motog5-perf-2:
-    motog5-01:
-    motog5-02:
     motog5-03:
     motog5-04:
     motog5-05:
@@ -150,23 +148,24 @@ device_groups:
     motog5-36:
     motog5-37:
     motog5-38:
+    motog5-39:
+    motog5-40:
   motog5-unit:
   motog5-unit-2:
   motog5-test:
     pixel2-60:
   test-1:
-    motog5-40:
+    motog5-01:
   test-2:
-    pixel2-59:
+    pixel2-01:
   test-3:
-    motog5-39:
+    motog5-02:
   motog5-batt:
   motog5-batt-2:
     motog5-08:
     motog5-15:
   pixel2-unit:
   pixel2-unit-2:
-    pixel2-01:
     pixel2-02:
     pixel2-03:
     pixel2-04:
@@ -187,9 +186,9 @@ device_groups:
     pixel2-19:
     pixel2-20:
     pixel2-21:
+    pixel2-22:
   pixel2-perf:
   pixel2-perf-2:
-    pixel2-22:
     pixel2-23:
     pixel2-24:
     pixel2-25:
@@ -224,6 +223,7 @@ device_groups:
     pixel2-56:
     pixel2-57:
     pixel2-58:
+    pixel2-59:
   pixel2-batt:
   pixel2-batt-2:
     pixel2-34:
