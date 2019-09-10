@@ -81,7 +81,7 @@ projects:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-1
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-1
       # replace with version to test
-      DOCKER_IMAGE_VERSION: 20190830T150902
+      DOCKER_IMAGE_VERSION: 20190910T102707
   mozilla-gw-test-2:
     device_group_name: test-2
     framework_name: mozilla-usb
@@ -90,7 +90,7 @@ projects:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-2
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-2
       # replace with version to test
-      DOCKER_IMAGE_VERSION: 20190830T150902
+      DOCKER_IMAGE_VERSION: 20190910T102707
   mozilla-gw-test-3:
     device_group_name: test-3
     framework_name: mozilla-usb
@@ -99,7 +99,7 @@ projects:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-3
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-3
       # replace with version to test
-      DOCKER_IMAGE_VERSION: 20190830T150902
+      DOCKER_IMAGE_VERSION: 20190910T102707
   mozilla-docker-image-test:
     device_group_name: motog5-test
     framework_name: mozilla-usb
@@ -108,14 +108,12 @@ projects:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-test-g5
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-g5
       # replace with version to test
-      DOCKER_IMAGE_VERSION: 20190830T150902
+      DOCKER_IMAGE_VERSION: 20190910T102707
 device_groups:
   motog4-docker-builder:
     Docker Builder:
   motog5-perf:
   motog5-perf-2:
-    motog5-01:
-    motog5-02:
     motog5-03:
     motog5-04:
     motog5-05:
@@ -150,23 +148,24 @@ device_groups:
     motog5-36:
     motog5-37:
     motog5-38:
+    motog5-39:
+    motog5-40:
   motog5-unit:
   motog5-unit-2:
   motog5-test:
     pixel2-60:
   test-1:
-    motog5-40:
+    motog5-01:
   test-2:
-    pixel2-59:
+    pixel2-01:
   test-3:
-    motog5-39:
+    motog5-02:
   motog5-batt:
   motog5-batt-2:
     motog5-08:
     motog5-15:
   pixel2-unit:
   pixel2-unit-2:
-    pixel2-01:
     pixel2-02:
     pixel2-03:
     pixel2-04:
@@ -187,9 +186,9 @@ device_groups:
     pixel2-19:
     pixel2-20:
     pixel2-21:
+    pixel2-22:
   pixel2-perf:
   pixel2-perf-2:
-    pixel2-22:
     pixel2-23:
     pixel2-24:
     pixel2-25:
@@ -224,6 +223,7 @@ device_groups:
     pixel2-56:
     pixel2-57:
     pixel2-58:
+    pixel2-59:
   pixel2-batt:
   pixel2-batt-2:
     pixel2-34:
