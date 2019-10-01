@@ -101,6 +101,8 @@ class TestRunManager(object):
                     logger.warning("exception raised when calling get_taskcluster_pending_tasks.")
                     logger.warning(e)
                     pending_tasks = 0
+                # warning: only take the log of positive non-zero numbers, or a
+                # "ValueError: math domain error" will be raised
                 jobs_to_start = min(pending_tasks,
                                     stats['IDLE'] - stats['WAITING'] + 1 + int(math.log10(1 + pending_tasks)))
                 if jobs_to_start < 0:
