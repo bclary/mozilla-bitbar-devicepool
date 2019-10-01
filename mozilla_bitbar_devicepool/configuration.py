@@ -121,7 +121,7 @@ def configure_device_groups(update_bitbar=False):
         add_device_names = new_device_group_names - bitbar_device_group_names
 
         delete_device_ids = [ devices_cache[name]['id'] for name in delete_device_names ]
-        add_device_ids = [ devices_cache[name]['id'] for name in add_device_names ]
+        add_device_ids = [ devices_cache[name]['id'] for name in add_device_names if name in devices_cache ]
 
         for device_id in delete_device_ids:
             if update_bitbar:
