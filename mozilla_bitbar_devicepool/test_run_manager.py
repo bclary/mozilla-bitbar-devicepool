@@ -100,8 +100,9 @@ class TestRunManager(object):
                 except requests.ConnectionError as e:
                     logger.warning("exception raised when calling get_taskcluster_pending_tasks.")
                     logger.warning(e)
-                    # ensure jobs_to_start is set to 0 below
-                    pending_tasks = -1
+                    pending_tasks = 0
+                # warning: only take the log of positive non-zero numbers, or a
+                # "ValueError: math domain error" will be raised
                 jobs_to_start = min(pending_tasks,
                                     stats['IDLE'] - stats['WAITING'] + 1 + int(math.log10(1 + pending_tasks)))
                 if jobs_to_start < 0:
