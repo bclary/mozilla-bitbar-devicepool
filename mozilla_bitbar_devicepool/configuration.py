@@ -77,11 +77,12 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
 
     with open(bitbar_configpath) as bitbar_configfile:
         CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
+    logger.info('configure: performing checks')
     try:
         configuration_preflight()
     except ConfigurationFileException as e:
+        logger.error(e.message)
         logger.error("Configuration files seem to be missing! Please place and restart. Exiting...")
-        logger.error("%s: %s" % (e.__class__.__name__, e.message))
         sys.exit(1)
     logger.info('configure: starting configuration')
     start = time.time()
@@ -167,9 +168,9 @@ def configuration_preflight():
         log_header = "configuration_preflight: {} ({}/{})".format(project_name, counter, project_total)
 
         if project_name == 'defaults':
-            logger.info('{}: skipping'.format(log_header))
+            # logger.info('{}: skipping'.format(log_header))
             continue
-        logger.info('{}: checking...'.format(log_header))
+        # logger.info('{}: checking...'.format(log_header))
 
         project_config = projects_config[project_name]
         project_config = projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
