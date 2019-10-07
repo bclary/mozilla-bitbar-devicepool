@@ -196,8 +196,6 @@ def configuration_preflight():
             else:
                 print("File exists %s" % file_path)
 
-
-
 def configure_projects(update_bitbar=False):
     """Configure projects from configuration.
 
