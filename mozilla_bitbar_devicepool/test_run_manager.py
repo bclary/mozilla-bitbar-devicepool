@@ -6,6 +6,7 @@ import math
 import signal
 import threading
 import time
+import sys
 
 import requests
 
@@ -15,6 +16,8 @@ from mozilla_bitbar_devicepool.devices import get_offline_devices
 from mozilla_bitbar_devicepool.runs import (get_active_test_runs,
                                             run_test_for_project)
 from mozilla_bitbar_devicepool.taskcluster import get_taskcluster_pending_tasks
+
+from testdroid import RequestResponseError
 
 #
 # WARNING: not used everywhere yet!!!
@@ -139,6 +142,12 @@ class TestRunManager(object):
 
                             logger.info('test run {} started'.format(
                                 test_run['id']))
+                except RequestResponseError as e:
+                    # TODO: inspect message for
+                    #   "FileEntity with id 1508313 does not exist"
+                    logger.error("Test files have been archived. Exiting so configuration is rerun...")
+                    logger.error("%s: %s" % (e.__class__.__name__, e.message))
+                    sys.exit(1)
                 except Exception as e:
                     logger.error(
                         'Failed to create test run for group %s (%s: %s).'
