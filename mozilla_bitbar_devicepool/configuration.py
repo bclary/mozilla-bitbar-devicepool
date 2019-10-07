@@ -165,12 +165,9 @@ def configuration_preflight():
     counter = 0
     for project_name in projects_config:
         counter += 1
-        log_header = "configuration_preflight: {} ({}/{})".format(project_name, counter, project_total)
 
         if project_name == 'defaults':
-            # logger.info('{}: skipping'.format(log_header))
             continue
-        # logger.info('{}: checking...'.format(log_header))
 
         project_config = projects_config[project_name]
         project_config = projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
@@ -178,7 +175,6 @@ def configuration_preflight():
         framework_name = project_config['framework_name']
         BITBAR_CACHE['frameworks'][framework_name] = get_frameworks(name=framework_name)[0]
 
-        # logger.info('{}: pre-flighting test file'.format(log_header))
         file_name =  project_config.get('test_file')
         if file_name:
             file_path = os.path.join(FILESPATH, file_name)
@@ -187,7 +183,6 @@ def configuration_preflight():
             else:
                 print("File exists %s" % file_path)
 
-        # logger.info('{}: pre-flighting application file'.format(log_header))
         file_name = project_config.get('application_file')
         if file_name:
             file_path = os.path.join(FILESPATH, file_name)
