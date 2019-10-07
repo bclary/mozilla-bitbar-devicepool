@@ -225,10 +225,11 @@ def configure_projects(update_bitbar=False):
             else:
                 if update_bitbar:
                     try:
+                        file_path = os.path.join(FILESPATH, file_name)
                         TESTDROID.upload_application_file(bitbar_project['id'],
-                                                          os.path.join(FILESPATH, file_name))
+                                                          file_path)
                     except IOError:
-                        raise ConfigurationFileUploadException("'%s' does not exist!" % file_name)
+                        raise ConfigurationFileUploadException("'%s' does not exist!" % file_path)
                     bitbar_file = get_files(name=file_name, inputtype='application')[-1]
                 else:
                     raise Exception('Application file {} not found and not configured to update bitbar configuration!'.format(file_name))
