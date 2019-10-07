@@ -7,6 +7,7 @@ from __future__ import absolute_import
 import os
 import threading
 import time
+import sys
 
 import yaml
 
@@ -70,8 +71,13 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
 
     logger.info('configure: starting configuration')
     start = time.time()
-    configure_device_groups(update_bitbar=update_bitbar)
-    configure_projects(update_bitbar=update_bitbar)
+    try:
+        configure_device_groups(update_bitbar=update_bitbar)
+        configure_projects(update_bitbar=update_bitbar)
+    except IOError as e:
+        logger.error("Test files seem to be missing! Please place and restart. Exiting...")
+        logger.error("%s: %s" % (e.__class__.__name__, e.message))
+        sys.exit(1)
     end = time.time()
     diff = end - start
     logger.info('configure: configuration took {} seconds'.format(diff))
