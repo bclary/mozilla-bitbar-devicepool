@@ -3,6 +3,7 @@
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import math
+import re
 import signal
 import threading
 import time
@@ -27,6 +28,8 @@ TESTING = False
 
 CACHE = None
 CONFIG = None
+ARCHIVED_FILE_REGEX = r'FileEntity with id [\d]* does not exist'
+
 
 class TestRunManager(object):
     """Model state and control from Apache's example:
@@ -143,11 +146,12 @@ class TestRunManager(object):
                             logger.info('test run {} started'.format(
                                 test_run['id']))
                 except RequestResponseError as e:
-                    # TODO: inspect message for
-                    #   "FileEntity with id 1508313 does not exist"
-                    logger.error("Test files have been archived. Exiting so configuration is rerun...")
-                    logger.error("%s: %s" % (e.__class__.__name__, e.message))
-                    sys.exit(1)
+                    if e.statusCode == 404 and re.search(ARCHIVED_FILE_REGEX, e.message):
+                        logger.error("Test files have been archived. Exiting so configuration is rerun...")
+                        logger.error("%s: %s" % (e.__class__.__name__, e.message))
+                        sys.exit(1)
+                    else:
+                        logger.error("%s: %s" % (e.__class__.__name__, e.message))
                 except Exception as e:
                     logger.error(
                         'Failed to create test run for group %s (%s: %s).'
