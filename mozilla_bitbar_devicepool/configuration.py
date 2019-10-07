@@ -52,7 +52,7 @@ class ConfigurationExceptionBase(Exception):
     def __init__(self, message):
         self.message = message
 
-class ConfigurationFileUploadException(ConfigurationExceptionBase):
+class ConfigurationFileException(ConfigurationExceptionBase):
     pass
 
 
@@ -83,7 +83,7 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
     try:
         configure_device_groups(update_bitbar=update_bitbar)
         configure_projects(update_bitbar=update_bitbar)
-    except ConfigurationFileUploadException as e:
+    except ConfigurationFileException as e:
         logger.error("Configuration files seem to be missing! Please place and restart. Exiting...")
         logger.error("%s: %s" % (e.__class__.__name__, e.message))
         sys.exit(1)
@@ -210,7 +210,7 @@ def configure_projects(update_bitbar=False):
                         file_path = os.path.join(FILESPATH, file_name)
                         TESTDROID.upload_test_file(bitbar_project['id'], file_path)
                     except IOError:
-                        raise ConfigurationFileUploadException("'%s' does not exist!" % file_path)
+                        raise ConfigurationFileException("'%s' does not exist!" % file_path)
                     bitbar_file = get_files(name=file_name, inputtype='test')[-1]
                 else:
                     raise Exception('Test file {} not found and not configured to update bitbar configuration!'.format(file_name))
@@ -229,7 +229,7 @@ def configure_projects(update_bitbar=False):
                         TESTDROID.upload_application_file(bitbar_project['id'],
                                                           file_path)
                     except IOError:
-                        raise ConfigurationFileUploadException("'%s' does not exist!" % file_path)
+                        raise ConfigurationFileException("'%s' does not exist!" % file_path)
                     bitbar_file = get_files(name=file_name, inputtype='application')[-1]
                 else:
                     raise Exception('Application file {} not found and not configured to update bitbar configuration!'.format(file_name))
