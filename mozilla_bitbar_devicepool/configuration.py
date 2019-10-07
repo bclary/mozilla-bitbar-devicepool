@@ -77,16 +77,16 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
 
     with open(bitbar_configpath) as bitbar_configfile:
         CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
-
-    logger.info('configure: starting configuration')
-    start = time.time()
     try:
-        configure_device_groups(update_bitbar=update_bitbar)
-        configure_projects(update_bitbar=update_bitbar)
+        configuration_preflight()
     except ConfigurationFileException as e:
         logger.error("Configuration files seem to be missing! Please place and restart. Exiting...")
         logger.error("%s: %s" % (e.__class__.__name__, e.message))
         sys.exit(1)
+    logger.info('configure: starting configuration')
+    start = time.time()
+    configure_device_groups(update_bitbar=update_bitbar)
+    configure_projects(update_bitbar=update_bitbar)
     end = time.time()
     diff = end - start
     logger.info('configure: configuration took {} seconds'.format(diff))
@@ -164,23 +164,20 @@ def configuration_preflight():
     counter = 0
     for project_name in projects_config:
         counter += 1
-        log_header = "configure_projects: {} ({}/{})".format(project_name, counter, project_total)
+        log_header = "configuration_preflight: {} ({}/{})".format(project_name, counter, project_total)
 
         if project_name == 'defaults':
             logger.info('{}: skipping'.format(log_header))
             continue
-        logger.info('{}: configuring...'.format(log_header))
+        logger.info('{}: checking...'.format(log_header))
 
         project_config = projects_config[project_name]
-        # Set the default project values.
         project_config = projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
-
-        # bitbar_projects = get_projects(name=project_name)
 
         framework_name = project_config['framework_name']
         BITBAR_CACHE['frameworks'][framework_name] = get_frameworks(name=framework_name)[0]
 
-        logger.info('{}: pre-flighting test file'.format(log_header))
+        # logger.info('{}: pre-flighting test file'.format(log_header))
         file_name =  project_config.get('test_file')
         if file_name:
             file_path = os.path.join(FILESPATH, file_name)
@@ -189,7 +186,7 @@ def configuration_preflight():
             else:
                 print("File exists %s" % file_path)
 
-        logger.info('{}: pre-flighting application file'.format(log_header))
+        # logger.info('{}: pre-flighting application file'.format(log_header))
         file_name = project_config.get('application_file')
         if file_name:
             file_path = os.path.join(FILESPATH, file_name)
