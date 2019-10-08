@@ -156,8 +156,9 @@ def configure_device_groups(update_bitbar=False):
 
         BITBAR_CACHE['device_groups'][device_group_name] = bitbar_device_group
 
-# ensures all things to do configuration are present
 def configuration_preflight():
+    """Perform checks to ensure configuration works.
+    """
     projects_config = CONFIG['projects']
     project_defaults = projects_config['defaults']
 
