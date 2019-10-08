@@ -78,13 +78,14 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
     with open(bitbar_configpath) as bitbar_configfile:
         CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
 
-    logger.info('configure: performing checks')
-    try:
-        configuration_preflight()
-    except ConfigurationFileException as e:
-        logger.error(e.message)
-        logger.error("Configuration files seem to be missing! Please place and restart. Exiting...")
-        sys.exit(1)
+    if update_bitbar:
+        logger.info('configure: performing checks')
+        try:
+            configuration_preflight()
+        except ConfigurationFileException as e:
+            logger.error(e.message)
+            logger.error("Configuration files seem to be missing! Please place and restart. Exiting...")
+            sys.exit(1)
 
     logger.info('configure: starting configuration')
     start = time.time()
