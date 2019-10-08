@@ -177,16 +177,12 @@ def configuration_preflight():
             file_path = os.path.join(FILESPATH, file_name)
             if not os.path.exists(file_path):
                 raise ConfigurationFileException("'%s' does not exist!" % file_path)
-            else:
-                print("File exists %s" % file_path)
 
         file_name = project_config.get('application_file')
         if file_name:
             file_path = os.path.join(FILESPATH, file_name)
             if not os.path.exists(file_path):
                 raise ConfigurationFileException("'%s' does not exist!" % file_path)
-            else:
-                print("File exists %s" % file_path)
 
 def configure_projects(update_bitbar=False):
     """Configure projects from configuration.
