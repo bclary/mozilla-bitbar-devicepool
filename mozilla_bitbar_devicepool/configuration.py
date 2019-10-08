@@ -161,11 +161,7 @@ def configuration_preflight():
     projects_config = CONFIG['projects']
     project_defaults = projects_config['defaults']
 
-    project_total = len(projects_config)
-    counter = 0
     for project_name in projects_config:
-        counter += 1
-
         if project_name == 'defaults':
             continue
 
