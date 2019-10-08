@@ -7,7 +7,6 @@ import re
 import signal
 import threading
 import time
-import sys
 
 import requests
 
@@ -146,10 +145,10 @@ class TestRunManager(object):
                             logger.info('test run {} started'.format(
                                 test_run['id']))
                 except RequestResponseError as e:
-                    if e.statusCode == 404 and re.search(ARCHIVED_FILE_REGEX, e.message):
+                    if e.status_code == 404 and re.search(ARCHIVED_FILE_REGEX, e.message):
                         logger.error("Test files have been archived. Exiting so configuration is rerun...")
                         logger.error("%s: %s" % (e.__class__.__name__, e.message))
-                        sys.exit(1)
+                        self.state = 'STOP'
                     else:
                         logger.error("%s: %s" % (e.__class__.__name__, e.message))
                 except Exception as e:
