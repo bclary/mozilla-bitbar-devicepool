@@ -172,9 +172,6 @@ def configuration_preflight():
         project_config = projects_config[project_name]
         project_config = projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
 
-        framework_name = project_config['framework_name']
-        BITBAR_CACHE['frameworks'][framework_name] = get_frameworks(name=framework_name)[0]
-
         file_name =  project_config.get('test_file')
         if file_name:
             file_path = os.path.join(FILESPATH, file_name)
