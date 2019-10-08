@@ -170,6 +170,7 @@ def configuration_preflight():
             continue
 
         project_config = projects_config[project_name]
+        # Set the default project values.
         project_config = projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
 
         file_name =  project_config.get('test_file')
