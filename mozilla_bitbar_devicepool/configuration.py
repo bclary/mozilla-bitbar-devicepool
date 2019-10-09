@@ -48,11 +48,11 @@ FILESPATH = None
 CONFIG = None
 
 
-class ConfigurationExceptionBase(Exception):
+class ConfigurationException(Exception):
     def __init__(self, message):
         self.message = message
 
-class ConfigurationFileException(ConfigurationExceptionBase):
+class ConfigurationFileException(ConfigurationException):
     pass
 
 
