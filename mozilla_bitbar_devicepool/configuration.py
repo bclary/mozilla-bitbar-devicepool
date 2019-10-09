@@ -239,8 +239,6 @@ def configure_projects(update_bitbar=False):
                     file_path = os.path.join(FILESPATH, file_name)
                     if not os.path.exists(file_path):
                         raise ConfigurationFileException("'%s' does not exist!" % file_path)
-                    else:
-                        print("File exists %s" % file_path)
                     TESTDROID.upload_test_file(bitbar_project['id'], file_path)
                     bitbar_file = get_files(name=file_name, inputtype='test')[-1]
                 else:
@@ -258,8 +256,6 @@ def configure_projects(update_bitbar=False):
                     file_path = os.path.join(FILESPATH, file_name)
                     if not os.path.exists(file_path):
                         raise ConfigurationFileException("'%s' does not exist!" % file_path)
-                    else:
-                        print("File exists %s" % file_path)
                     TESTDROID.upload_application_file(bitbar_project['id'], file_path)
                     bitbar_file = get_files(name=file_name, inputtype='application')[-1]
                 else:
