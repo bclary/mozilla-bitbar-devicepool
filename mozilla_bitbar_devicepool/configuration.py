@@ -110,6 +110,9 @@ def expand_configuration():
         # Set the default project values.
         projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
 
+    # TODO: remove 'defaults' from CONFIG['projects']?
+    #   - would save later code from having to exclude it
+
 def configure_device_groups(update_bitbar=False):
     """Configure device groups from configuration.
 
