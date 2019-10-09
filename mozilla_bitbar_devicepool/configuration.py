@@ -77,6 +77,7 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
 
     with open(bitbar_configpath) as bitbar_configfile:
         CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
+    expand_configuration()
 
     if update_bitbar:
         logger.info('configure: performing checks')
@@ -95,6 +96,19 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
     diff = end - start
     logger.info('configure: configuration took {} seconds'.format(diff))
 
+def expand_configuration():
+    """Materializes the configuration. Sets default values when none are specified.
+    """
+    projects_config = CONFIG['projects']
+    project_defaults = projects_config['defaults']
+
+    for project_name in projects_config:
+        if project_name == 'defaults':
+            continue
+
+        project_config = projects_config[project_name]
+        # Set the default project values.
+        project_config = projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
 
 def configure_device_groups(update_bitbar=False):
     """Configure device groups from configuration.
@@ -163,16 +177,12 @@ def configuration_preflight():
     """Perform checks to ensure configuration works.
     """
     projects_config = CONFIG['projects']
-    project_defaults = projects_config['defaults']
 
     for project_name in projects_config:
         if project_name == 'defaults':
             continue
 
         project_config = projects_config[project_name]
-        # Set the default project values.
-        project_config = projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
-
         file_name =  project_config.get('test_file')
         if file_name:
             file_path = os.path.join(FILESPATH, file_name)
@@ -197,7 +207,6 @@ def configure_projects(update_bitbar=False):
 
     """
     projects_config = CONFIG['projects']
-    project_defaults = projects_config['defaults']
 
     project_total = len(projects_config)
     counter = 0
@@ -211,9 +220,6 @@ def configure_projects(update_bitbar=False):
         logger.info('{}: configuring...'.format(log_header))
 
         project_config = projects_config[project_name]
-        # Set the default project values.
-        project_config = projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
-
         bitbar_projects = get_projects(name=project_name)
         if len(bitbar_projects) > 1:
             raise Exception('project {} has {} duplicates'.format(project_name, len(bitbar_projects) - 1))
