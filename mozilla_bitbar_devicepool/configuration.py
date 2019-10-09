@@ -52,6 +52,7 @@ class ConfigurationException(Exception):
     def __init__(self, message):
         self.message = message
 
+
 class ConfigurationFileException(ConfigurationException):
     pass
 
