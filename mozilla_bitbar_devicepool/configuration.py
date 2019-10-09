@@ -7,6 +7,7 @@ from __future__ import absolute_import
 import os
 import threading
 import time
+import sys
 
 import yaml
 
@@ -46,6 +47,16 @@ BITBAR_CACHE = {
 FILESPATH = None
 CONFIG = None
 
+
+class ConfigurationException(Exception):
+    def __init__(self, message):
+        self.message = message
+
+
+class ConfigurationFileException(ConfigurationException):
+    pass
+
+
 def get_filespath():
     """Return files path where application and test files are kept.
     """
@@ -65,16 +76,64 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
 
     FILESPATH=filespath
 
-    with open(bitbar_configpath) as bitbar_configfile:
-        CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
-
     logger.info('configure: starting configuration')
     start = time.time()
+
+    with open(bitbar_configpath) as bitbar_configfile:
+        CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
+    expand_configuration()
+    logger.info('configure: performing checks')
+    try:
+        configuration_preflight()
+    except ConfigurationFileException as e:
+        logger.error(e.message)
+        logger.error("Configuration files seem to be missing! Please place and restart. Exiting...")
+        sys.exit(1)
     configure_device_groups(update_bitbar=update_bitbar)
     configure_projects(update_bitbar=update_bitbar)
+
     end = time.time()
     diff = end - start
     logger.info('configure: configuration took {} seconds'.format(diff))
+
+def expand_configuration():
+    """Materializes the configuration. Sets default values when none are specified.
+    """
+    projects_config = CONFIG['projects']
+    project_defaults = projects_config['defaults']
+
+    for project_name in projects_config:
+        if project_name == 'defaults':
+            continue
+
+        project_config = projects_config[project_name]
+        # Set the default project values.
+        projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
+
+    # TODO: remove 'defaults' from CONFIG['projects']?
+    #   - would save later code from having to exclude it
+
+def configuration_preflight():
+    """Ensure that everything necessary for configuration is present.
+    """
+    projects_config = CONFIG['projects']
+
+    for project_name in projects_config:
+        if project_name == 'defaults':
+            continue
+
+        project_config = projects_config[project_name]
+        file_name =  project_config.get('test_file')
+        if file_name:
+            file_path = os.path.join(FILESPATH, file_name)
+            if not os.path.exists(file_path):
+                raise ConfigurationFileException("'%s' does not exist!" % file_path)
+
+        file_name = project_config.get('application_file')
+        if file_name:
+            file_path = os.path.join(FILESPATH, file_name)
+            if not os.path.exists(file_path):
+                raise ConfigurationFileException("'%s' does not exist!" % file_path)
 
 
 def configure_device_groups(update_bitbar=False):
@@ -152,7 +211,6 @@ def configure_projects(update_bitbar=False):
 
     """
     projects_config = CONFIG['projects']
-    project_defaults = projects_config['defaults']
 
     project_total = len(projects_config)
     counter = 0
@@ -166,9 +224,6 @@ def configure_projects(update_bitbar=False):
         logger.info('{}: configuring...'.format(log_header))
 
         project_config = projects_config[project_name]
-        # Set the default project values.
-        project_config = projects_config[project_name] = apply_dict_defaults(project_config, project_defaults)
-
         bitbar_projects = get_projects(name=project_name)
         if len(bitbar_projects) > 1:
             raise Exception('project {} has {} duplicates'.format(project_name, len(bitbar_projects) - 1))
@@ -255,4 +310,4 @@ def configure_projects(update_bitbar=False):
             'DISABLED': 0,
             'RUNNING': 0,
             'WAITING': 0,
-}
+        }
