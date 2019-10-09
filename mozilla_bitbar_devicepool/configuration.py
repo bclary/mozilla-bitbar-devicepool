@@ -113,6 +113,29 @@ def expand_configuration():
     # TODO: remove 'defaults' from CONFIG['projects']?
     #   - would save later code from having to exclude it
 
+def configuration_preflight():
+    """Ensure that everything necessary for configuration is present.
+    """
+    projects_config = CONFIG['projects']
+
+    for project_name in projects_config:
+        if project_name == 'defaults':
+            continue
+
+        project_config = projects_config[project_name]
+        file_name =  project_config.get('test_file')
+        if file_name:
+            file_path = os.path.join(FILESPATH, file_name)
+            if not os.path.exists(file_path):
+                raise ConfigurationFileException("'%s' does not exist!" % file_path)
+
+        file_name = project_config.get('application_file')
+        if file_name:
+            file_path = os.path.join(FILESPATH, file_name)
+            if not os.path.exists(file_path):
+                raise ConfigurationFileException("'%s' does not exist!" % file_path)
+
+
 def configure_device_groups(update_bitbar=False):
     """Configure device groups from configuration.
 
@@ -175,28 +198,6 @@ def configure_device_groups(update_bitbar=False):
                 raise Exception('Attempting to add device(s) {} to group {}, but not configured to update bitbar config.'.format(add_device_ids, bitbar_device_group['id']))
 
         BITBAR_CACHE['device_groups'][device_group_name] = bitbar_device_group
-
-def configuration_preflight():
-    """Perform checks to ensure configuration works.
-    """
-    projects_config = CONFIG['projects']
-
-    for project_name in projects_config:
-        if project_name == 'defaults':
-            continue
-
-        project_config = projects_config[project_name]
-        file_name =  project_config.get('test_file')
-        if file_name:
-            file_path = os.path.join(FILESPATH, file_name)
-            if not os.path.exists(file_path):
-                raise ConfigurationFileException("'%s' does not exist!" % file_path)
-
-        file_name = project_config.get('application_file')
-        if file_name:
-            file_path = os.path.join(FILESPATH, file_name)
-            if not os.path.exists(file_path):
-                raise ConfigurationFileException("'%s' does not exist!" % file_path)
 
 def configure_projects(update_bitbar=False):
     """Configure projects from configuration.
