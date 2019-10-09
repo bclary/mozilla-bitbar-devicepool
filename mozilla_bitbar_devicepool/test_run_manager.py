@@ -3,6 +3,7 @@
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import math
+import re
 import signal
 import threading
 import time
@@ -16,6 +17,8 @@ from mozilla_bitbar_devicepool.runs import (get_active_test_runs,
                                             run_test_for_project)
 from mozilla_bitbar_devicepool.taskcluster import get_taskcluster_pending_tasks
 
+from testdroid import RequestResponseError
+
 #
 # WARNING: not used everywhere yet!!!
 #
@@ -24,6 +27,8 @@ TESTING = False
 
 CACHE = None
 CONFIG = None
+ARCHIVED_FILE_REGEX = r'FileEntity with id [\d]* does not exist'
+
 
 class TestRunManager(object):
     """Model state and control from Apache's example:
@@ -139,6 +144,13 @@ class TestRunManager(object):
 
                             logger.info('test run {} started'.format(
                                 test_run['id']))
+                except RequestResponseError as e:
+                    if e.status_code == 404 and re.search(ARCHIVED_FILE_REGEX, e.message):
+                        logger.error("Test files have been archived. Exiting so configuration is rerun...")
+                        logger.error("%s: %s" % (e.__class__.__name__, e.message))
+                        self.state = 'STOP'
+                    else:
+                        logger.error("%s: %s" % (e.__class__.__name__, e.message))
                 except Exception as e:
                     logger.error(
                         'Failed to create test run for group %s (%s: %s).'
