@@ -246,8 +246,9 @@ def configure_projects(update_bitbar=False):
                 bitbar_file = bitbar_files[-1]
             else:
                 if update_bitbar:
-                    TESTDROID.upload_test_file(bitbar_project['id'],
-                                               os.path.join(FILESPATH, file_name))
+                    # TESTDROID.upload_test_file(bitbar_project['id'],
+                    #                            os.path.join(FILESPATH, file_name))
+                    TESTDROID.upload_file(os.path.join(FILESPATH, file_name))
                     bitbar_file = get_files(name=file_name, inputtype='test')[-1]
                 else:
                     raise Exception('Test file {} not found and not configured to update bitbar configuration!'.format(file_name))
@@ -261,8 +262,9 @@ def configure_projects(update_bitbar=False):
                 bitbar_file = bitbar_files[-1]
             else:
                 if update_bitbar:
-                    TESTDROID.upload_application_file(bitbar_project['id'],
-                                                      os.path.join(FILESPATH, file_name))
+                    # TESTDROID.upload_application_file(bitbar_project['id'],
+                    #                                   os.path.join(FILESPATH, file_name))
+                    TESTDROID.upload_file(os.path.join(FILESPATH, file_name))
                     bitbar_file = get_files(name=file_name, inputtype='application')[-1]
                 else:
                     raise Exception('Application file {} not found and not configured to update bitbar configuration!'.format(file_name))
