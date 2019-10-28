@@ -241,7 +241,7 @@ def configure_projects(update_bitbar=False):
         logger.info('{}: configuring test file'.format(log_header))
         file_name =  project_config.get('test_file')
         if file_name:
-            bitbar_files = get_files(name=file_name, inputtype='test')
+            bitbar_files = get_files(name=file_name)
             if len(bitbar_files) > 0:
                 bitbar_file = bitbar_files[-1]
             else:
@@ -249,7 +249,7 @@ def configure_projects(update_bitbar=False):
                     # TESTDROID.upload_test_file(bitbar_project['id'],
                     #                            os.path.join(FILESPATH, file_name))
                     TESTDROID.upload_file(os.path.join(FILESPATH, file_name))
-                    bitbar_file = get_files(name=file_name, inputtype='test')[-1]
+                    bitbar_file = get_files(name=file_name)[-1]
                 else:
                     raise Exception('Test file {} not found and not configured to update bitbar configuration!'.format(file_name))
             BITBAR_CACHE['files'][file_name] = bitbar_file
@@ -257,7 +257,7 @@ def configure_projects(update_bitbar=False):
         logger.info('{}: configuring application file'.format(log_header))
         file_name = project_config.get('application_file')
         if file_name:
-            bitbar_files = get_files(name=file_name, inputtype='application')
+            bitbar_files = get_files(name=file_name)
             if len(bitbar_files) > 0:
                 bitbar_file = bitbar_files[-1]
             else:
@@ -265,7 +265,7 @@ def configure_projects(update_bitbar=False):
                     # TESTDROID.upload_application_file(bitbar_project['id'],
                     #                                   os.path.join(FILESPATH, file_name))
                     TESTDROID.upload_file(os.path.join(FILESPATH, file_name))
-                    bitbar_file = get_files(name=file_name, inputtype='application')[-1]
+                    bitbar_file = get_files(name=file_name)[-1]
                 else:
                     raise Exception('Application file {} not found and not configured to update bitbar configuration!'.format(file_name))
             BITBAR_CACHE['files'][file_name] = bitbar_file
