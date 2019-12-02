@@ -70,8 +70,3 @@ def test_unique_filenames_bad_config():
   config = yaml.load(test_configuration_2, Loader=yaml.SafeLoader)
   with pytest.raises(configuration.ConfigurationFileDuplicateFilenamesException):
     configuration.ensure_filenames_are_unique(config)
-
-if __name__== "__main__":
-  # for testing when we need output
-  test_unique_filenames_ok_config()
-  test_unique_filenames_bad_config()
