@@ -20,7 +20,7 @@ def get_files(**kwargs):
 
                      Returns files sorted by createTime ascending.
     Examples:
-       get_files(name='ignore.apk', inputtype='application')
+       get_files(name='ignore.apk')
 
     https://mozilla.testdroid.com/cloud/swagger-ui.html#/File/getFilesUsingGET
     """
@@ -28,7 +28,6 @@ def get_files(**kwargs):
         'createtime': int,
         'direction': str,
         'id': int,
-        'inputtype': str,
         'mimetype': str,
         'name': str,
         'size': int,
