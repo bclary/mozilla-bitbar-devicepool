@@ -56,7 +56,7 @@ class ConfigurationException(Exception):
 class ConfigurationFileException(ConfigurationException):
     pass
 
-class ConfigurationFileDuplicateFilenamesException(ConfigurationException):
+class ConfigurationFileDuplicateFilenamesException(ConfigurationFileException):
     pass
 
 def get_filespath():
