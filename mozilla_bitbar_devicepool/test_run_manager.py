@@ -258,7 +258,8 @@ class TestRunManager(object):
                     except requests.exceptions.ConnectionError as e:
                         logger.warning("exception raised when calling get_bitbar_test_stats.")
                         logger.warning(e)
-                        # TODO: sleep a bit longer?
+                        # TODO: if we see this a lot, add exponential backoff?
+                        time.sleep(15)
                 time.sleep(1)
             logger.info('WAITING_TOTAL {} RUNNING_TOTAL {}'.format(waiting_total, running_total))
         logger.info('main thread exiting')
