@@ -66,6 +66,7 @@ def get_filespath():
 
 def ensure_filenames_are_unique(config):
     seen_filenames = []
+    # TODO: break extraction of filenames out for easier testing
     try:
         for item in config['projects']:
             for deeper_item in config['projects'][item]:
@@ -77,6 +78,7 @@ def ensure_filenames_are_unique(config):
     except KeyError as e:
         print(e)
         raise ConfigurationFileException("config does not appear to be in proper format")
+    return seen_filenames
 
 def configure(bitbar_configpath, filespath=None, update_bitbar=False):
     """Parse and load the configuration yaml file
