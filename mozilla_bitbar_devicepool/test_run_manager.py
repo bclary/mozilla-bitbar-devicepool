@@ -38,6 +38,7 @@ class TestRunManager(object):
     test jobs from Taskcluster.
     """
 
+    # tell pytest to ignore this class, it's not a test class
     __test__ = False
 
     def __init__(self, wait=60):
