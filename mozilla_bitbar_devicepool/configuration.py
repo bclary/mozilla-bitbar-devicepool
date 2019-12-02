@@ -99,9 +99,13 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
 
     with open(bitbar_configpath) as bitbar_configfile:
         CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
-    ensure_filenames_are_unique(CONFIG)
-    expand_configuration()
     logger.info('configure: performing checks')
+    try:
+        ensure_filenames_are_unique(CONFIG)
+    except (ConfigurationFileException, ConfigurationFileDuplicateFilenamesException) as e:
+        logger.error(e.message)
+        sys.exit(1)
+    expand_configuration()
     try:
         configuration_preflight()
     except ConfigurationFileException as e:
