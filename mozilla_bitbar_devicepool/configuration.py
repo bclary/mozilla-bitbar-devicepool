@@ -56,6 +56,8 @@ class ConfigurationException(Exception):
 class ConfigurationFileException(ConfigurationException):
     pass
 
+class ConfigurationFileDuplicateFilenamesException(ConfigurationException):
+    pass
 
 def get_filespath():
     """Return files path where application and test files are kept.
@@ -72,11 +74,11 @@ def ensure_filenames_are_unique(config):
                 if deeper_item == "application_file" or deeper_item == "test_file":
                     a_filename = config['projects'][item][deeper_item]
                     if a_filename in seen_filenames:
-                        raise Exception("duplicate filenames found!")
+                        raise ConfigurationFileDuplicateFilenamesException("duplicate filenames found!")
                     seen_filenames.append(a_filename)
     except KeyError as e:
         print(e)
-        raise Exception("config does not appear to be in proper format")
+        raise ConfigurationFileException("config does not appear to be in proper format")
     return seen_filenames
 
 def configure(bitbar_configpath, filespath=None, update_bitbar=False):

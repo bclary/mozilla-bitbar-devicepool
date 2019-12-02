@@ -4,6 +4,7 @@
 
 import configuration
 
+import pytest
 import yaml
 
 test_configuration_1 = '''
@@ -16,6 +17,7 @@ projects:
   blah1:
     device_group_name: blah1-group
     device_model: pixel2
+    test_file: aerickson-empty-test2.zip
     framework_name: mozilla-usb
     description: blah1 is great
     additional_parameters:
@@ -59,15 +61,15 @@ projects:
 
 def test_unique_filenames_ok_config():
   config = yaml.load(test_configuration_1, Loader=yaml.SafeLoader)
-  import pprint
-  pprint.pprint(config)
-  configuration.ensure_filenames_are_unique(config)
+  try:
+    configuration.ensure_filenames_are_unique(config)
+  except Exception:
+    pytest.fail("shouldn't be any exceptions")
 
 def test_unique_filenames_bad_config():
   config = yaml.load(test_configuration_2, Loader=yaml.SafeLoader)
-  import pprint
-  pprint.pprint(config)
-  configuration.ensure_filenames_are_unique(config)
+  with pytest.raises(configuration.ConfigurationFileDuplicateFilenamesException):
+    configuration.ensure_filenames_are_unique(config)
 
 if __name__== "__main__":
   # for testing when we need output
