@@ -68,9 +68,7 @@ def ensure_filenames_are_unique(config):
     seen_filenames = []
     try:
         for item in config['projects']:
-            # print(item)
             for deeper_item in config['projects'][item]:
-                # print(deeper_item)
                 if deeper_item == "application_file" or deeper_item == "test_file":
                     a_filename = config['projects'][item][deeper_item]
                     if a_filename in seen_filenames:
