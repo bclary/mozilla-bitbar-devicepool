@@ -37,6 +37,9 @@ class TestRunManager(object):
     DevicePoolTestRunManager starts Bitbar test runs to service the
     test jobs from Taskcluster.
     """
+
+    __test__ = False
+
     def __init__(self, wait=60):
         global CACHE, CONFIG
 
