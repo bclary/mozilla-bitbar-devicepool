@@ -20,11 +20,9 @@ from testdroid import Testdroid
 
 # make importing urlparse work in py 2 and 3
 try:
-    # from urllib.request import urlopen
     from urllib.parse import urlparse
 except ImportError:
     from urlparse import urlparse
-    # from urllib import urlopen
 
 modulepath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 logger = logging.getLogger()
