@@ -62,6 +62,23 @@ def get_filespath():
     """
     return FILESPATH
 
+def ensure_filenames_are_unique(config):
+    seen_filenames = []
+    try:
+        for item in config['projects']:
+            # print(item)
+            for deeper_item in config['projects'][item]:
+                # print(deeper_item)
+                if deeper_item == "application_file" or deeper_item == "test_file":
+                    a_filename = config['projects'][item][deeper_item]
+                    if a_filename in seen_filenames:
+                        raise Exception("duplicate filenames found!")
+                    seen_filenames.append(a_filename)
+    except KeyError as e:
+        print(e)
+        raise Exception("config does not appear to be in proper format")
+    return seen_filenames
+
 def configure(bitbar_configpath, filespath=None, update_bitbar=False):
     """Parse and load the configuration yaml file
     defining the Mozilla Bitbar test setup.
@@ -81,6 +98,7 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
 
     with open(bitbar_configpath) as bitbar_configfile:
         CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
+    ensure_filenames_are_unique(CONFIG)
     expand_configuration()
     logger.info('configure: performing checks')
     try:
