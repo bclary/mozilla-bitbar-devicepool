@@ -61,10 +61,11 @@ projects:
 
 def test_unique_filenames_extraction():
   config = yaml.load(test_configuration_1, Loader=yaml.SafeLoader)
-  assert (configuration.ensure_filenames_are_unique(config) ==
-          ['aerickson-empty-test2.zip',
-          'aerickson-Testdroid.apk',
-          'aerickson-empty-test.zip']
+  assert (sorted(configuration.ensure_filenames_are_unique(config)) ==
+          sorted(['aerickson-empty-test2.zip',
+                  'aerickson-Testdroid.apk',
+                  'aerickson-empty-test.zip']
+          )
   )
 
 def test_unique_filenames_ok_config():
