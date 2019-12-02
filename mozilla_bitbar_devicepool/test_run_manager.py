@@ -253,7 +253,13 @@ class TestRunManager(object):
                 waiting_total += stats['WAITING']
                 running_total += stats['RUNNING']
                 with lock:
-                    self.get_bitbar_test_stats(project_name, projects_config[project_name])
+                    try:
+                        self.get_bitbar_test_stats(project_name, projects_config[project_name])
+                    except requests.exceptions.ConnectionError as e:
+                        logger.warning("exception raised when calling get_bitbar_test_stats.")
+                        logger.warning(e)
+                        # TODO: if we see this a lot, add exponential backoff?
+                        time.sleep(15)
                 time.sleep(1)
             logger.info('WAITING_TOTAL {} RUNNING_TOTAL {}'.format(waiting_total, running_total))
         logger.info('main thread exiting')
