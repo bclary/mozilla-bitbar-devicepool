@@ -11,7 +11,7 @@ projects:
     taskcluster_provisioner_id: proj-autophone
     additional_parameters:
       bitbar_cloud_url: https://mozilla.testdroid.com
-      DOCKER_IMAGE_VERSION: 20191119T130125
+      DOCKER_IMAGE_VERSION: 20191029T170431
       TC_WORKER_CONF: gecko-t-ap
   # generic-worker
   mozilla-gw-unittest-p2:
