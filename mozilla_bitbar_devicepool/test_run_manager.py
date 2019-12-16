@@ -165,7 +165,13 @@ class TestRunManager(object):
     def thread_active_jobs(self):
         while self.state == 'RUNNING':
             logger.info('getting active runs')
-            self.process_active_runs()
+            try:
+                self.process_active_runs()
+            except requests.exceptions.ConnectionError as e:
+                logger.warning("exception raised when calling process_active_runs.")
+                logger.warning(e)
+                # TODO: if we see this a lot, add exponential backoff?
+                time.sleep(10)
             time.sleep(10)
 
     def process_active_runs(self):
