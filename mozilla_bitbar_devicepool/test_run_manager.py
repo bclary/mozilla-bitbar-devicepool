@@ -150,7 +150,7 @@ class TestRunManager(object):
                         logger.error("Test files have been archived. Exiting so configuration is rerun...")
                         logger.error("%s: %s" % (e.__class__.__name__, e.message))
                         self.state = 'STOP'
-                    elif e.statu_code == 404 and re.search(PROJECT_DOES_NOT_EXIST_REGEX, e.message):
+                    elif e.status_code == 404 and re.search(PROJECT_DOES_NOT_EXIST_REGEX, e.message):
                         logger.error("Project does not exist!. Exiting so configuration is rerun...")
                         logger.error("%s: %s" % (e.__class__.__name__, e.message))
                         self.state = 'STOP'
