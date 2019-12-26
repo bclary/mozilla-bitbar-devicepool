@@ -52,7 +52,12 @@ def test_run_manager(args):
     else:
         bitbar_configpath = args.bitbar_config
 
-    configuration.configure(bitbar_configpath, filespath=args.files, update_bitbar=args.update_bitbar)
+    try:
+        configuration.configure(bitbar_configpath, filespath=args.files, update_bitbar=args.update_bitbar)
+    except configuration.DuplicateProjectException as e:
+        logger.error("Duplicate project found! Please archive all but one and restart. Exiting...")
+        logger.error(e)
+        sys.exit(1)
 
     manager = TestRunManager(wait=args.wait)
     manager.run()
