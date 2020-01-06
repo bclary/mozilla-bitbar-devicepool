@@ -71,6 +71,7 @@ def run_test(args):
     configuration.configure(bitbar_configpath, filespath=args.files, update_bitbar=args.update_bitbar)
 
     run_test_for_project(args.project_name)
+    logger.info("run started for project '%s'" % args.project_name)
 
 def main():
 
