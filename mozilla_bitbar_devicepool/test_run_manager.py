@@ -28,6 +28,7 @@ TESTING = False
 CACHE = None
 CONFIG = None
 ARCHIVED_FILE_REGEX = r'FileEntity with id [\d]* does not exist'
+PROJECT_DOES_NOT_EXIST_REGEX = r'Project with id [\d]* does not exist'
 
 
 class TestRunManager(object):
@@ -147,6 +148,10 @@ class TestRunManager(object):
                 except RequestResponseError as e:
                     if e.status_code == 404 and re.search(ARCHIVED_FILE_REGEX, e.message):
                         logger.error("Test files have been archived. Exiting so configuration is rerun...")
+                        logger.error("%s: %s" % (e.__class__.__name__, e.message))
+                        self.state = 'STOP'
+                    elif e.status_code == 404 and re.search(PROJECT_DOES_NOT_EXIST_REGEX, e.message):
+                        logger.error("Project does not exist!. Exiting so configuration is rerun...")
                         logger.error("%s: %s" % (e.__class__.__name__, e.message))
                         self.state = 'STOP'
                     else:
