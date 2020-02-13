@@ -81,7 +81,7 @@ projects:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-1
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-1
       # replace with version to test
-      DOCKER_IMAGE_VERSION: 20200210T140509
+      DOCKER_IMAGE_VERSION: 20200116T163912
   mozilla-gw-test-2:
     device_group_name: test-2
     framework_name: mozilla-usb
@@ -90,7 +90,7 @@ projects:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-2
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-2
       # replace with version to test
-      DOCKER_IMAGE_VERSION: 20200210T140509
+      DOCKER_IMAGE_VERSION: 20200116T163912
   mozilla-gw-test-3:
     device_group_name: test-3
     framework_name: mozilla-usb
@@ -99,7 +99,7 @@ projects:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-3
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-3
       # replace with version to test
-      DOCKER_IMAGE_VERSION: 20200210T140509
+      DOCKER_IMAGE_VERSION: 20200116T163912
   mozilla-docker-image-test:
     device_group_name: motog5-test
     framework_name: mozilla-usb
@@ -108,7 +108,7 @@ projects:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-g5
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-g5
       # replace with version to test
-      DOCKER_IMAGE_VERSION: 20200210T140509
+      DOCKER_IMAGE_VERSION: 20200116T163912
 device_groups:
   motog4-docker-builder:
     Docker Builder:
@@ -153,6 +153,7 @@ device_groups:
   motog5-unit:
   motog5-unit-2:
   motog5-test:
+    # pixel2-60 has android 9.0 on it
     pixel2-60:
   test-1:
     motog5-01:
