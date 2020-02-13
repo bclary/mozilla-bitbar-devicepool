@@ -153,6 +153,7 @@ device_groups:
   motog5-unit:
   motog5-unit-2:
   motog5-test:
+    # pixel2-60 has android 9.0 on it
     pixel2-60:
   test-1:
     motog5-01:
