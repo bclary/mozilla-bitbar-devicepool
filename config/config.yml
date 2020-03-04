@@ -109,6 +109,8 @@ projects:
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-g5
       # replace with version to test
       DOCKER_IMAGE_VERSION: 20200221T180700
+# devices hooked up to battery hubs
+#   - pixel2-34, pixel2-35. motog5-08, motog5-15.
 device_groups:
   motog4-docker-builder:
     Docker Builder:
@@ -119,12 +121,14 @@ device_groups:
     motog5-05:
     motog5-06:
     motog5-07:
+    motog5-08:
     motog5-09:
     motog5-10:
     motog5-11:
     motog5-12:
     motog5-13:
     motog5-14:
+    motog5-15:
     motog5-16:
     motog5-17:
     motog5-18:
@@ -163,8 +167,6 @@ device_groups:
     motog5-02:
   motog5-batt:
   motog5-batt-2:
-    motog5-08:
-    motog5-15:
   pixel2-unit:
   pixel2-unit-2:
     pixel2-02:
@@ -193,17 +195,19 @@ device_groups:
     pixel2-25:
     pixel2-26:
     pixel2-27:
+  pixel2-perf:
+  pixel2-perf-2:
     pixel2-28:
     pixel2-29:
     pixel2-30:
     pixel2-31:
     pixel2-32:
     pixel2-33:
+    pixel2-34:
+    pixel2-35:
     pixel2-36:
     pixel2-37:
     pixel2-38:
-  pixel2-perf:
-  pixel2-perf-2:
     pixel2-39:
     pixel2-40:
     pixel2-41:
@@ -227,5 +231,4 @@ device_groups:
     pixel2-59:
   pixel2-batt:
   pixel2-batt-2:
-    pixel2-34:
-    pixel2-35:
+
