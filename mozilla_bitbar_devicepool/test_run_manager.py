@@ -188,8 +188,14 @@ class TestRunManager(object):
         for project_name in bitbar_projects:
             accumulation_dict[project_name] = []
 
-        # gather all runs per project
-        result = get_active_test_runs()
+        try:
+            # gather all runs per project
+            result = get_active_test_runs()
+        except RequestResponseError as e:
+            logger.error("process_active_runs: RequestResponseError received")
+            logger.error(e)
+            return
+
         for item in result:
             project_name = item['projectName']
             # only accumulate for projects in our config
