@@ -195,8 +195,6 @@ device_groups:
     pixel2-25:
     pixel2-26:
     pixel2-27:
-  pixel2-perf:
-  pixel2-perf-2:
     pixel2-28:
     pixel2-29:
     pixel2-30:
@@ -206,6 +204,8 @@ device_groups:
     pixel2-34:
     pixel2-35:
     pixel2-36:
+  pixel2-perf:
+  pixel2-perf-2:
     pixel2-37:
     pixel2-38:
     pixel2-39:
