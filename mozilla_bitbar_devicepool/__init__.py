@@ -5,8 +5,6 @@
 # mozilla_bitbar_devicepool
 # https://mozilla.testdroid.com/cloud/swagger-ui.html
 
-from __future__ import absolute_import
-
 # we need to run basicConfig before any other module does
 import logging
 
@@ -15,7 +13,7 @@ logging.basicConfig(format='%(threadName)26s %(levelname)-8s %(message)s')
 
 import copy
 import os
-import urlparse
+import urllib.parse
 import requests
 from testdroid import Testdroid
 
