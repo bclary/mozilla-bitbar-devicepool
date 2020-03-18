@@ -102,7 +102,7 @@ def download_file(url, dest, max_attempts=3):
     :max_attempts: integer number of times to attempt download.
                    Defaults to 3.
     """
-    parse_result = urlparse.urlparse(url)
+    parse_result = urllib.parse.urlparse(url)
     if not parse_result.scheme or parse_result.scheme.startswith('file'):
         local_file = open(parse_result.path)
         with local_file:
