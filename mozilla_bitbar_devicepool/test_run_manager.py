@@ -2,7 +2,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import math
 import re
 import signal
 import threading
@@ -110,7 +109,7 @@ class TestRunManager(object):
                 # warning: only take the log of positive non-zero numbers, or a
                 # "ValueError: math domain error" will be raised
                 jobs_to_start = min(pending_tasks,
-                                    stats['IDLE'] - stats['WAITING'] + 1 + int(math.log10(1 + pending_tasks)))
+                                    stats['IDLE'] - stats['WAITING'])
                 if jobs_to_start < 0:
                     jobs_to_start = 0
 
