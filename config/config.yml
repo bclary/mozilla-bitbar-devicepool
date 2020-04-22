@@ -116,14 +116,17 @@ device_groups:
     Docker Builder:
   motog5-perf:
   motog5-perf-2:
-    motog5-03:
-    motog5-04:
-    motog5-05:
-    motog5-06:
-    motog5-07:
-    motog5-08:
-    motog5-09:
-    motog5-10:
+    # disabled to draw down cluster to 2020 contract sizes (27 g5, 48 p2)
+    # motog5-01:
+    # motog5-02:
+    # motog5-03:
+    # motog5-04:
+    # motog5-05:
+    # motog5-06:
+    # motog5-07:
+    # motog5-08:
+    # motog5-09:
+    # motog5-10:
     motog5-11:
     motog5-12:
     motog5-13:
@@ -153,27 +156,25 @@ device_groups:
     motog5-37:
     motog5-38:
     motog5-39:
-    motog5-40:
   motog5-unit:
   motog5-unit-2:
   motog5-test:
+  test-1:
+    motog5-40:
+  test-2:
     # pixel2-60 has android 9.0 on it
     pixel2-60:
-  test-1:
-    motog5-01:
-  test-2:
-    pixel2-01:
   test-3:
-    motog5-02:
   motog5-batt:
   motog5-batt-2:
   pixel2-unit:
   pixel2-unit-2:
-    pixel2-02:
-    pixel2-03:
-    pixel2-04:
-    pixel2-05:
-    pixel2-06:
+    # pixel2-01:
+    # pixel2-02:
+    # pixel2-03:
+    # pixel2-04:
+    # pixel2-05:
+    # pixel2-06:
     pixel2-07:
     pixel2-08:
     pixel2-09:
@@ -214,12 +215,12 @@ device_groups:
     pixel2-44:
     pixel2-45:
     pixel2-46:
-  pixel2-perf:
-  pixel2-perf-2:
     pixel2-47:
     pixel2-48:
     pixel2-49:
     pixel2-50:
+  pixel2-perf:
+  pixel2-perf-2:
     pixel2-51:
     pixel2-52:
     pixel2-53:
