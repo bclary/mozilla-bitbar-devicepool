@@ -67,6 +67,8 @@ class DeviceGroupReport:
         for key in sorted(self.test_result_dict.keys()):
             print("%s: %s" % (key, self.test_result_dict[key]))
         print("/// device summary ///")
+        total_count = 0
         for item in self.device_dict:
+            total_count += int(self.device_dict[item])
             print("%s: %s" % (item, self.device_dict[item]))
-
+        print("total: %s" % total_count)
