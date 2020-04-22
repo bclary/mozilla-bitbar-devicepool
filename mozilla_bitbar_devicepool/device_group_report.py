@@ -57,9 +57,9 @@ class DeviceGroupReport:
     def main(self):
         self.get_report_dict()
 
-        print("/// tc-w  workers ///")
-        for key in sorted(self.tcw_result_dict.keys()):
-            print("%s: %s" % (key, self.tcw_result_dict[key]))
+        # print("/// tc-w  workers ///")
+        # for key in sorted(self.tcw_result_dict.keys()):
+        #     print("%s: %s" % (key, self.tcw_result_dict[key]))
         print("/// g-w workers ///")
         for key in sorted(self.gw_result_dict.keys()):
             print("%s: %s" % (key, self.gw_result_dict[key]))
