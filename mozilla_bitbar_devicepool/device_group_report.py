@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import yaml
 import os
@@ -17,6 +17,7 @@ class DeviceGroupReport:
         self.gw_result_dict = {}
         self.tcw_result_dict = {}
         self.test_result_dict = {}
+        self.device_dict = {}  # device types to count
         if not config_path:
             pathname = os.path.dirname(sys.argv[0])
             root_dir = os.path.abspath(os.path.join(pathname, ".."))
@@ -43,15 +44,31 @@ class DeviceGroupReport:
                 else:
                     self.tcw_result_dict[group] = get_len(the_item)
 
+        for group in conf_yaml["device_groups"]:
+            the_item = conf_yaml["device_groups"][group]
+            # print(the_item)
+            if the_item:
+                for device in the_item:
+                    if 'pixel2' in device:
+                        self.device_dict['p2'] = self.device_dict.get('p2', 0) + 1
+                    if 'motog5' in device:
+                        self.device_dict['g5'] = self.device_dict.get('g5', 0) + 1
+
     def main(self):
         self.get_report_dict()
 
-        print("/// tc-w ///")
-        for key in sorted(self.tcw_result_dict.keys()):
-            print("%s: %s" % (key, self.tcw_result_dict[key]))
-        print("/// g-w ///")
+        # print("/// tc-w  workers ///")
+        # for key in sorted(self.tcw_result_dict.keys()):
+        #     print("%s: %s" % (key, self.tcw_result_dict[key]))
+        print("/// g-w workers ///")
         for key in sorted(self.gw_result_dict.keys()):
             print("%s: %s" % (key, self.gw_result_dict[key]))
-        print("/// test ///")
+        print("/// test workers ///")
         for key in sorted(self.test_result_dict.keys()):
             print("%s: %s" % (key, self.test_result_dict[key]))
+        print("/// device summary ///")
+        total_count = 0
+        for item in self.device_dict:
+            total_count += int(self.device_dict[item])
+            print("%s: %s" % (item, self.device_dict[item]))
+        print("total: %s" % total_count)
