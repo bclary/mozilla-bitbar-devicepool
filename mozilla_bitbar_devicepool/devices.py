@@ -3,7 +3,6 @@
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-
 from mozilla_bitbar_devicepool import (
     TESTDROID,
     get_filter,
