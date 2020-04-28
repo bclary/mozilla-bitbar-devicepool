@@ -5,8 +5,6 @@
 # mozilla_bitbar_devicepool
 # https://mozilla.testdroid.com/cloud/swagger-ui.html
 
-from __future__ import absolute_import
-
 # we need to run basicConfig before any other module does
 import logging
 
@@ -15,7 +13,7 @@ logging.basicConfig(format='%(threadName)26s %(levelname)-8s %(message)s')
 
 import copy
 import os
-import urlparse
+import urllib.parse
 import requests
 from testdroid import Testdroid
 
@@ -104,7 +102,7 @@ def download_file(url, dest, max_attempts=3):
     :max_attempts: integer number of times to attempt download.
                    Defaults to 3.
     """
-    parse_result = urlparse.urlparse(url)
+    parse_result = urllib.parse.urlparse(url)
     if not parse_result.scheme or parse_result.scheme.startswith('file'):
         local_file = open(parse_result.path)
         with local_file:
