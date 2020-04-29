@@ -127,9 +127,9 @@ device_groups:
     # motog5-08:
     # motog5-09:
     # motog5-10:
-    motog5-11:
-    motog5-12:
-    motog5-13:
+    # motog5-11:
+    # motog5-12:
+    # motog5-13:
     motog5-14:
     motog5-15:
     motog5-16:
@@ -175,12 +175,12 @@ device_groups:
     # pixel2-04:
     # pixel2-05:
     # pixel2-06:
-    pixel2-07:
-    pixel2-08:
-    pixel2-09:
-    pixel2-10:
-    pixel2-11:
-    pixel2-12:
+    # pixel2-07:
+    # pixel2-08:
+    # pixel2-09:
+    # pixel2-10:
+    # pixel2-11:
+    # pixel2-12:
     pixel2-13:
     pixel2-14:
     pixel2-15:
@@ -216,10 +216,10 @@ device_groups:
     pixel2-45:
     pixel2-46:
     pixel2-47:
-  pixel2-perf:
-  pixel2-perf-2:
     pixel2-48:
     pixel2-49:
+  pixel2-perf:
+  pixel2-perf-2:
     pixel2-50:
     pixel2-51:
     pixel2-52:
