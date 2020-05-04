@@ -180,7 +180,7 @@ device_groups:
     # pixel2-09:
     # pixel2-10:
     # pixel2-11:
-    # pixel2-12:
+    pixel2-12:
     pixel2-13:
     pixel2-14:
     pixel2-15:
@@ -217,12 +217,12 @@ device_groups:
     pixel2-46:
     pixel2-47:
     pixel2-48:
-    pixel2-49:
   pixel2-perf:
   pixel2-perf-2:
+    pixel2-49:
     pixel2-50:
     pixel2-51:
-    pixel2-52:
+    # pixel2-52: # removed from cluster due to battery bloat
     pixel2-53:
     pixel2-54:
     pixel2-55:
