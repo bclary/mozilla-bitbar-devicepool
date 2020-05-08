@@ -64,7 +64,7 @@ projects:
       TC_WORKER_TYPE: gecko-t-bitbar-gw-unit-g5
   # used for building new docker images
   # mozilla-docker-build:
-  #   device_group_name: motog4-docker-builder
+  #   device_group_name: motog4-docker-builder-2
   #   device_model: motog4
   #   framework_name: Docker image build
   #   description: Mozilla Docker image build
@@ -112,7 +112,7 @@ projects:
 # devices hooked up to battery hubs
 #   - pixel2-34, pixel2-35. motog5-08, motog5-15.
 device_groups:
-  motog4-docker-builder:
+  motog4-docker-builder-2:
     Docker Builder:
   motog5-perf:
   motog5-perf-2:
