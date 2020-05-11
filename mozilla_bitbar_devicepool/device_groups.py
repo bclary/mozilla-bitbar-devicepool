@@ -9,7 +9,7 @@ from mozilla_bitbar_devicepool import (
 
 
 def get_device_groups(**kwargs):
-    """Return list of matching Bitbar device_groups.
+    """Return list of matching Bitbar device_groups belonging to current user.
 
     :param **kwargs: keyword arguments containing fieldnames and
                      values with which to filter the devices to
@@ -32,7 +32,7 @@ def get_device_groups(**kwargs):
         }
 
     filter = get_filter(fields, **kwargs)
-    response = TESTDROID.get('/api/v2/device-groups',
+    response = TESTDROID.get('/api/v2/me/device-groups',
                              payload={'limit': 0, 'filter': filter})
     return response['data']
 
