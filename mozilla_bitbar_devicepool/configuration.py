@@ -50,6 +50,9 @@ class ConfigurationException(Exception):
     def __init__(self, message):
         self.message = message
 
+    def __str__(self):
+        return self.message
+
 
 class ConfigurationFileException(ConfigurationException):
     pass
@@ -88,7 +91,7 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
     try:
         configuration_preflight()
     except ConfigurationFileException as e:
-        logger.error(e.message)
+        logger.error(e)
         logger.error("Configuration files seem to be missing! Please place and restart. Exiting...")
         sys.exit(1)
     configure_device_groups(update_bitbar=update_bitbar)

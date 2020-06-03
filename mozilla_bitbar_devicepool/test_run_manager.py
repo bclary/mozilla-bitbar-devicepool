@@ -146,20 +146,20 @@ class TestRunManager(object):
                             logger.info('test run {} started'.format(
                                 test_run['id']))
                 except RequestResponseError as e:
-                    if e.status_code == 404 and re.search(ARCHIVED_FILE_REGEX, e.message):
+                    if e.status_code == 404 and re.search(ARCHIVED_FILE_REGEX, str(e)):
                         logger.error("Test files have been archived. Exiting so configuration is rerun...")
-                        logger.error("%s: %s" % (e.__class__.__name__, e.message))
+                        logger.error("%s: %s" % (e.__class__.__name__, e))
                         self.state = 'STOP'
-                    elif e.status_code == 404 and re.search(PROJECT_DOES_NOT_EXIST_REGEX, e.message):
+                    elif e.status_code == 404 and re.search(PROJECT_DOES_NOT_EXIST_REGEX, str(e)):
                         logger.error("Project does not exist!. Exiting so configuration is rerun...")
-                        logger.error("%s: %s" % (e.__class__.__name__, e.message))
+                        logger.error("%s: %s" % (e.__class__.__name__, e))
                         self.state = 'STOP'
                     else:
-                        logger.error("%s: %s" % (e.__class__.__name__, e.message))
+                        logger.error("%s: %s" % (e.__class__.__name__, e))
                 except Exception as e:
                     logger.error(
                         'Failed to create test run for group %s (%s: %s).'
-                        % (device_group_name, e.__class__.__name__, e.message),
+                        % (device_group_name, e.__class__.__name__, e),
                         exc_info=True,
                         )
 
