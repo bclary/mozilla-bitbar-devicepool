@@ -91,7 +91,7 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
     try:
         configuration_preflight()
     except ConfigurationFileException as e:
-        logger.error(str(e))
+        logger.error(e)
         logger.error("Configuration files seem to be missing! Please place and restart. Exiting...")
         sys.exit(1)
     configure_device_groups(update_bitbar=update_bitbar)
