@@ -48,18 +48,19 @@ CONFIG = None
 
 class ConfigurationException(Exception):
     def __init__(self, message):
+        super(ConfigurationException, self).__init__(message)
         self.message = message
 
     def __str__(self):
         return self.message
 
-
 class ConfigurationFileException(ConfigurationException):
-    pass
-
+    def __init__(self, message):
+        super(ConfigurationFileException, self).__init__(message)
 
 class DuplicateProjectException(ConfigurationException):
-    pass
+    def __init__(self, message):
+        super(DuplicateProjectException, self).__init__(message)
 
 
 def get_filespath():
