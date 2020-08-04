@@ -38,6 +38,10 @@ class TestRunManager(object):
     DevicePoolTestRunManager starts Bitbar test runs to service the
     test jobs from Taskcluster.
     """
+
+    # tell pytest to ignore this class, it's not a test class
+    __test__ = False
+
     def __init__(self, wait=60):
         global CACHE, CONFIG
 

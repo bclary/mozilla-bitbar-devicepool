@@ -57,6 +57,8 @@ class ConfigurationException(Exception):
 class ConfigurationFileException(ConfigurationException):
     pass
 
+class ConfigurationFileDuplicateFilenamesException(ConfigurationFileException):
+    pass
 
 class DuplicateProjectException(ConfigurationException):
     pass
@@ -66,6 +68,22 @@ def get_filespath():
     """Return files path where application and test files are kept.
     """
     return FILESPATH
+
+def ensure_filenames_are_unique(config):
+    seen_filenames = []
+    # TODO: break extraction of filenames out for easier testing
+    try:
+        for item in config['projects']:
+            for deeper_item in config['projects'][item]:
+                if deeper_item == "application_file" or deeper_item == "test_file":
+                    a_filename = config['projects'][item][deeper_item]
+                    if a_filename in seen_filenames:
+                        raise ConfigurationFileDuplicateFilenamesException("duplicate filenames found!")
+                    seen_filenames.append(a_filename)
+    except KeyError as e:
+        print(e)
+        raise ConfigurationFileException("config does not appear to be in proper format")
+    return seen_filenames
 
 def configure(bitbar_configpath, filespath=None, update_bitbar=False):
     """Parse and load the configuration yaml file
@@ -86,8 +104,13 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
 
     with open(bitbar_configpath) as bitbar_configfile:
         CONFIG = yaml.load(bitbar_configfile.read(), Loader=yaml.SafeLoader)
-    expand_configuration()
     logger.info('configure: performing checks')
+    try:
+        ensure_filenames_are_unique(CONFIG)
+    except (ConfigurationFileException) as e:
+        logger.error(e.message)
+        sys.exit(1)
+    expand_configuration()
     try:
         configuration_preflight()
     except ConfigurationFileException as e:
@@ -246,13 +269,13 @@ def configure_projects(update_bitbar=False):
         logger.info('{}: configuring test file'.format(log_header))
         file_name =  project_config.get('test_file')
         if file_name:
-            bitbar_files = get_files(name=file_name, inputtype='test')
+            bitbar_files = get_files(name=file_name)
             if len(bitbar_files) > 0:
                 bitbar_file = bitbar_files[-1]
             else:
                 if update_bitbar:
                     TESTDROID.upload_file(os.path.join(FILESPATH, file_name))
-                    bitbar_file = get_files(name=file_name, inputtype='test')[-1]
+                    bitbar_file = get_files(name=file_name)[-1]
                 else:
                     raise Exception('Test file {} not found and not configured to update bitbar configuration!'.format(file_name))
             BITBAR_CACHE['files'][file_name] = bitbar_file
@@ -260,13 +283,13 @@ def configure_projects(update_bitbar=False):
         logger.info('{}: configuring application file'.format(log_header))
         file_name = project_config.get('application_file')
         if file_name:
-            bitbar_files = get_files(name=file_name, inputtype='application')
+            bitbar_files = get_files(name=file_name)
             if len(bitbar_files) > 0:
                 bitbar_file = bitbar_files[-1]
             else:
                 if update_bitbar:
                     TESTDROID.upload_file(os.path.join(FILESPATH, file_name))
-                    bitbar_file = get_files(name=file_name, inputtype='application')[-1]
+                    bitbar_file = get_files(name=file_name)[-1]
                 else:
                     raise Exception('Application file {} not found and not configured to update bitbar configuration!'.format(file_name))
             BITBAR_CACHE['files'][file_name] = bitbar_file
