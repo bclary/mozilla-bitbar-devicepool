@@ -2,8 +2,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from __future__ import absolute_import
-
 import os
 import threading
 import time
@@ -52,12 +50,19 @@ class ConfigurationException(Exception):
     def __init__(self, message):
         self.message = message
 
+    def __str__(self):
+        return self.message
+
 
 class ConfigurationFileException(ConfigurationException):
     pass
 
 class ConfigurationFileDuplicateFilenamesException(ConfigurationFileException):
     pass
+
+class DuplicateProjectException(ConfigurationException):
+    pass
+
 
 def get_filespath():
     """Return files path where application and test files are kept.
@@ -109,7 +114,7 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
     try:
         configuration_preflight()
     except ConfigurationFileException as e:
-        logger.error(e.message)
+        logger.error(e)
         logger.error("Configuration files seem to be missing! Please place and restart. Exiting...")
         sys.exit(1)
     configure_device_groups(update_bitbar=update_bitbar)
@@ -249,7 +254,7 @@ def configure_projects(update_bitbar=False):
         project_config = projects_config[project_name]
         bitbar_projects = get_projects(name=project_name)
         if len(bitbar_projects) > 1:
-            raise Exception('project {} has {} duplicates'.format(project_name, len(bitbar_projects) - 1))
+            raise DuplicateProjectException('project {} has {} duplicates'.format(project_name, len(bitbar_projects) - 1))
         elif len(bitbar_projects) == 1:
             bitbar_project = bitbar_projects[0]
         else:

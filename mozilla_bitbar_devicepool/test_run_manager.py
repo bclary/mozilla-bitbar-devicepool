@@ -28,6 +28,7 @@ TESTING = False
 CACHE = None
 CONFIG = None
 ARCHIVED_FILE_REGEX = r'FileEntity with id [\d]* does not exist'
+PROJECT_DOES_NOT_EXIST_REGEX = r'Project with id [\d]* does not exist'
 
 
 class TestRunManager(object):
@@ -149,16 +150,20 @@ class TestRunManager(object):
                             logger.info('test run {} started'.format(
                                 test_run['id']))
                 except RequestResponseError as e:
-                    if e.status_code == 404 and re.search(ARCHIVED_FILE_REGEX, e.message):
+                    if e.status_code == 404 and re.search(ARCHIVED_FILE_REGEX, str(e)):
                         logger.error("Test files have been archived. Exiting so configuration is rerun...")
-                        logger.error("%s: %s" % (e.__class__.__name__, e.message))
+                        logger.error("%s: %s" % (e.__class__.__name__, e))
+                        self.state = 'STOP'
+                    elif e.status_code == 404 and re.search(PROJECT_DOES_NOT_EXIST_REGEX, str(e)):
+                        logger.error("Project does not exist!. Exiting so configuration is rerun...")
+                        logger.error("%s: %s" % (e.__class__.__name__, e))
                         self.state = 'STOP'
                     else:
-                        logger.error("%s: %s" % (e.__class__.__name__, e.message))
+                        logger.error("%s: %s" % (e.__class__.__name__, e))
                 except Exception as e:
                     logger.error(
                         'Failed to create test run for group %s (%s: %s).'
-                        % (device_group_name, e.__class__.__name__, e.message),
+                        % (device_group_name, e.__class__.__name__, e),
                         exc_info=True,
                         )
 
@@ -169,7 +174,13 @@ class TestRunManager(object):
     def thread_active_jobs(self):
         while self.state == 'RUNNING':
             logger.info('getting active runs')
-            self.process_active_runs()
+            try:
+                self.process_active_runs()
+            except requests.exceptions.ConnectionError as e:
+                logger.warning("exception raised when calling process_active_runs.")
+                logger.warning(e)
+                # TODO: if we see this a lot, add exponential backoff?
+                time.sleep(10)
             time.sleep(10)
 
     def process_active_runs(self):
@@ -181,8 +192,14 @@ class TestRunManager(object):
         for project_name in bitbar_projects:
             accumulation_dict[project_name] = []
 
-        # gather all runs per project
-        result = get_active_test_runs()
+        try:
+            # gather all runs per project
+            result = get_active_test_runs()
+        except RequestResponseError as e:
+            logger.error("process_active_runs: RequestResponseError received")
+            logger.error(e)
+            return
+
         for item in result:
             project_name = item['projectName']
             # only accumulate for projects in our config

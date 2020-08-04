@@ -2,8 +2,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from __future__ import absolute_import
-
 import argparse
 import os
 import sys
@@ -52,7 +50,12 @@ def test_run_manager(args):
     else:
         bitbar_configpath = args.bitbar_config
 
-    configuration.configure(bitbar_configpath, filespath=args.files, update_bitbar=args.update_bitbar)
+    try:
+        configuration.configure(bitbar_configpath, filespath=args.files, update_bitbar=args.update_bitbar)
+    except configuration.DuplicateProjectException as e:
+        logger.error("Duplicate project found! Please archive all but one and restart. Exiting...")
+        logger.error(e)
+        sys.exit(1)
 
     manager = TestRunManager(wait=args.wait)
     manager.run()
@@ -71,6 +74,7 @@ def run_test(args):
     configuration.configure(bitbar_configpath, filespath=args.files, update_bitbar=args.update_bitbar)
 
     run_test_for_project(args.project_name)
+    logger.info("run started for project '%s'" % args.project_name)
 
 def main():
 
