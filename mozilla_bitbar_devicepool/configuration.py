@@ -107,7 +107,7 @@ def configure(bitbar_configpath, filespath=None, update_bitbar=False):
     logger.info('configure: performing checks')
     try:
         ensure_filenames_are_unique(CONFIG)
-    except (ConfigurationFileException, ConfigurationFileDuplicateFilenamesException) as e:
+    except (ConfigurationFileException) as e:
         logger.error(e.message)
         sys.exit(1)
     expand_configuration()
