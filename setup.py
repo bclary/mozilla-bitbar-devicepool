@@ -18,5 +18,5 @@ setuptools.setup(
         "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
         "Operating System :: OS Independent",
     ],
-    scripts=['bin/device_group_report'],
+    scripts=["bin/device_group_report"],
 )
