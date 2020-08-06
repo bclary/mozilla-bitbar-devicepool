@@ -290,3 +290,22 @@ To follow the log output of the bitbar service
 ```
 sudo journalctl _SYSTEMD_UNIT=bitbar.service --follow
 ```
+
+## Development
+
+```
+pip install -r requirements-dev.txt  # install deps
+pre-commit install  # install the pre-commit hook
+# make changes
+# commit
+# test
+# make a PR
+```
+
+# Unit Testing
+
+```
+pytest  # runs once
+# or
+pytest-watch  # monitors files for changes and reruns
+```
