@@ -63,7 +63,7 @@ def run_test_for_project(project_name):
     for parameter_name in additional_parameters:
         parameter_value = additional_parameters[parameter_name]
         test_configuration["testRunParameters"].append(
-            {"key": parameter_name, "value": parameter_value,}
+            {"key": parameter_name, "value": parameter_value}
         )
 
     return run_test_with_configuration(test_configuration)
