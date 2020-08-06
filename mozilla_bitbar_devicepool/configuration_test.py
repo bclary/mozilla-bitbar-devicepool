@@ -7,7 +7,7 @@ from mozilla_bitbar_devicepool import configuration
 import pytest
 import yaml
 
-test_configuration_1 = '''
+test_configuration_1 = """
 projects:
   defaults:
     application_file: aerickson-Testdroid.apk
@@ -31,9 +31,9 @@ projects:
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/blah2
       TC_WORKER_TYPE: blah2
- '''
+ """
 
-test_configuration_2 = '''
+test_configuration_2 = """
 projects:
   defaults:
     application_file: aerickson-Testdroid.apk
@@ -57,25 +57,29 @@ projects:
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/blah2
       TC_WORKER_TYPE: blah2
- '''
+ """
+
 
 def test_unique_filenames_extraction():
-  config = yaml.load(test_configuration_1, Loader=yaml.SafeLoader)
-  assert (sorted(configuration.ensure_filenames_are_unique(config)) ==
-          sorted(['aerickson-empty-test2.zip',
-                  'aerickson-Testdroid.apk',
-                  'aerickson-empty-test.zip']
-          )
-  )
+    config = yaml.load(test_configuration_1, Loader=yaml.SafeLoader)
+    assert sorted(configuration.ensure_filenames_are_unique(config)) == sorted(
+        [
+            "aerickson-empty-test2.zip",
+            "aerickson-Testdroid.apk",
+            "aerickson-empty-test.zip",
+        ]
+    )
+
 
 def test_unique_filenames_ok_config():
-  config = yaml.load(test_configuration_1, Loader=yaml.SafeLoader)
-  try:
-    configuration.ensure_filenames_are_unique(config)
-  except Exception:
-    pytest.fail("shouldn't be any exceptions")
+    config = yaml.load(test_configuration_1, Loader=yaml.SafeLoader)
+    try:
+        configuration.ensure_filenames_are_unique(config)
+    except Exception:
+        pytest.fail("shouldn't be any exceptions")
+
 
 def test_unique_filenames_bad_config():
-  config = yaml.load(test_configuration_2, Loader=yaml.SafeLoader)
-  with pytest.raises(configuration.ConfigurationFileDuplicateFilenamesException):
-    configuration.ensure_filenames_are_unique(config)
+    config = yaml.load(test_configuration_2, Loader=yaml.SafeLoader)
+    with pytest.raises(configuration.ConfigurationFileDuplicateFilenamesException):
+        configuration.ensure_filenames_are_unique(config)

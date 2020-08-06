@@ -30,18 +30,17 @@ def get_devices(**kwargs):
        get_devices(displayname='pixel2-25') # Return pixel2-25
     """
     fields = {
-        'displayname': str,
-        'enabled': bool,
-        'id': int,
-        'locked': bool,
-        'online': bool,
-        'ostype': str
-        }
+        "displayname": str,
+        "enabled": bool,
+        "id": int,
+        "locked": bool,
+        "online": bool,
+        "ostype": str,
+    }
 
     filter = get_filter(fields, **kwargs)
-    response = TESTDROID.get('/api/v2/devices',
-                             payload={'limit': 0, 'filter': filter})
-    return response['data']
+    response = TESTDROID.get("/api/v2/devices", payload={"limit": 0, "filter": filter})
+    return response["data"]
 
 
 def get_device(id):
@@ -52,9 +51,11 @@ def get_device(id):
     Examples:
        get_device(1) # Return device with id 1
     """
-    response = TESTDROID.get('/api/v2/devices/{}'.format(id),
-                             payload={'limit': 0, 'filter': filter})
+    response = TESTDROID.get(
+        "/api/v2/devices/{}".format(id), payload={"limit": 0, "filter": filter}
+    )
     return response
+
 
 def get_device_problems(device_model=None):
     """Return list of matching Bitbar devices with device problems.
@@ -62,23 +63,22 @@ def get_device_problems(device_model=None):
     :param device_model: string prefix of device names to match.
     """
 
-    path = 'admin/device-problems'
-    payload={'limit': 0}
-    data = TESTDROID.get(path=path, payload=payload)['data']
+    path = "admin/device-problems"
+    payload = {"limit": 0}
+    data = TESTDROID.get(path=path, payload=payload)["data"]
     if device_model:
-        data = [d for d in data
-                if d['deviceName'].startswith(device_model)]
+        data = [d for d in data if d["deviceName"].startswith(device_model)]
     else:
-        data = [d for d in data
-                if d['deviceName'] != "Docker Builder"]
+        data = [d for d in data if d["deviceName"] != "Docker Builder"]
     return data
+
 
 def get_offline_devices(device_model=None):
     device_problems = get_device_problems(device_model=device_model)
     offline_devices = []
     for device_problem in device_problems:
-        problems = device_problem['problems']
+        problems = device_problem["problems"]
         for problem in problems:
-            if problem['type'] == 'OFFLINE':
-                offline_devices.append(device_problem['deviceModelName'])
+            if problem["type"] == "OFFLINE":
+                offline_devices.append(device_problem["deviceModelName"])
     return offline_devices
