@@ -304,6 +304,8 @@ pre-commit install  # install the pre-commit hook
 
 # Unit Testing
 
+You must install the development requirements first.  See the "Development" section above.
+
 ```
 pytest  # runs once
 # or
