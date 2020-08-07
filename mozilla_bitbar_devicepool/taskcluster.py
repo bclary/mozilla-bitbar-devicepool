@@ -4,12 +4,13 @@
 
 import requests
 
+
 def get_taskcluster_pending_tasks(provisioner_id, worker_type):
-    taskcluster_queue_url = 'https://firefox-ci-tc.services.mozilla.com/api/queue/v1/pending/%s/%s' % (
-        provisioner_id, worker_type)
+    taskcluster_queue_url = (
+        "https://firefox-ci-tc.services.mozilla.com/api/queue/v1/pending/%s/%s"
+        % (provisioner_id, worker_type)
+    )
     r = requests.get(taskcluster_queue_url)
     if r.ok:
-        return r.json()['pendingTasks']
+        return r.json()["pendingTasks"]
     return 0
-
-

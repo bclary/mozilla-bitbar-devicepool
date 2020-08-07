@@ -11,4 +11,3 @@ User=bitbar
 
 [Install]
 WantedBy=multi-user.target
-

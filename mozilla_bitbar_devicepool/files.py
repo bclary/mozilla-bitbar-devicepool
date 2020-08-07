@@ -23,18 +23,17 @@ def get_files(**kwargs):
     https://mozilla.testdroid.com/cloud/swagger-ui.html#/File/getFilesUsingGET
     """
     fields = {
-        'createtime': int,
-        'direction': str,
-        'id': int,
-        'mimetype': str,
-        'name': str,
-        'size': int,
-        'state': str,
+        "createtime": int,
+        "direction": str,
+        "id": int,
+        "mimetype": str,
+        "name": str,
+        "size": int,
+        "state": str,
     }
 
     filter = get_filter(fields, **kwargs)
-    response = TESTDROID.get('/api/v2/files',
-                             payload={'limit': 0,
-                                      'filter': filter,
-                                      'sort': 'createTime_a'})
-    return response['data']
+    response = TESTDROID.get(
+        "/api/v2/files", payload={"limit": 0, "filter": filter, "sort": "createTime_a"}
+    )
+    return response["data"]

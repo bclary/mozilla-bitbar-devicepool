@@ -49,10 +49,10 @@ class DeviceGroupReport:
             # print(the_item)
             if the_item:
                 for device in the_item:
-                    if 'pixel2' in device:
-                        self.device_dict['p2'] = self.device_dict.get('p2', 0) + 1
-                    if 'motog5' in device:
-                        self.device_dict['g5'] = self.device_dict.get('g5', 0) + 1
+                    if "pixel2" in device:
+                        self.device_dict["p2"] = self.device_dict.get("p2", 0) + 1
+                    if "motog5" in device:
+                        self.device_dict["g5"] = self.device_dict.get("g5", 0) + 1
 
     def main(self):
         self.get_report_dict()

@@ -25,16 +25,13 @@ def get_device_groups(**kwargs):
        get_device_groups() # Return all device groups
        get_device_groups(displayname='pixel2-perf') # Return pixel2-perf device group.
     """
-    fields = {
-        'displayname': str,
-        'id': int,
-        'ostype': str
-        }
+    fields = {"displayname": str, "id": int, "ostype": str}
 
     filter = get_filter(fields, **kwargs)
-    response = TESTDROID.get('/api/v2/me/device-groups',
-                             payload={'limit': 0, 'filter': filter})
-    return response['data']
+    response = TESTDROID.get(
+        "/api/v2/me/device-groups", payload={"limit": 0, "filter": filter}
+    )
+    return response["data"]
 
 
 def get_device_group(id):
@@ -45,9 +42,10 @@ def get_device_group(id):
     Examples:
        get_device_group(27) # Return device group with id 27
     """
-    response = TESTDROID.get('/api/v2/device-groups/{}'.format(id),
-                             payload={'limit': 0, 'filter': filter})
-    return response['data']
+    response = TESTDROID.get(
+        "/api/v2/device-groups/{}".format(id), payload={"limit": 0, "filter": filter}
+    )
+    return response["data"]
 
 
 def get_device_group_devices(id, **kwargs):
@@ -73,21 +71,23 @@ def get_device_group_devices(id, **kwargs):
        get_device_group_devices(27, displayname='pixel2-27') # Return devices for device group with id 27 and displayname pixel2-27.
     """
     fields = {
-        'displayname': str,
-        'enabled': bool,
-        'id': int,
-        'locked': bool,
-        'online': bool,
-        'ostype': str
-        }
+        "displayname": str,
+        "enabled": bool,
+        "id": int,
+        "locked": bool,
+        "online": bool,
+        "ostype": str,
+    }
 
     filter = get_filter(fields, **kwargs)
-    response = TESTDROID.get('/api/v2/device-groups/{}/devices'.format(id),
-                             payload={'limit': 0, 'filter': filter})
-    return response['data']
+    response = TESTDROID.get(
+        "/api/v2/device-groups/{}/devices".format(id),
+        payload={"limit": 0, "filter": filter},
+    )
+    return response["data"]
 
 
-def create_device_group(displayname, ostype='ANDROID'):
+def create_device_group(displayname, ostype="ANDROID"):
     """Create a device group for the current user.
 
     :param displayname: display name for the device group.
@@ -100,12 +100,13 @@ def create_device_group(displayname, ostype='ANDROID'):
     """
     me = TESTDROID.get_me()
     payload = {
-        'displayName': displayname,
-        'osType': ostype,
+        "displayName": displayname,
+        "osType": ostype,
     }
 
-    response = TESTDROID.post(path='/users/{}/device-groups'.format(me['id']),
-                             payload=payload)
+    response = TESTDROID.post(
+        path="/users/{}/device-groups".format(me["id"]), payload=payload
+    )
     return response
 
 
@@ -119,11 +120,12 @@ def add_devices_to_device_group(id, deviceids):
        add_device_to_device_group(40, [31])')
     """
     payload = {
-        'deviceIds[]': deviceids,
+        "deviceIds[]": deviceids,
     }
 
-    response = TESTDROID.post(path='/device-groups/{}/devices'.format(id),
-                             payload=payload)
+    response = TESTDROID.post(
+        path="/device-groups/{}/devices".format(id), payload=payload
+    )
     return response
 
 
@@ -136,7 +138,7 @@ def delete_device_from_device_group(id, deviceid):
     Examples:
        delete_device_group(99, 31)
     """
-    TESTDROID.delete(path='/device-groups/{}/devices/{}'.format(id, deviceid))
+    TESTDROID.delete(path="/device-groups/{}/devices/{}".format(id, deviceid))
 
 
 def delete_device_group(id):
@@ -148,4 +150,4 @@ def delete_device_group(id):
        delete_device_group(99)
     """
 
-    TESTDROID.delete(path='/device-groups/{}'.format(id))
+    TESTDROID.delete(path="/device-groups/{}".format(id))

@@ -29,15 +29,16 @@ def get_frameworks(**kwargs):
        get_devices(displayname='pixel2-25') # Return pixel2-25
     """
     fields = {
-        'id': int,
-        'jobconfigid': int,
-        'labelname': str,
-        'name': str,
-        'ostype': str,
-        'type': str,
-        }
+        "id": int,
+        "jobconfigid": int,
+        "labelname": str,
+        "name": str,
+        "ostype": str,
+        "type": str,
+    }
 
     filter = get_filter(fields, **kwargs)
-    response = TESTDROID.get('/api/v2/admin/frameworks',
-                             payload={'limit': 0, 'filter': filter})
-    return response['data']
+    response = TESTDROID.get(
+        "/api/v2/admin/frameworks", payload={"limit": 0, "filter": filter}
+    )
+    return response["data"]

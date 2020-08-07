@@ -27,18 +27,18 @@ def get_projects(**kwargs):
        get_projects(name='mozilla-unittests-p2')
     """
     fields = {
-        'frameworkid': int,
-        'id': int,
-        'name': str,
-        'ostype': str,
-        }
+        "frameworkid": int,
+        "id": int,
+        "name": str,
+        "ostype": str,
+    }
 
     filter = get_filter(fields, **kwargs)
-    response = TESTDROID.get('/api/v2/projects',
-                             payload={'limit': 0, 'filter': filter})
+    response = TESTDROID.get("/api/v2/projects", payload={"limit": 0, "filter": filter})
     # remove the archived projects
-    projects = [project for project in response['data']
-                if project['archiveTime'] is None]
+    projects = [
+        project for project in response["data"] if project["archiveTime"] is None
+    ]
     return projects
 
 
@@ -50,12 +50,13 @@ def get_project(id):
     Examples:
        get_project(1) # Return project with id 1
     """
-    response = TESTDROID.get('/api/v2/projects/{}'.format(id),
-                             payload={'limit': 0, 'filter': filter})
+    response = TESTDROID.get(
+        "/api/v2/projects/{}".format(id), payload={"limit": 0, "filter": filter}
+    )
     return response
 
 
-def create_project(name, project_type='GENERIC'):
+def create_project(name, project_type="GENERIC"):
     """Create a project.
 
     :param name: name for the project.
@@ -70,16 +71,19 @@ def create_project(name, project_type='GENERIC'):
     """
     me = TESTDROID.get_me()
     payload = {
-        'name': name,
-        'type': project_type,
+        "name": name,
+        "type": project_type,
     }
 
-    response = TESTDROID.post(path='/users/{}/projects'.format(me['id']),
-                             payload=payload)
+    response = TESTDROID.post(
+        path="/users/{}/projects".format(me["id"]), payload=payload
+    )
     return response
 
 
-def update_project(id, name, archiving_item_count=365, archiving_strategy='DAYS', description=None):
+def update_project(
+    id, name, archiving_item_count=365, archiving_strategy="DAYS", description=None
+):
     """Update a project.
 
     :param id: integer id of project.
@@ -99,14 +103,15 @@ def update_project(id, name, archiving_item_count=365, archiving_strategy='DAYS'
     """
     me = TESTDROID.get_me()
     payload = {
-        'archivingItemCount': archiving_item_count,
-        'archivingStrategy': archiving_strategy,
-        'description': description,
-        'name': name,
+        "archivingItemCount": archiving_item_count,
+        "archivingStrategy": archiving_strategy,
+        "description": description,
+        "name": name,
     }
 
-    response = TESTDROID.post(path='/users/{}/projects/{}'.format(me['id'], id),
-                             payload=payload)
+    response = TESTDROID.post(
+        path="/users/{}/projects/{}".format(me["id"], id), payload=payload
+    )
     return response
 
 
@@ -125,12 +130,14 @@ def get_project_test_run_config_parameters(id):
     """
     me = TESTDROID.get_me()
     payload = {
-        'limit': 0,
+        "limit": 0,
     }
 
-    response = TESTDROID.get(path='/api/v2/users/{}/projects/{}/config/parameters'.format(me['id'], id),
-                             payload=payload)
-    return response['data']
+    response = TESTDROID.get(
+        path="/api/v2/users/{}/projects/{}/config/parameters".format(me["id"], id),
+        payload=payload,
+    )
+    return response["data"]
 
 
 def add_project_test_run_config_parameter(id, key, value):
@@ -145,12 +152,14 @@ def add_project_test_run_config_parameter(id, key, value):
     """
     me = TESTDROID.get_me()
     payload = {
-        'key': key,
-        'value': value,
+        "key": key,
+        "value": value,
     }
 
-    response = TESTDROID.post(path='/users/{}/projects/{}/config/parameters'.format(me['id'], id),
-                             payload=payload)
+    response = TESTDROID.post(
+        path="/users/{}/projects/{}/config/parameters".format(me["id"], id),
+        payload=payload,
+    )
     return response
 
 
@@ -169,4 +178,8 @@ def delete_project_test_run_config_parameter(id, parameter_id):
     """
     me = TESTDROID.get_me()
 
-    TESTDROID.delete(path='/users/{}/projects/{}/config/parameters/{}'.format(me['id'], id, parameter_id))
+    TESTDROID.delete(
+        path="/users/{}/projects/{}/config/parameters/{}".format(
+            me["id"], id, parameter_id
+        )
+    )

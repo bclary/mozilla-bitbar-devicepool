@@ -2,14 +2,15 @@
 
 import argparse
 import sys
+
 try:
-  from mozilla_bitbar_devicepool.device_group_report import DeviceGroupReport
+    from mozilla_bitbar_devicepool.device_group_report import DeviceGroupReport
 except ImportError:
-  print("ERROR: Please install dependencies (`pip install -r requirements.txt`)!")
-  sys.exit(1)
+    print("ERROR: Please install dependencies (`pip install -r requirements.txt`)!")
+    sys.exit(1)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-c', '--config-file', help='config file to inspect')
+parser.add_argument("-c", "--config-file", help="config file to inspect")
 args = parser.parse_args()
 
 dgr = DeviceGroupReport(config_path=args.config_file)
