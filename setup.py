@@ -22,6 +22,6 @@ setuptools.setup(
     entry_points="""
     # -*- Entry points: -*-
     [console_scripts]
-    mbdp = mozilla_bitbar_devicepool.main:main
+    mbd = mozilla_bitbar_devicepool.main:main
     """,
 )
