@@ -212,7 +212,11 @@ Terminate Now
 
     logger.setLevel(level=args.log_level)
 
-    args.func(args)
+    try:
+        func = args.func
+    except AttributeError:
+        parser.error("too few arguments")
+    func(args)
 
 
 if __name__ == "__main__":
