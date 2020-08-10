@@ -1,3 +1,6 @@
+# roughly equivalent to `python setup.py develop`
+-e .
+
 PyYAML
 requests
 testdroid
