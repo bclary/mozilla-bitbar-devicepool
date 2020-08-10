@@ -19,4 +19,9 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     scripts=["bin/device_group_report"],
+    entry_points="""
+    # -*- Entry points: -*-
+    [console_scripts]
+    mbdp = mozilla_bitbar_devicepool.main:main
+    """,
 )
