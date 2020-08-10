@@ -1,4 +1,4 @@
-# install this module with `python setup.py develop`
+# roughly equivalent to `python setup.py develop`
 -e .
 
 PyYAML
