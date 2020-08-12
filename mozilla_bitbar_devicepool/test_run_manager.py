@@ -11,9 +11,12 @@ import time
 import requests
 
 from mozilla_bitbar_devicepool import configuration, logger
-from mozilla_bitbar_devicepool.device_groups import get_device_group_devices
-from mozilla_bitbar_devicepool.devices import get_offline_devices
-from mozilla_bitbar_devicepool.runs import get_active_test_runs, run_test_for_project
+from mozilla_bitbar_devicepool.bitbar.device_groups import get_device_group_devices
+from mozilla_bitbar_devicepool.bitbar.devices import get_offline_devices
+from mozilla_bitbar_devicepool.bitbar.runs import (
+    get_active_test_runs,
+    run_test_for_project,
+)
 from mozilla_bitbar_devicepool.taskcluster import get_taskcluster_pending_tasks
 
 from testdroid import RequestResponseError

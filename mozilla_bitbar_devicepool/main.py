@@ -15,7 +15,7 @@ from mozilla_bitbar_devicepool import (
     modulepath,
 )
 
-from mozilla_bitbar_devicepool.runs import run_test_for_project
+from mozilla_bitbar_devicepool.bitbar.runs import run_test_for_project
 from mozilla_bitbar_devicepool.test_run_manager import TestRunManager
 
 
