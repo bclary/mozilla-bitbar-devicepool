@@ -136,14 +136,3 @@ def download_file(url, dest, max_attempts=3):
             logger.warning("utils.download_file: %s: Attempt %s: %s", url, attempt, e)
             if attempt == max_attempts - 1:
                 raise
-
-
-__all__ = [
-    "configuration",
-    "device_groups",
-    "devices",
-    "files",
-    "frameworks",
-    "projects",
-    "runs",
-]
