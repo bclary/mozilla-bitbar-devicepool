@@ -1,4 +1,4 @@
-pytest
-pytest-watch
 pre-commit
 pylint
+pytest
+pytest-watch
