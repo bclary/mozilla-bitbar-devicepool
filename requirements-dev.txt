@@ -1,4 +1,3 @@
-pyflakes
 pytest
 pytest-watch
 pre-commit
