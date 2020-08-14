@@ -4,6 +4,9 @@
 
 import copy
 
+# TODO: use m-c utility functions vs writing our own
+# see https://github.com/bclary/mozilla-bitbar-devicepool/pull/2
+
 
 def lookup_key_value(dict_list, keyname):
     """Utility function to look up an object by key name from a list of
