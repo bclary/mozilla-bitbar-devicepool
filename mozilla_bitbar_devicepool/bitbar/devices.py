@@ -3,10 +3,8 @@
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-from mozilla_bitbar_devicepool import (
-    TESTDROID,
-    get_filter,
-)
+from mozilla_bitbar_devicepool import TESTDROID
+from mozilla_bitbar_devicepool.util.template import get_filter
 
 
 def get_devices(**kwargs):
