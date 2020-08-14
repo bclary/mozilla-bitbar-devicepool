@@ -3,18 +3,13 @@
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import os
+import sys
 import threading
 import time
-import sys
 
 import yaml
 
-from mozilla_bitbar_devicepool import TESTDROID, apply_dict_defaults, logger
-
-from mozilla_bitbar_devicepool.bitbar.devices import get_devices
-from mozilla_bitbar_devicepool.bitbar.files import get_files
-from mozilla_bitbar_devicepool.bitbar.frameworks import get_frameworks
-
+from mozilla_bitbar_devicepool import TESTDROID, logger
 from mozilla_bitbar_devicepool.bitbar.device_groups import (
     add_devices_to_device_group,
     create_device_group,
@@ -22,12 +17,15 @@ from mozilla_bitbar_devicepool.bitbar.device_groups import (
     get_device_group_devices,
     get_device_groups,
 )
-
+from mozilla_bitbar_devicepool.bitbar.devices import get_devices
+from mozilla_bitbar_devicepool.bitbar.files import get_files
+from mozilla_bitbar_devicepool.bitbar.frameworks import get_frameworks
 from mozilla_bitbar_devicepool.bitbar.projects import (
     create_project,
     get_projects,
     update_project,
 )
+from mozilla_bitbar_devicepool.util.template import apply_dict_defaults
 
 BITBAR_CACHE = {
     "device_groups": {},

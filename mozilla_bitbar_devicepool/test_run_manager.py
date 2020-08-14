@@ -9,6 +9,7 @@ import threading
 import time
 
 import requests
+from testdroid import RequestResponseError
 
 from mozilla_bitbar_devicepool import configuration, logger
 from mozilla_bitbar_devicepool.bitbar.device_groups import get_device_group_devices
@@ -18,8 +19,6 @@ from mozilla_bitbar_devicepool.bitbar.runs import (
     run_test_for_project,
 )
 from mozilla_bitbar_devicepool.taskcluster import get_taskcluster_pending_tasks
-
-from testdroid import RequestResponseError
 
 #
 # WARNING: not used everywhere yet!!!
