@@ -37,7 +37,7 @@ def get_devices(**kwargs):
     }
 
     filter = get_filter(fields, **kwargs)
-    response = TESTDROID.get("/api/v2/devices", payload={"limit": 0, "filter": filter})
+    response = TESTDROID.get("api/v2/devices", payload={"limit": 0, "filter": filter})
     return response["data"]
 
 
@@ -50,7 +50,7 @@ def get_device(id):
        get_device(1) # Return device with id 1
     """
     response = TESTDROID.get(
-        "/api/v2/devices/{}".format(id), payload={"limit": 0, "filter": filter}
+        "api/v2/devices/{}".format(id), payload={"limit": 0, "filter": filter}
     )
     return response
 

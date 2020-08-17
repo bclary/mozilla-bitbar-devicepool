@@ -87,7 +87,7 @@ def get_test_runs(project_id, active=None):
 
 def delete_test_run(project_id, test_run_id):
     me = TESTDROID.get_me()
-    path = "/users/%s/projects/%s/runs/%s" % (me["id"], project_id, test_run_id)
+    path = "users/%s/projects/%s/runs/%s" % (me["id"], project_id, test_run_id)
     data = TESTDROID.delete(path=path)
     return data
 
@@ -100,5 +100,5 @@ def abort_test_run(project_id, test_run_id):
 def get_active_test_runs(**kwargs):
     """Gets active test runs.
     """
-    response = TESTDROID.get("/api/v2/admin/runs?filter=d_endTime_isnull&limit=0")
+    response = TESTDROID.get("api/v2/admin/runs?filter=d_endTime_isnull&limit=0")
     return response["data"]

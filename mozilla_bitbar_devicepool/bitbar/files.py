@@ -32,6 +32,6 @@ def get_files(**kwargs):
 
     filter = get_filter(fields, **kwargs)
     response = TESTDROID.get(
-        "/api/v2/files", payload={"limit": 0, "filter": filter, "sort": "createTime_a"}
+        "api/v2/files", payload={"limit": 0, "filter": filter, "sort": "createTime_a"}
     )
     return response["data"]
