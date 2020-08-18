@@ -3,10 +3,8 @@
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-from mozilla_bitbar_devicepool import (
-    TESTDROID,
-    get_filter,
-)
+from mozilla_bitbar_devicepool import TESTDROID
+from mozilla_bitbar_devicepool.util.template import get_filter
 
 
 def get_devices(**kwargs):
@@ -39,7 +37,7 @@ def get_devices(**kwargs):
     }
 
     filter = get_filter(fields, **kwargs)
-    response = TESTDROID.get("/api/v2/devices", payload={"limit": 0, "filter": filter})
+    response = TESTDROID.get("api/v2/devices", payload={"limit": 0, "filter": filter})
     return response["data"]
 
 
@@ -52,7 +50,7 @@ def get_device(id):
        get_device(1) # Return device with id 1
     """
     response = TESTDROID.get(
-        "/api/v2/devices/{}".format(id), payload={"limit": 0, "filter": filter}
+        "api/v2/devices/{}".format(id), payload={"limit": 0, "filter": filter}
     )
     return response
 

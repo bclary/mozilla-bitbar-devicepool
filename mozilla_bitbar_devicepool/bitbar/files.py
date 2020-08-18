@@ -2,10 +2,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from mozilla_bitbar_devicepool import (
-    TESTDROID,
-    get_filter,
-)
+from mozilla_bitbar_devicepool import TESTDROID
+from mozilla_bitbar_devicepool.util.template import get_filter
 
 
 def get_files(**kwargs):
@@ -34,6 +32,6 @@ def get_files(**kwargs):
 
     filter = get_filter(fields, **kwargs)
     response = TESTDROID.get(
-        "/api/v2/files", payload={"limit": 0, "filter": filter, "sort": "createTime_a"}
+        "api/v2/files", payload={"limit": 0, "filter": filter, "sort": "createTime_a"}
     )
     return response["data"]

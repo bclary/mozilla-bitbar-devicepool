@@ -2,10 +2,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from mozilla_bitbar_devicepool import (
-    TESTDROID,
-    get_filter,
-)
+from mozilla_bitbar_devicepool import TESTDROID
+from mozilla_bitbar_devicepool.util.template import get_filter
 
 
 def get_device_groups(**kwargs):
@@ -29,7 +27,7 @@ def get_device_groups(**kwargs):
 
     filter = get_filter(fields, **kwargs)
     response = TESTDROID.get(
-        "/api/v2/me/device-groups", payload={"limit": 0, "filter": filter}
+        "api/v2/me/device-groups", payload={"limit": 0, "filter": filter}
     )
     return response["data"]
 
@@ -43,7 +41,7 @@ def get_device_group(id):
        get_device_group(27) # Return device group with id 27
     """
     response = TESTDROID.get(
-        "/api/v2/device-groups/{}".format(id), payload={"limit": 0, "filter": filter}
+        "api/v2/device-groups/{}".format(id), payload={"limit": 0, "filter": filter}
     )
     return response["data"]
 
@@ -81,7 +79,7 @@ def get_device_group_devices(id, **kwargs):
 
     filter = get_filter(fields, **kwargs)
     response = TESTDROID.get(
-        "/api/v2/device-groups/{}/devices".format(id),
+        "api/v2/device-groups/{}/devices".format(id),
         payload={"limit": 0, "filter": filter},
     )
     return response["data"]
@@ -105,7 +103,7 @@ def create_device_group(displayname, ostype="ANDROID"):
     }
 
     response = TESTDROID.post(
-        path="/users/{}/device-groups".format(me["id"]), payload=payload
+        path="users/{}/device-groups".format(me["id"]), payload=payload
     )
     return response
 
@@ -124,7 +122,7 @@ def add_devices_to_device_group(id, deviceids):
     }
 
     response = TESTDROID.post(
-        path="/device-groups/{}/devices".format(id), payload=payload
+        path="device-groups/{}/devices".format(id), payload=payload
     )
     return response
 
@@ -138,7 +136,7 @@ def delete_device_from_device_group(id, deviceid):
     Examples:
        delete_device_group(99, 31)
     """
-    TESTDROID.delete(path="/device-groups/{}/devices/{}".format(id, deviceid))
+    TESTDROID.delete(path="device-groups/{}/devices/{}".format(id, deviceid))
 
 
 def delete_device_group(id):
@@ -150,4 +148,4 @@ def delete_device_group(id):
        delete_device_group(99)
     """
 
-    TESTDROID.delete(path="/device-groups/{}".format(id))
+    TESTDROID.delete(path="device-groups/{}".format(id))

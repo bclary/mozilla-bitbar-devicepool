@@ -2,10 +2,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from mozilla_bitbar_devicepool import (
-    TESTDROID,
-    get_filter,
-)
+from mozilla_bitbar_devicepool import TESTDROID
+from mozilla_bitbar_devicepool.util.template import get_filter
 
 
 def get_projects(**kwargs):
@@ -34,7 +32,7 @@ def get_projects(**kwargs):
     }
 
     filter = get_filter(fields, **kwargs)
-    response = TESTDROID.get("/api/v2/projects", payload={"limit": 0, "filter": filter})
+    response = TESTDROID.get("api/v2/projects", payload={"limit": 0, "filter": filter})
     # remove the archived projects
     projects = [
         project for project in response["data"] if project["archiveTime"] is None
@@ -51,7 +49,7 @@ def get_project(id):
        get_project(1) # Return project with id 1
     """
     response = TESTDROID.get(
-        "/api/v2/projects/{}".format(id), payload={"limit": 0, "filter": filter}
+        "api/v2/projects/{}".format(id), payload={"limit": 0, "filter": filter}
     )
     return response
 
@@ -76,7 +74,7 @@ def create_project(name, project_type="GENERIC"):
     }
 
     response = TESTDROID.post(
-        path="/users/{}/projects".format(me["id"]), payload=payload
+        path="users/{}/projects".format(me["id"]), payload=payload
     )
     return response
 
@@ -110,7 +108,7 @@ def update_project(
     }
 
     response = TESTDROID.post(
-        path="/users/{}/projects/{}".format(me["id"], id), payload=payload
+        path="users/{}/projects/{}".format(me["id"], id), payload=payload
     )
     return response
 
@@ -134,7 +132,7 @@ def get_project_test_run_config_parameters(id):
     }
 
     response = TESTDROID.get(
-        path="/api/v2/users/{}/projects/{}/config/parameters".format(me["id"], id),
+        path="api/v2/users/{}/projects/{}/config/parameters".format(me["id"], id),
         payload=payload,
     )
     return response["data"]
@@ -157,7 +155,7 @@ def add_project_test_run_config_parameter(id, key, value):
     }
 
     response = TESTDROID.post(
-        path="/users/{}/projects/{}/config/parameters".format(me["id"], id),
+        path="users/{}/projects/{}/config/parameters".format(me["id"], id),
         payload=payload,
     )
     return response
@@ -179,7 +177,7 @@ def delete_project_test_run_config_parameter(id, parameter_id):
     me = TESTDROID.get_me()
 
     TESTDROID.delete(
-        path="/users/{}/projects/{}/config/parameters/{}".format(
+        path="users/{}/projects/{}/config/parameters/{}".format(
             me["id"], id, parameter_id
         )
     )

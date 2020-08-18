@@ -1,5 +1,9 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+
+# pylint needs to be run in the local venv (vs pre-commit's generated) so imports work
+# - should be installed via `pip install -r requirements-dev.txt`
+
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
@@ -16,3 +20,11 @@ repos:
     rev: 3.8.3
     hooks:
     - id: flake8
+-   repo: local
+    hooks:
+    -   id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        args: [-E]  # only look for errors

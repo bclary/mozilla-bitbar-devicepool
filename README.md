@@ -115,13 +115,13 @@ device_groups:
 
 ### Main
 
-The `main.py` script is used to perform tasks related to running
+The `mbd` script is used to perform tasks related to running
 the Mozilla Android Hardware tests. It is implemented using `sub-command`
 arguments.
 
 ```
-$ python main.py --help
-usage: main.py [-h] [--files FILES]
+$ mbd --help
+usage: mbd [-h] [--files FILES]
                [--log-level {CRITICAL,ERROR,WARNING,INFO,DEBUG}]
                {download-testdroid-apk,empty-test-zip,start-test-run-manager,run-test}
                ...
@@ -184,8 +184,8 @@ to the `files/` directory. You can specify a unique name to prevent name
 collisions with files from other users.
 
 ```
-$ python main.py download-testdroid-apk --help
-usage: main.py download-testdroid-apk [-h] [--filename FILENAME] [--force]
+$ mbd download-testdroid-apk --help
+usage: mbd download-testdroid-apk [-h] [--filename FILENAME] [--force]
 
 optional arguments:
   -h, --help           show this help message and exit
@@ -204,8 +204,8 @@ create an empty zip file in the `files/` directory. You can specify a
 unique name to prevent name collisions with files from other users.
 
 ```
-$ python main.py empty-test-zip --help
-usage: main.py empty-test-zip [-h] [--filename FILENAME]
+$ mbd empty-test-zip --help
+usage: mbd empty-test-zip [-h] [--filename FILENAME]
 
 optional arguments:
   -h, --help           show this help message and exit
@@ -221,8 +221,8 @@ the configuration for pending tasks and starts a corresponding Bitbar
 test run to service the task.
 
 ```
-$ python main.py start-test-run-manager --help
-usage: main.py start-test-run-manager [-h] [--bitbar-config BITBAR_CONFIG]
+$ mbd start-test-run-manager --help
+usage: mbd start-test-run-manager [-h] [--bitbar-config BITBAR_CONFIG]
                                       [--wait WAIT] [--delete-bitbar-tests]
 
 optional arguments:
@@ -243,8 +243,8 @@ test runs, is to execute test runs for the `mozilla-docker-build`
 project which creates a new Docker image for use in further testing.
 
 ```
-$ python main.py run-test --help
-usage: main.py run-test [-h] --project_name PROJECT_NAME
+$ mbd run-test --help
+usage: mbd run-test [-h] --project_name PROJECT_NAME
 
 optional arguments:
   -h, --help            show this help message and exit

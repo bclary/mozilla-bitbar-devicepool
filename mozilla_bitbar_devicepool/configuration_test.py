@@ -2,10 +2,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from mozilla_bitbar_devicepool import configuration
-
 import pytest
 import yaml
+
+from mozilla_bitbar_devicepool import configuration
 
 test_configuration_1 = """
 projects:

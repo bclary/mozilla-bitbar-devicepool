@@ -10,14 +10,12 @@ import zipfile
 from mozilla_bitbar_devicepool import (
     TESTDROID,
     configuration,
-    download_file,
     logger,
     modulepath,
 )
-
-from mozilla_bitbar_devicepool.runs import run_test_for_project
+from mozilla_bitbar_devicepool.bitbar.runs import run_test_for_project
 from mozilla_bitbar_devicepool.test_run_manager import TestRunManager
-
+from mozilla_bitbar_devicepool.util.network import download_file
 
 testdroid_apk_url = (
     "https://github.com/bitbar/bitbar-samples/blob/master/apps/builds/Testdroid.apk"

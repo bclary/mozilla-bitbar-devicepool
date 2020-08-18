@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-import yaml
 import os
 import sys
+
+import yaml
 
 
 def get_len(an_object):
