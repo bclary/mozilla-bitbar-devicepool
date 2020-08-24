@@ -25,6 +25,22 @@ python -m virtualenv venv
 pip install -r requirements.txt
 ```
 
+## Updates
+
+```
+# Update the repository
+cd mozilla-bitbar-devicepool
+git pull --rebase
+
+# Activate the virtual environment
+. venv/bin/activate
+
+# Install any updated requirements
+pip install -r requirements.txt
+
+# Restart the service
+```
+
 ## Configuration
 
 Configuring mozilla-bitbar-devicepool requires creating environment
