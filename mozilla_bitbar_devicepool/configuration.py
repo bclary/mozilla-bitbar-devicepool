@@ -303,6 +303,7 @@ def configure_projects(update_bitbar=False):
         logger.info("{}: configuring...".format(log_header))
 
         project_config = projects_config[project_name]
+        # TODO: salt project_name below with user id!?!
         bitbar_projects = get_projects(name=project_name)
         if len(bitbar_projects) > 1:
             raise DuplicateProjectException(
