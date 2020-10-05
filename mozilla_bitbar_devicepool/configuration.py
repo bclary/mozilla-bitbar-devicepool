@@ -312,10 +312,14 @@ def configure_projects(update_bitbar=False):
             )
         elif len(bitbar_projects) == 1:
             bitbar_project = bitbar_projects[0]
+            logger.info("configure_projects: using project {}".format(bitbar_project))
         else:
             if update_bitbar:
                 bitbar_project = create_project(
                     project_name, project_type=project_config["project_type"]
+                )
+                logger.info(
+                    "configure_projects: created project {}".format(bitbar_project)
                 )
             else:
                 raise Exception(
