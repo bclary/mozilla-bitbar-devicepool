@@ -206,10 +206,20 @@ def configure_device_groups(update_bitbar=False):
             )
         elif len(bitbar_device_groups) == 1:
             bitbar_device_group = bitbar_device_groups[0]
+            logger.info(
+                "configure_device_groups: configuring group {} to use {}".format(
+                    device_group_name, bitbar_device_group
+                )
+            )
         else:
             # no such device group. create it.
             if update_bitbar:
                 bitbar_device_group = create_device_group(device_group_name)
+                logger.info(
+                    "configure_device_groups: configuring group {} to use newly created group {}".format(
+                        device_group_name, bitbar_device_group
+                    )
+                )
             else:
                 raise Exception(
                     "device group {} does not exist but can not create.".format(
