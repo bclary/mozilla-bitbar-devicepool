@@ -20,6 +20,7 @@ from mozilla_bitbar_devicepool.bitbar.device_groups import (
 from mozilla_bitbar_devicepool.bitbar.devices import get_devices
 from mozilla_bitbar_devicepool.bitbar.files import get_files
 from mozilla_bitbar_devicepool.bitbar.frameworks import get_frameworks
+from mozilla_bitbar_devicepool.bitbar.me import get_me
 from mozilla_bitbar_devicepool.bitbar.projects import (
     create_project,
     get_projects,
@@ -303,29 +304,39 @@ def configure_projects(update_bitbar=False):
         logger.info("{}: configuring...".format(log_header))
 
         project_config = projects_config[project_name]
-        # TODO: salt project_name below with user id!?!
-        bitbar_projects = get_projects(name=project_name)
+
+        # salt project_name below with user id
+        api_user_id = get_me()[id]
+        salted_project_name = "%s-%s" % (api_user_id, project_name)
+
+        bitbar_projects = get_projects(name=salted_project_name)
         if len(bitbar_projects) > 1:
             raise DuplicateProjectException(
-                "project {} has {} duplicates".format(
-                    project_name, len(bitbar_projects) - 1
+                "project {} ({}) has {} duplicates".format(
+                    project_name, salted_project_name, len(bitbar_projects) - 1
                 )
             )
         elif len(bitbar_projects) == 1:
             bitbar_project = bitbar_projects[0]
-            logger.info("configure_projects: using project {}".format(bitbar_project))
+            logger.debug(
+                "configure_projects: using project {} ({})".format(
+                    bitbar_project, salted_project_name
+                )
+            )
         else:
             if update_bitbar:
                 bitbar_project = create_project(
-                    project_name, project_type=project_config["project_type"]
+                    salted_project_name, project_type=project_config["project_type"]
                 )
-                logger.info(
-                    "configure_projects: created project {}".format(bitbar_project)
+                logger.debug(
+                    "configure_projects: created project {} ({})".format(
+                        bitbar_project, salted_project_name
+                    )
                 )
             else:
                 raise Exception(
-                    "Project {} does not exist, but not creating as not configured to update bitbar!".format(
-                        project_name
+                    "Project {} ({}) does not exist, but not creating as not configured to update bitbar!".format(
+                        project_name, salted_project_name
                     )
                 )
 
@@ -381,7 +392,7 @@ def configure_projects(update_bitbar=False):
             if update_bitbar:
                 bitbar_project = update_project(
                     bitbar_project["id"],
-                    project_name,
+                    salted_project_name,
                     archiving_item_count=project_config["archivingItemCount"],
                     archiving_strategy=project_config["archivingStrategy"],
                     description=project_config["description"],
@@ -405,8 +416,8 @@ def configure_projects(update_bitbar=False):
                     )
                 )
                 raise Exception(
-                    "The remote configuration for {} differs from the local configuration, but not configured to update bitbar!".format(
-                        project_name
+                    "The remote configuration for {} ({}) differs from the local configuration, but not configured to update bitbar!".format(
+                        project_name, salted_project_name
                     )
                 )
 
