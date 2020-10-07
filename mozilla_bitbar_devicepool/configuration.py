@@ -305,7 +305,7 @@ def configure_projects(update_bitbar=False):
 
         project_config = projects_config[project_name]
 
-        # salt project_name below with user id
+        # prepend project_name with user id
         api_user_id = get_me()["id"]
         salted_project_name = "%s-%s" % (api_user_id, project_name)
 
