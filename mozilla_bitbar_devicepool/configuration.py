@@ -29,6 +29,7 @@ from mozilla_bitbar_devicepool.bitbar.projects import (
 from mozilla_bitbar_devicepool.util.template import apply_dict_defaults
 
 BITBAR_CACHE = {
+    "me": {},
     "device_groups": {},
     "devices": {},
     "files": {},
@@ -308,7 +309,8 @@ def configure_projects(update_bitbar=False):
         # for the project name at bitbar, add user id to the project_name
         # - prevents collision with other users' projects and allows us to
         #   avoid having to share projects
-        api_user_id = get_me()["mainUserId"]
+        BITBAR_CACHE["me"] = get_me()
+        api_user_id = BITBAR_CACHE["me"]["mainUserId"]
         user_project_name = "%s-%s" % (api_user_id, project_name)
 
         bitbar_projects = get_projects(name=user_project_name)
