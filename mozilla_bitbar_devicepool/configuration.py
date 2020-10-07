@@ -308,7 +308,7 @@ def configure_projects(update_bitbar=False):
         # for the project name at bitbar, add user id to the project_name
         # - prevents collision with other users' projects and allows us to
         #   avoid having to share projects
-        api_user_id = get_me()["accountId"]
+        api_user_id = get_me()["mainUserId"]
         user_project_name = "%s-%s" % (api_user_id, project_name)
 
         bitbar_projects = get_projects(name=user_project_name)
