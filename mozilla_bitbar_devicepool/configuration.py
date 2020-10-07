@@ -307,36 +307,36 @@ def configure_projects(update_bitbar=False):
 
         # prepend project_name with user id
         api_user_id = get_me()["accountId"]
-        salted_project_name = "%s-%s" % (api_user_id, project_name)
+        user_project_name = "%s-%s" % (api_user_id, project_name)
 
-        bitbar_projects = get_projects(name=salted_project_name)
+        bitbar_projects = get_projects(name=user_project_name)
         if len(bitbar_projects) > 1:
             raise DuplicateProjectException(
                 "project {} ({}) has {} duplicates".format(
-                    project_name, salted_project_name, len(bitbar_projects) - 1
+                    project_name, user_project_name, len(bitbar_projects) - 1
                 )
             )
         elif len(bitbar_projects) == 1:
             bitbar_project = bitbar_projects[0]
             logger.debug(
                 "configure_projects: using project {} ({})".format(
-                    bitbar_project, salted_project_name
+                    bitbar_project, user_project_name
                 )
             )
         else:
             if update_bitbar:
                 bitbar_project = create_project(
-                    salted_project_name, project_type=project_config["project_type"]
+                    user_project_name, project_type=project_config["project_type"]
                 )
                 logger.debug(
                     "configure_projects: created project {} ({})".format(
-                        bitbar_project, salted_project_name
+                        bitbar_project, user_project_name
                     )
                 )
             else:
                 raise Exception(
                     "Project {} ({}) does not exist, but not creating as not configured to update bitbar!".format(
-                        project_name, salted_project_name
+                        project_name, user_project_name
                     )
                 )
 
@@ -392,7 +392,7 @@ def configure_projects(update_bitbar=False):
             if update_bitbar:
                 bitbar_project = update_project(
                     bitbar_project["id"],
-                    salted_project_name,
+                    user_project_name,
                     archiving_item_count=project_config["archivingItemCount"],
                     archiving_strategy=project_config["archivingStrategy"],
                     description=project_config["description"],
@@ -417,7 +417,7 @@ def configure_projects(update_bitbar=False):
                 )
                 raise Exception(
                     "The remote configuration for {} ({}) differs from the local configuration, but not configured to update bitbar!".format(
-                        project_name, salted_project_name
+                        project_name, user_project_name
                     )
                 )
 
