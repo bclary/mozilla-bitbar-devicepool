@@ -29,11 +29,11 @@ from mozilla_bitbar_devicepool.bitbar.projects import (
 from mozilla_bitbar_devicepool.util.template import apply_dict_defaults
 
 BITBAR_CACHE = {
-    "me": {},
     "device_groups": {},
     "devices": {},
     "files": {},
     "frameworks": {},
+    "me": {},
     "projects": {},
     "test_runs": {},
 }
