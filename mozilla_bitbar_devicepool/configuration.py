@@ -305,7 +305,9 @@ def configure_projects(update_bitbar=False):
 
         project_config = projects_config[project_name]
 
-        # prepend project_name with user id
+        # for the project name at bitbar, add user id to the project_name
+        # - prevents collision with other users' projects and avoid having
+        #   to share projects
         api_user_id = get_me()["accountId"]
         user_project_name = "%s-%s" % (api_user_id, project_name)
 
