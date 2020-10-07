@@ -306,7 +306,7 @@ def configure_projects(update_bitbar=False):
         project_config = projects_config[project_name]
 
         # prepend project_name with user id
-        api_user_id = get_me()["id"]
+        api_user_id = get_me()["accountId"]
         salted_project_name = "%s-%s" % (api_user_id, project_name)
 
         bitbar_projects = get_projects(name=salted_project_name)
