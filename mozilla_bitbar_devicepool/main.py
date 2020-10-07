@@ -17,9 +17,7 @@ from mozilla_bitbar_devicepool.bitbar.runs import run_test_for_project
 from mozilla_bitbar_devicepool.test_run_manager import TestRunManager
 from mozilla_bitbar_devicepool.util.network import download_file
 
-testdroid_apk_url = (
-    "https://github.com/bitbar/bitbar-samples/blob/master/apps/builds/Testdroid.apk"
-)
+testdroid_apk_url = "https://github.com/bitbar/test-samples/raw/master/apps/android/testdroid-sample-app.apk"
 
 
 def download_testdroid_apk(args):
