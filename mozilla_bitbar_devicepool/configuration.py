@@ -20,7 +20,6 @@ from mozilla_bitbar_devicepool.bitbar.device_groups import (
 from mozilla_bitbar_devicepool.bitbar.devices import get_devices
 from mozilla_bitbar_devicepool.bitbar.files import get_files
 from mozilla_bitbar_devicepool.bitbar.frameworks import get_frameworks
-from mozilla_bitbar_devicepool.bitbar.me import get_me
 from mozilla_bitbar_devicepool.bitbar.projects import (
     create_project,
     get_projects,
@@ -66,6 +65,18 @@ def get_filespath():
     """Return files path where application and test files are kept.
     """
     return FILESPATH
+
+
+def get_me_id():
+    """Returns the Bitbar User ID that the application is using.
+    """
+
+    if BITBAR_CACHE["me"] == {}:
+        BITBAR_CACHE["me"] = TESTDROID.get_me()
+    # use 'id'
+    # - not 'mainUserId' (user's can create sub-users)
+    # - not 'accountId' (the organization's id))
+    return BITBAR_CACHE["me"]["id"]
 
 
 def ensure_filenames_are_unique(config):
@@ -309,8 +320,7 @@ def configure_projects(update_bitbar=False):
         # for the project name at bitbar, add user id to the project_name
         # - prevents collision with other users' projects and allows us to
         #   avoid having to share projects
-        BITBAR_CACHE["me"] = get_me()
-        api_user_id = BITBAR_CACHE["me"]["mainUserId"]
+        api_user_id = get_me_id()
         user_project_name = "%s-%s" % (api_user_id, project_name)
 
         bitbar_projects = get_projects(name=user_project_name)
