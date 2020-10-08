@@ -32,6 +32,7 @@ BITBAR_CACHE = {
     "devices": {},
     "files": {},
     "frameworks": {},
+    "me": {},
     "projects": {},
     "test_runs": {},
 }
@@ -64,6 +65,18 @@ def get_filespath():
     """Return files path where application and test files are kept.
     """
     return FILESPATH
+
+
+def get_me_id():
+    """Returns the Bitbar User ID that the application is using.
+    """
+
+    if BITBAR_CACHE["me"] == {}:
+        BITBAR_CACHE["me"] = TESTDROID.get_me()
+    # use 'id'
+    # - not 'mainUserId' (user's can create sub-users)
+    # - not 'accountId' (the organization's id))
+    return BITBAR_CACHE["me"]["id"]
 
 
 def ensure_filenames_are_unique(config):
@@ -206,10 +219,20 @@ def configure_device_groups(update_bitbar=False):
             )
         elif len(bitbar_device_groups) == 1:
             bitbar_device_group = bitbar_device_groups[0]
+            logger.debug(
+                "configure_device_groups: configuring group {} to use {}".format(
+                    device_group_name, bitbar_device_group
+                )
+            )
         else:
             # no such device group. create it.
             if update_bitbar:
                 bitbar_device_group = create_device_group(device_group_name)
+                logger.debug(
+                    "configure_device_groups: configuring group {} to use newly created group {}".format(
+                        device_group_name, bitbar_device_group
+                    )
+                )
             else:
                 raise Exception(
                     "device group {} does not exist but can not create.".format(
@@ -293,24 +316,41 @@ def configure_projects(update_bitbar=False):
         logger.info("{}: configuring...".format(log_header))
 
         project_config = projects_config[project_name]
-        bitbar_projects = get_projects(name=project_name)
+
+        # for the project name at bitbar, add user id to the project_name
+        # - prevents collision with other users' projects and allows us to
+        #   avoid having to share projects
+        api_user_id = get_me_id()
+        user_project_name = "%s-%s" % (api_user_id, project_name)
+
+        bitbar_projects = get_projects(name=user_project_name)
         if len(bitbar_projects) > 1:
             raise DuplicateProjectException(
-                "project {} has {} duplicates".format(
-                    project_name, len(bitbar_projects) - 1
+                "project {} ({}) has {} duplicates".format(
+                    project_name, user_project_name, len(bitbar_projects) - 1
                 )
             )
         elif len(bitbar_projects) == 1:
             bitbar_project = bitbar_projects[0]
+            logger.debug(
+                "configure_projects: using project {} ({})".format(
+                    bitbar_project, user_project_name
+                )
+            )
         else:
             if update_bitbar:
                 bitbar_project = create_project(
-                    project_name, project_type=project_config["project_type"]
+                    user_project_name, project_type=project_config["project_type"]
+                )
+                logger.debug(
+                    "configure_projects: created project {} ({})".format(
+                        bitbar_project, user_project_name
+                    )
                 )
             else:
                 raise Exception(
-                    "Project {} does not exist, but not creating as not configured to update bitbar!".format(
-                        project_name
+                    "Project {} ({}) does not exist, but not creating as not configured to update bitbar!".format(
+                        project_name, user_project_name
                     )
                 )
 
@@ -366,7 +406,7 @@ def configure_projects(update_bitbar=False):
             if update_bitbar:
                 bitbar_project = update_project(
                     bitbar_project["id"],
-                    project_name,
+                    user_project_name,
                     archiving_item_count=project_config["archivingItemCount"],
                     archiving_strategy=project_config["archivingStrategy"],
                     description=project_config["description"],
@@ -390,8 +430,8 @@ def configure_projects(update_bitbar=False):
                     )
                 )
                 raise Exception(
-                    "The remote configuration for {} differs from the local configuration, but not configured to update bitbar!".format(
-                        project_name
+                    "The remote configuration for {} ({}) differs from the local configuration, but not configured to update bitbar!".format(
+                        project_name, user_project_name
                     )
                 )
 

@@ -226,7 +226,10 @@ class TestRunManager(object):
             return
 
         for item in result:
-            project_name = item["projectName"]
+            # remove user id from this (see configuration.py:configure_projects)
+            project_name = item["projectName"].replace(
+                "%s-" % (configuration.get_me_id()), ""
+            )
             # only accumulate for projects in our config
             if project_name in bitbar_projects:
                 accumulation_dict[project_name].append(item)

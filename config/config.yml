@@ -2,8 +2,8 @@ projects:
   defaults:
     os_type: ANDROID
     project_type: APPIUM_ANDROID_SERVER_SIDE
-    application_file: aerickson-Testdroid.apk
-    test_file: aerickson-empty-test.zip
+    application_file: relops-testdroid-sample-app.apk
+    test_file: relops-empty-test.zip
     timeout: 0
     scheduler: SINGLE
     archivingStrategy: DAYS
