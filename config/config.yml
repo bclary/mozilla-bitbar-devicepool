@@ -76,7 +76,7 @@ projects:
   mozilla-gw-test-1:
     device_group_name: test-1
     framework_name: mozilla-usb
-    description: used for testing new images
+    description: used for testing new images, devices, operating systems
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-1
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-1
@@ -85,21 +85,21 @@ projects:
   mozilla-gw-test-2:
     device_group_name: test-2
     framework_name: mozilla-usb
-    description: used for testing new images
+    description: used for testing new images, devices, operating systems
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-2
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-2
       # replace with version to test
       DOCKER_IMAGE_VERSION: 20200804T101109
-  # mozilla-gw-test-3:
-  #   device_group_name: test-3
-  #   framework_name: mozilla-usb
-  #   description: used for testing new images
-  #   additional_parameters:
-  #     TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-3
-  #     TC_WORKER_TYPE: gecko-t-bitbar-gw-test-3
-  #     # replace with version to test
-  #     DOCKER_IMAGE_VERSION: 20200326T142021
+  mozilla-gw-test-3:
+    device_group_name: s7-unit
+    framework_name: mozilla-usb
+    description: used for testing new images, devices, operating systems
+    additional_parameters:
+      TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-3
+      TC_WORKER_TYPE: gecko-t-bitbar-gw-test-3
+      # replace with version to test
+      DOCKER_IMAGE_VERSION: 20200804T101109
   # mozilla-docker-image-test:
   #   device_group_name: motog5-test
   #   framework_name: mozilla-usb
@@ -130,10 +130,11 @@ device_groups:
     # motog5-11:
     # motog5-12:
     # motog5-13:
-    motog5-14:
-    motog5-15:
-    motog5-16:
-    motog5-17:
+    # disabled to add 4 s7g
+    # motog5-14:
+    # motog5-15:
+    # motog5-16:
+    # motog5-17:
     motog5-18:
     motog5-19:
     motog5-20:
@@ -232,3 +233,9 @@ device_groups:
     pixel2-59:
   pixel2-batt:
   pixel2-batt-2:
+  s7-unit:
+    s7-01:
+    s7-02:
+    s7-03:
+    s7-04:
+  s7-perf:
