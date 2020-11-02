@@ -76,7 +76,7 @@ projects:
   mozilla-gw-test-1:
     device_group_name: test-1
     framework_name: mozilla-usb
-    description: used for testing new images
+    description: used for testing new images, devices, operating systems
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-1
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-1
@@ -85,7 +85,7 @@ projects:
   mozilla-gw-test-2:
     device_group_name: test-2
     framework_name: mozilla-usb
-    description: used for testing new images
+    description: used for testing new images, devices, operating systems
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-2
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-2
@@ -94,7 +94,7 @@ projects:
   mozilla-gw-test-3:
     device_group_name: s7-unit
     framework_name: mozilla-usb
-    description: used for testing new images
+    description: used for testing new images, devices, operating systems
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-3
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-3
