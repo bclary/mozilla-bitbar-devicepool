@@ -130,10 +130,11 @@ device_groups:
     # motog5-11:
     # motog5-12:
     # motog5-13:
-    motog5-14:
-    motog5-15:
-    motog5-16:
-    motog5-17:
+    # disabled to add 4 s7g
+    # motog5-14:
+    # motog5-15:
+    # motog5-16:
+    # motog5-17:
     motog5-18:
     motog5-19:
     motog5-20:
@@ -232,3 +233,9 @@ device_groups:
     pixel2-59:
   pixel2-batt:
   pixel2-batt-2:
+  s7-unit:
+    s7-01:
+    s7-02:
+    s7-03:
+    s7-04:
+  s7-perf:
