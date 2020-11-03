@@ -68,10 +68,10 @@ projects:
   #   device_model: motog4
   #   framework_name: Docker image build
   #   description: Mozilla Docker image build
-  #   test_file: mozilla-docker-20190528T112747.zip
-  #   application_file: aerickson-Testdroid.apk
+  #   test_file: mozilla-docker-20201102T161546.zip
+  #   # app file is defaulted
   #   additional_parameters:
-  #     DOCKER_IMAGE_VERSION: 20190528T112747
+  #     DOCKER_IMAGE_VERSION: 20201102T161546
   # used for testing new docker images
   mozilla-gw-test-1:
     device_group_name: test-1
