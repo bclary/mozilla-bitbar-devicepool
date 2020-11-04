@@ -68,10 +68,10 @@ projects:
   #   device_model: motog4
   #   framework_name: Docker image build
   #   description: Mozilla Docker image build
-  #   test_file: mozilla-docker-20190528T112747.zip
-  #   application_file: aerickson-Testdroid.apk
+  #   test_file: mozilla-docker-20201102T161546.zip
+  #   # app file is defaulted
   #   additional_parameters:
-  #     DOCKER_IMAGE_VERSION: 20190528T112747
+  #     DOCKER_IMAGE_VERSION: 20201102T161546
   # used for testing new docker images
   mozilla-gw-test-1:
     device_group_name: test-1
@@ -81,7 +81,7 @@ projects:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-1
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-1
       # replace with version to test
-      DOCKER_IMAGE_VERSION: 20200804T101109
+      DOCKER_IMAGE_VERSION: 20201102T161546
   mozilla-gw-test-2:
     device_group_name: test-2
     framework_name: mozilla-usb
@@ -90,7 +90,7 @@ projects:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-2
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-2
       # replace with version to test
-      DOCKER_IMAGE_VERSION: 20200804T101109
+      DOCKER_IMAGE_VERSION: 20201102T161546
   mozilla-gw-test-3:
     device_group_name: s7-unit
     framework_name: mozilla-usb
@@ -99,7 +99,7 @@ projects:
       TASKCLUSTER_CLIENT_ID: project/autophone/bitbar-x-test-3
       TC_WORKER_TYPE: gecko-t-bitbar-gw-test-3
       # replace with version to test
-      DOCKER_IMAGE_VERSION: 20200804T101109
+      DOCKER_IMAGE_VERSION: 20201102T161546
   # mozilla-docker-image-test:
   #   device_group_name: motog5-test
   #   framework_name: mozilla-usb
