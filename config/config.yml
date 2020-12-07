@@ -62,6 +62,22 @@ projects:
     additional_parameters:
       TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-unit-g5
       TC_WORKER_TYPE: gecko-t-bitbar-gw-unit-g5
+  mozilla-gw-unittest-s7:
+    device_group_name: s7-unit
+    device_model: s7
+    framework_name: mozilla-usb
+    description: Mozilla Unit tests for S7Galaxy (using generic-worker)
+    additional_parameters:
+      TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-unit-s7
+      TC_WORKER_TYPE: gecko-t-bitbar-gw-unit-s7
+  mozilla-gw-perftest-s7:
+    device_group_name: s7-perf
+    device_model: s7
+    framework_name: mozilla-usb
+    description: Mozilla Performance tests for S7Galaxy (using generic-worker)
+    additional_parameters:
+      TASKCLUSTER_CLIENT_ID: project/autophone/gecko-t-bitbar-perf-s7
+      TC_WORKER_TYPE: gecko-t-bitbar-gw-perf-s7
   # used for building new docker images
   # mozilla-docker-build:
   #   device_group_name: motog4-docker-builder-2
@@ -92,7 +108,7 @@ projects:
       # replace with version to test
       DOCKER_IMAGE_VERSION: 20201110T135924
   mozilla-gw-test-3:
-    device_group_name: s7-unit
+    device_group_name: test-3
     framework_name: mozilla-usb
     description: used for testing new images, devices, operating systems
     additional_parameters:
@@ -236,6 +252,6 @@ device_groups:
   s7-unit:
     s7-01:
     s7-02:
+  s7-perf:
     s7-03:
     s7-04:
-  s7-perf:
