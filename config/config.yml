@@ -139,7 +139,7 @@ device_groups:
     # motog5-04:
     # motog5-05:
     # motog5-06:
-    # motog5-07:
+    motog5-07:  # replaces 5-31
     # motog5-08:
     # motog5-09:
     # motog5-10:
@@ -164,7 +164,7 @@ device_groups:
     motog5-28:
     motog5-29:
     motog5-30:
-    motog5-31:
+    # motog5-31:  # bad device
     motog5-32:
     motog5-33:
     motog5-34:
