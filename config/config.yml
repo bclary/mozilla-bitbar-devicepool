@@ -134,7 +134,7 @@ device_groups:
   motog5-perf-2:
     # disabled to draw down cluster to 2020 contract sizes (27 g5, 48 p2)
     # motog5-01:
-    motog5-02:  # replaces 5-39
+    # motog5-02:  # replaces 5-39, bad also
     # motog5-03:
     # motog5-04:
     # motog5-05:
@@ -150,7 +150,7 @@ device_groups:
     # motog5-14:
     # motog5-15:
     # motog5-16:
-    # motog5-17:
+    motog5-17:  # replaces 5-02
     motog5-18:
     motog5-19:
     motog5-20:
