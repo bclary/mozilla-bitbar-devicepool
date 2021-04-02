@@ -8,6 +8,9 @@ to match the specified configuration.
 
 Bitbar Frameworks must be managed via the Testdroid user interface.
 
+This repository has been archived. Active development has moved to
+[mozilla-platform-ops/mozilla-bitbar-devicepool](https://github.com/mozilla-platform-ops/mozilla-bitbar-devicepool)
+
 ## Installation
 
 ```
